@@ -334,6 +334,155 @@ The view is from above the cut walls, with the scan as background and each scann
 </div></section>'''
 
 
+def overlay_svg(items, color='#2563c9'):
+    """An action drawn on a start frame (the same drawing as the page script's overlay): a dot on the acted object, an arrow along the force or launch direction."""
+    W, H = 1600, 900; out = f'<svg class="ov" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'; labels = ''
+    for o in items or []:
+        if not o or not o.get('point'):
+            continue
+        x0, y0 = o['point'][0]*W, o['point'][1]*H
+        if o.get('tip'):
+            x1, y1 = o['tip'][0]*W, o['tip'][1]*H; dx, dy = x1-x0, y1-y0; n = (dx*dx+dy*dy)**.5 or 1.; ux, uy = dx/n, dy/n; hl, hw = 46, 22
+            bx, by = x1-ux*hl, y1-uy*hl
+            out += (f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="#fff" stroke-width="20" stroke-linecap="round"/>'
+                    f'<polygon points="{x1:.1f},{y1:.1f} {bx-uy*hw:.1f},{by+ux*hw:.1f} {bx+uy*hw:.1f},{by-ux*hw:.1f}" fill="{color}" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>'
+                    f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="{color}" stroke-width="11" stroke-linecap="round"/>')
+        out += f'<circle cx="{x0:.1f}" cy="{y0:.1f}" r="13" fill="{color}" stroke="#fff" stroke-width="6"/>'
+        if o.get('label'):
+            cls = ('al' if o['point'][0] < .5 else 'ar') + (' up' if o['point'][1] > .78 else '')
+            labels += f'<span class="ov-label {cls}" style="left:{o["point"][0]*100:.1f}%;top:{o["point"][1]*100:.1f}%;color:{color}">{e(o["label"])}</span>'
+    return out + '</svg>' + labels
+
+
+SERIES = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100']   # categorical slots 1 to 4 of the chart palette, in fixed order
+
+
+def speed_chart(traj, key):
+    """Speed of the bodies that travel farthest, as thin lines over time (one axis, legend with line keys, hover read-out added by the page script)."""
+    t = traj['series']['time_s']; bodies = []
+    for b in traj['series']['bodies']:
+        if 'speed_m_s' in b:
+            v = b['speed_m_s']
+        else:
+            x, y, z = b['x_m'], b['y_m'], b['z_m']
+            v = [0.] + [(((x[i]-x[i-1])**2+(y[i]-y[i-1])**2+(z[i]-z[i-1])**2)**.5)/max(t[i]-t[i-1], 1e-9) for i in range(1, len(t))]
+        travel = sum(vv*(t[i]-t[i-1]) for i, vv in enumerate(v) if i)
+        bodies.append((travel, b['name'], v))
+    bodies = [b for b in sorted(bodies, key=lambda r: -r[0]) if b[0] > .02][:4]
+    if not bodies:
+        return ''
+    W, H, L, R, T, B = 640, 250, 46, 12, 12, 34; vmax = max(max(b[2]) for b in bodies) or 1.; step = next(s for s in (.25, .5, 1, 2, 5, 10) if vmax/s <= 5); top = step*int(vmax/step+1)
+    X = lambda v: L+(W-L-R)*v/t[-1]; Y = lambda v: T+(H-T-B)*(1-v/top)
+    grid = ''.join(f'<line x1="{L}" x2="{W-R}" y1="{Y(k*step):.1f}" y2="{Y(k*step):.1f}" stroke="#e3e6e8" stroke-width="1"/><text x="{L-6}" y="{Y(k*step)+4:.1f}" text-anchor="end" class="ax">{k*step:g}</text>' for k in range(int(top/step)+1))
+    ticks = ''.join(f'<text x="{X(k):.1f}" y="{H-B+16}" text-anchor="middle" class="ax">{k:g}</text>' for k in range(int(t[-1])+1))
+    lines = ''.join(f'<polyline fill="none" stroke="{SERIES[i]}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="{" ".join("%.1f,%.1f" % (X(tt), Y(vv)) for tt, vv in zip(t, b[2]))}"/>' for i, b in enumerate(bodies))
+    legend = ''.join(f'<span><i style="background:{SERIES[i]}"></i>{e(b[1])}</span>' for i, b in enumerate(bodies))
+    data = e(json.dumps({'t': t, 'names': [b[1] for b in bodies], 'v': [[round(x, 3) for x in b[2]] for b in bodies], 'box': [L, T, W-R, H-B], 'tmax': t[-1], 'size': [W, H]}))
+    return (f'<div class="chart" data-chart=\'{data}\'><div class="chart-legend">{legend}</div><svg viewBox="0 0 {W} {H}" role="img" aria-label="Speed over time">{grid}{ticks}'
+            f'<text x="{(L+W-R)/2:.0f}" y="{H-2}" text-anchor="middle" class="ax">time (s)</text><text x="12" y="{(T+H-B)/2:.0f}" text-anchor="middle" class="ax" transform="rotate(-90 12 {(T+H-B)/2:.0f})">speed (m/s)</text>{lines}'
+            f'<line class="cross" x1="0" x2="0" y1="{T}" y2="{H-B}" stroke="#5f6b70" stroke-width="1" visibility="hidden"/></svg><div class="chart-tip" hidden></div>'
+            f'<p class="sp-note">Speed of the {len(bodies)} bodies that travel farthest, from the saved states (plotted at {traj["plotted_rate_hz"]:g} Hz; stored at {traj["saved_rate_hz"]} Hz).</p></div>')
+
+
+def kv(rows):
+    return '<table class="sp-kv">' + ''.join(f'<tr><th>{e(k)}</th><td>{e(v)}</td></tr>' for k, v in rows) + '</table>'
+
+
+CHANNELS = [('rgb', 'RGB', 'colour image'), ('depth', 'Depth', 'metres along the optical axis; near is warm'), ('instances', 'Instance masks', 'one colour per movable body'),
+            ('optical_flow', 'Optical flow', 'pixels per frame; hue is direction, saturation is magnitude'), ('scene_flow', 'Scene flow', 'metres per frame in the world; red x, green y, blue z')]
+
+
+def record_block(r):
+    sg = r['scene_graph']; g = sg['global']; clip = r['clip']
+    movable = '<div class="sp-table-wrap"><table class="sp-table small"><thead><tr><th>Object</th><th>Shape</th><th>Material</th><th>Mass (kg)</th><th>Friction</th><th>Restitution</th></tr></thead><tbody>' + ''.join(
+        f'<tr><td>{e(o["name"])}</td><td>{e(o["shape"])}</td><td>{e(o.get("material", ""))}</td><td>{o["mass_kg"]:g}</td><td>{o["friction"]:g}</td><td>{o["restitution"]:g}</td></tr>' for o in sg['movable']) + '</tbody></table></div>'
+    furniture = ', '.join(f'{n} {k.replace("_", " ")}' for k, n in sg['furniture'].items()) if isinstance(sg['furniture'], dict) else ''
+    joints = '; '.join(f'{j["type"]} joint {j["body0"]} to {j["body1"]}' + (f' (stiffness {j["stiffness"]:g}, damping {j["damping"]:g})' if j.get('stiffness') else '') for j in sg['joints'])
+    glob = kv([('Gravity', f'{g["gravity_m_s2"]} m/s\u00b2'), ('Floor', f'friction {g["floor_friction"]:g}, restitution {g["floor_restitution"]:g}'), ('Rates', f'solver {g["solver_rate_hz"]} Hz, states saved at {g["saved_rate_hz"]} Hz, {g["horizon_s"]:g} s'),
+               ('Room', f'{g.get("room_type", "room")}, {g["room_size_m"][0]:g} x {g["room_size_m"][1]:g} m, with {furniture}' if furniture else str(g.get('room_type', ''))), ('Joints', joints or 'none')])
+    prog = r['action'].get('program') or {}
+    action = kv([('In words', r['action']['semantic_action']), *[(k.replace('_', ' '), json.dumps(v) if isinstance(v, (list, dict)) else str(v)) for k, v in prog.items() if k != 'semantic_action'],
+                 *([('Stated change of this branch', r['action']['stated_change'])] if r['action'].get('stated_change') else [])])
+    events = '<ol class="ev">' + ''.join(f'<li><b>{ev["time_s"]:.2f} s</b> {e(ev["text"])}</li>' for ev in r['events']['timeline']) + '</ol>'
+    qa = r['qa']
+    qa_html = ('<p class="sp-note"><b>Measured on this run</b></p><ul class="qa">' + ''.join(f'<li><span>{e(q["question"])}</span><b>{e(q["answer"])}</b></li>' for q in qa['measured']) + '</ul>'
+               + '<p class="sp-note"><b>Comparing this run with another branch of the same action</b></p><ul class="qa">' + ''.join(f'<li><span>{e(q["question"])}</span><b>{e(q["answer"])}</b></li>' for q in qa['comparative'][:4]) + '</ul>'
+               + '<p class="sp-note"><b>About the actions of the scene</b></p><ul class="qa">' + ''.join(f'<li><span>{e(q["question"])}</span><b>{e(q["answer"])}</b></li>' for q in qa['scene_bank'][:3]) + '</ul>'
+               + f'<p class="sp-note">{e(qa["note"])}</p>')
+    keys = []
+    for b in r['branches']:
+        keys += [k for k in b['measured'] if k not in keys]
+    keys = keys[:4]
+    branches = '<div class="sp-table-wrap"><table class="sp-table small"><thead><tr><th>Stated change</th>' + ''.join(f'<th>{e(k.replace("_", " "))}</th>' for k in keys) + '</tr></thead><tbody>' + ''.join(
+        '<tr><td>%s</td>%s</tr>' % (e(b['stated_change']), ''.join(f'<td>{e(b["measured"].get(k, ""))}</td>' for k in keys)) for b in r['branches']) + '</tbody></table></div>'
+    files = ''.join(f'<p class="sp-note" style="margin-top:0.5rem"><b>{e(k)}</b></p><pre class="sp-code">{e(v)}</pre>' for k, v in r['excerpts'].items())
+    n_ev = dict(r['facts']).get('Timed events', len(r['events']['timeline']))
+    return f'''<div class="rec">
+<div class="rec-left">
+<div class="vid"><img src="{e(clip['start_frame'])}" alt="start frame" loading="lazy">{overlay_svg(r.get('action_overlay'))}<span class="vid-tag">start state and action</span></div>
+<div class="sync-group" style="margin-top:0.6rem"><div class="vid"><video data-src="{e(clip['file'])}" poster="{e(clip['poster'])}" muted playsinline preload="none"></video><span class="vid-tag tag-ref">PhysX simulation</span></div></div>
+<p class="cap" style="margin-top:0.6rem">{e(r['summary'])}</p>
+</div>
+<div class="rec-right">
+<details class="sp-more" open><summary>What this record stores</summary>{kv(r['facts'])}</details>
+<details class="sp-more"><summary>Scene graph: objects, properties, joints, global settings</summary>{movable}{glob}</details>
+<details class="sp-more"><summary>Action program</summary>{action}</details>
+<details class="sp-more"><summary>Timed events ({e(n_ev)} in this record; the first {len(r['events']['timeline'])} shown)</summary>{events}</details>
+<details class="sp-more"><summary>Trajectory of every object</summary>{speed_chart(r['trajectory'], r['key'])}<p class="sp-note">{e(r['excerpts'].get('trajectory.npz', ''))}</p></details>
+<details class="sp-more" open><summary>Question-answer pairs</summary>{qa_html}</details>
+<details class="sp-more"><summary>Counterfactual branches of this action ({len(r['branches'])})</summary>{branches}</details>
+<details class="sp-more"><summary>Excerpts of the record's files</summary>{files}</details>
+</div></div>'''
+
+
+def dataset_section(d, pickers):
+    if not d:
+        return ''
+    groups = [g for g in GROUPS if any(c['group'] == g for c in d['gallery'])]
+    filt = '<button type="button" data-filter="all" class="on">All</button>' + ''.join(f'<button type="button" data-filter="{e(g)}">{e(g)}</button>' for g in groups)
+    cards = ''.join(f'''<div class="dcard hover-play" data-group="{e(c['group'])}"><div class="vid"><video data-src="{e(c['file'])}" poster="{e(c['poster'])}" muted playsinline loop preload="none"></video></div>
+<p><b>{e(c['family'].replace('_', ' '))}</b> {e(c['description'])}</p></div>''' for c in d['gallery'])
+    tabs = ''.join('<button type="button" data-tab="rec-%s" class="%s">%s</button>' % (r['key'], 'on' if i == 0 else '', e(r['title'])) for i, r in enumerate(d['records']))
+    panels = ''.join('<div class="tab-panel" id="rec-%s"%s>%s</div>' % (r['key'], '' if i == 0 else ' hidden', record_block(r)) for i, r in enumerate(d['records']))
+    cf = []
+    for c in d['counterfactual_sets']:
+        tiles = [{'label': x['stated_change'][0].upper() + x['stated_change'][1:], 'sub': 'the recorded run' if x['branch'] == 'factual' else 'a counterfactual branch of the same action', 'src': x['file'], 'poster': x['poster'],
+                  'cls': 'ref' if x['branch'] == 'factual' else 'given', 'note': '; '.join(f'{e(k.replace("_", " "))}: <b>{e(v)}</b>' for k, v in x['measured'].items())} for x in c['clips']]
+        cf.append({'id': c['key'], 'title': c['title'], 'short': c['title'].split(':')[0], 'thumb': c['clips'][0]['poster'], 'tiles': tiles, 'caption': f"<b>{e(c['title'])}.</b> {e(c['summary'])}"})
+    pickers['cf'] = {'items': cf}
+    ch = []
+    for c in d['channels']['records']:
+        tiles = [{'label': label, 'sub': sub, 'src': c['tiles'][k]['file'], 'poster': c['tiles'][k]['poster']} for k, label, sub in CHANNELS if k in c['tiles']]
+        dep = c['channels'].get('depth', {}); of = c['channels'].get('optical_flow', {}); sf = c['channels'].get('scene_flow', {})
+        cap = (f"<b>{e(c['title'])}.</b> <span class=\"m\">Depth is shown from {dep.get('near_m', 0):g} m to {dep.get('far_m', 0):g} m. Optical flow saturates at {of.get('saturates_at_px_per_frame', 0):.0f} pixels per frame, "
+               f"scene flow at {sf.get('saturates_at_m_per_s', 0):.1f} m/s.</span>")
+        ch.append({'id': c['key'], 'title': c['title'], 'short': c['family'].replace('_', ' '), 'thumb': c['tiles']['rgb']['poster'], 'tiles': tiles, 'caption': cap})
+    pickers['channels'] = {'items': ch}
+    return f'''<section class="section sp-section" id="dataset"><div class="sp-container sp-wide">
+<h2 class="title is-3 has-text-centered">The dataset</h2>
+<p class="sp-lead">We train on 505,827 PhysX simulations from 56 motion families, split by scene. Each record stores the scene graph, the action, the state of every object at 120 Hz
+and timed contact events. Images, depth, masks and flow are rendered from the saved states when needed.</p>
+<details class="sp-more"><summary>The dataset in numbers</summary>{kv(d['numbers']['rows'])}</details>
+<details class="sp-more"><summary>Every attribute of the scene graph, the start state and the actions</summary>{kv(d['attributes']['rows'])}</details>
+<h3 class="title is-4 has-text-centered sp-sub">Motion families</h3>
+<p class="sp-lead">{e(d['gallery_note'])} Move the pointer over a clip to play it.</p>
+<div class="gal-bar"><div><span class="seg-label">Motion</span><span class="seg" data-filter-switch="ds-gal">{filt}</span></div></div>
+<div class="dgal" id="ds-gal">{cards}</div>
+<h3 class="title is-4 has-text-centered sp-sub">One record, everything it stores</h3>
+<p class="sp-lead">Three records, opened up. The arrow or dot on the start frame marks the action. Every value below is read from the files of the record.</p>
+<div class="gal-bar"><span class="seg" data-tabs>{tabs}</span></div>
+{panels}
+<h3 class="title is-4 has-text-centered sp-sub">Counterfactual branches</h3>
+<p class="sp-lead">Each action of a scene is simulated again under stated changes: a property, a material, a shape, the floor, gravity, a removed object, or a change during the motion.
+The answers under each clip are measured from that run.</p>
+<div class="picker" data-picker="cf" style="max-width:1100px;margin-inline:auto"></div>
+<h3 class="title is-4 has-text-centered sp-sub">Rendered channels</h3>
+<p class="sp-lead">RGB, depth, instance masks, optical flow and scene flow of the same saved states, from one camera. They are rendered on demand, without running the physics again.</p>
+<div class="picker" data-picker="channels"></div>
+<p class="sp-note" style="margin-top:0.7rem">{e(d['channels']['note'])}</p>
+</div></section>'''
+
+
 RESULTS = [  # tables/main_results.tex of the paper: families-equal means over the 25,413 test simulations
     ('Forward (constant velocity: 0.836 m)', [('GNS', '0.157', '24.9*', '0.218', '1.24', '6.0%*', '1.7*', '0.4*', '1.3'), ('NeuWorld+FM', '0.182', '29.9', '0.183', '1.28', '18.5%', '7.3', '3.2', '0.9'),
                                              ('NeuWorld+DDPM', '0.194', '30.7', '0.186', '1.30', '18.2%', '7.1', '2.8', '0.9'), ('NeuWorld+Reg', '0.130*', '25.2', '0.160*', '1.01*', '22.3%', '6.3', '3.2', '0.9')]),
@@ -378,7 +527,8 @@ def main():
     sections = [('modes', 'Inference modes', modes_section(md)), ('forward', 'Forward prediction', forward_section(v1)),
                 ('video-models', 'Video models', vdm_section(load('compare_vdm.json'), pickers)),
                 ('llm-vla', 'Language models and robot policy', others_section(load('compare_llm.json'), load('compare_vla.json'), pickers)),
-                ('twins', 'Real-room scans', twins_section(load('twins.json'), pickers)), ('numbers', 'Numbers', results_section())]
+                ('twins', 'Real-room scans', twins_section(load('twins.json'), pickers)), ('dataset', 'Dataset', dataset_section(load('dataset.json'), pickers)),
+                ('numbers', 'Numbers', results_section())]
     nav = [(k, label) for k, label, body in sections if body]
     body = hero(nav) + overview() + ''.join(b for _, _, b in sections) + footer()
     data = {'modes': md, 'pickers': pickers}

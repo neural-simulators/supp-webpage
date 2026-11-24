@@ -108,7 +108,7 @@
             '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="' + color + '" stroke-width="11" stroke-linecap="round"/>';
         }
         out += '<circle cx="' + x0 + '" cy="' + y0 + '" r="13" fill="' + color + '" stroke="#fff" stroke-width="6"/>';
-        if (o.label) { labels += '<span class="ov-label' + (timed ? ' ov-timed' : '') + '" style="left:' + (100 * o.point[0]) + '%;top:' + (100 * o.point[1]) + '%;color:' + color + '">' + esc(o.label) + '</span>'; }
+        if (o.label) { labels += '<span class="ov-label ' + (o.point[0] < 0.5 ? 'al' : 'ar') + (o.point[1] > 0.78 ? ' up' : '') + (timed ? ' ov-timed' : '') + '" style="left:' + (100 * o.point[0]) + '%;top:' + (100 * o.point[1]) + '%;color:' + color + '">' + esc(o.label) + '</span>'; }
       });
       return out + '</svg>' + labels;
     }
@@ -211,10 +211,47 @@
     });
   }
 
+  /* ---- Small helpers: tab switches, clips that play under the pointer, the read-out of a line chart ---- */
+  function initTabs() {
+    all('[data-tabs]').forEach(function (bar) {
+      bar.addEventListener('click', function (ev) {
+        var b = ev.target.closest('button[data-tab]'); if (!b) { return; }
+        all('button[data-tab]', bar).forEach(function (x) { x.classList.toggle('on', x === b); var p = document.getElementById(x.dataset.tab); if (p) { p.hidden = x !== b; } });
+      });
+    });
+  }
+  function initHoverPlay() {
+    all('.hover-play').forEach(function (card) {
+      var v = card.querySelector('video'); if (!v) { return; }
+      function start() { if (!v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; } var p = v.play(); if (p && p.catch) { p.catch(function () {}); } }
+      card.addEventListener('mouseenter', start);
+      card.addEventListener('mouseleave', function () { v.pause(); });
+      card.addEventListener('click', function () { if (v.paused) { start(); } else { v.pause(); } });
+    });
+  }
+  function initCharts() {
+    all('.chart[data-chart]').forEach(function (host) {
+      var d = JSON.parse(host.dataset.chart), svg = host.querySelector('svg'), cross = host.querySelector('.cross'), tip = host.querySelector('.chart-tip');
+      svg.addEventListener('mousemove', function (ev) {
+        var r = svg.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * d.size[0];
+        if (x < d.box[0] || x > d.box[2]) { cross.setAttribute('visibility', 'hidden'); tip.hidden = true; return; }
+        var t = (x - d.box[0]) / (d.box[2] - d.box[0]) * d.tmax, i = 0, best = 1e9;
+        d.t.forEach(function (tt, k) { if (Math.abs(tt - t) < best) { best = Math.abs(tt - t); i = k; } });
+        cross.setAttribute('x1', x); cross.setAttribute('x2', x); cross.setAttribute('visibility', 'visible');
+        tip.hidden = false; tip.innerHTML = '<b>' + d.t[i].toFixed(2) + ' s</b>' + d.names.map(function (n, k) { return '<span>' + esc(n) + ': ' + d.v[k][i].toFixed(2) + ' m/s</span>'; }).join('');
+        tip.style.left = Math.min(r.width - 190, Math.max(0, ev.clientX - r.left + 12)) + 'px';
+      });
+      svg.addEventListener('mouseleave', function () { cross.setAttribute('visibility', 'hidden'); tip.hidden = true; });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     all('.sync-group').forEach(watch);
     initGalleries();
     initModes();
     initPickers();
+    initTabs();
+    initHoverPlay();
+    initCharts();
   });
 }());

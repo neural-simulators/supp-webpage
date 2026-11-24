@@ -76,7 +76,11 @@ a { color: #3273dc; }
 .vid .vid-cover { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; background: repeating-linear-gradient(135deg, rgba(245, 246, 247, 0.96) 0 14px, rgba(232, 235, 237, 0.96) 14px 28px); color: var(--muted); font-size: 0.92rem; font-weight: 600; padding: 1rem; opacity: 0; transition: opacity 0.12s; pointer-events: none; }
 .vid .vid-cover.on { opacity: 1; }
 .vid .ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 0.25s; }
-.vid .ov-label { position: absolute; transform: translate(-50%, 0.7rem); background: rgba(255, 255, 255, 0.93); font-size: 0.74rem; font-weight: 700; padding: 0.05rem 0.45rem; border-radius: 5px; white-space: nowrap; pointer-events: none; transition: opacity 0.25s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+.vid .ov-label { position: absolute; background: rgba(255, 255, 255, 0.93); font-size: 0.74rem; font-weight: 700; line-height: 1.25; padding: 0.1rem 0.45rem; border-radius: 5px; max-width: 62%; pointer-events: none; transition: opacity 0.25s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+.vid .ov-label.al { transform: translate(-0.5rem, 0.8rem); }
+.vid .ov-label.ar { transform: translate(calc(-100% + 0.5rem), 0.8rem); }
+.vid .ov-label.al.up { transform: translate(-0.5rem, calc(-100% - 0.8rem)); }
+.vid .ov-label.ar.up { transform: translate(calc(-100% + 0.5rem), calc(-100% - 0.8rem)); }
 .sync-group { cursor: pointer; }
 
 /* ---------- Mode viewer ---------- */
@@ -178,6 +182,35 @@ table.llm-grid .ans { font-size: 0.82rem; line-height: 1.5; padding: 0.3rem 0.1r
 .kf { display: grid; grid-template-columns: 5.2rem repeat(var(--n, 3), minmax(0, 1fr)); gap: 0.3rem; align-items: center; }
 .kf-t { font-size: 0.78rem; color: var(--muted); text-align: center; }
 .kf-l { font-size: 0.8rem; font-weight: 600; }
+
+/* ---------- Dataset ---------- */
+.dgal { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.8rem; }
+.dcard { border: 1px solid var(--line); border-radius: 10px; padding: 0.4rem; background: #fff; cursor: pointer; }
+.dcard p { font-size: 0.78rem; line-height: 1.35; margin: 0.35rem 0.1rem 0.1rem; color: var(--muted); }
+.dcard p b { color: var(--ink); display: block; font-size: 0.84rem; }
+.rec { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 1.2rem; align-items: start; }
+@media screen and (max-width: 900px) { .rec { grid-template-columns: 1fr; } }
+.rec-left { position: sticky; top: 0.8rem; }
+@media screen and (max-width: 900px) { .rec-left { position: static; } }
+.rec-right details.sp-more { margin-top: 0; margin-bottom: 0.5rem; }
+table.sp-kv { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-top: 0.5rem; }
+table.sp-kv th { text-align: left; font-weight: 600; vertical-align: top; padding: 0.25rem 0.8rem 0.25rem 0; width: 13rem; color: var(--ink); border-bottom: 1px solid var(--line); }
+table.sp-kv td { padding: 0.25rem 0; border-bottom: 1px solid var(--line); color: var(--ink); overflow-wrap: anywhere; }
+table.sp-table.small { font-size: 0.8rem; margin-top: 0.5rem; }
+table.sp-table.small td, table.sp-table.small th { padding: 0.22rem 0.5rem; white-space: normal; }
+ol.ev { list-style: none; margin: 0.5rem 0 0; padding: 0; font-size: 0.84rem; max-height: 17rem; overflow: auto; }
+ol.ev li { padding: 0.18rem 0; border-bottom: 1px solid var(--line); }
+ol.ev li b { display: inline-block; width: 3.6rem; font-variant-numeric: tabular-nums; }
+ul.qa { list-style: none; margin: 0.3rem 0 0.6rem; padding: 0; font-size: 0.85rem; }
+ul.qa li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.22rem 0; border-bottom: 1px solid var(--line); }
+ul.qa li b { text-align: right; flex: 0 0 auto; max-width: 45%; }
+.chart { position: relative; margin-top: 0.5rem; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart text.ax { font-size: 11px; fill: #52514e; font-family: var(--font); }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; font-size: 0.8rem; color: var(--ink); margin-bottom: 0.2rem; }
+.chart-legend i { display: inline-block; width: 18px; height: 3px; border-radius: 2px; margin-right: 0.35rem; vertical-align: middle; }
+.chart-tip { position: absolute; top: 1.6rem; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 0.3rem 0.5rem; font-size: 0.76rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); pointer-events: none; width: 180px; }
+.chart-tip span { display: block; }
 
 /* ---------- Tables ---------- */
 .sp-table-wrap { overflow-x: auto; }

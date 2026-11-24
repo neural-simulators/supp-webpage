@@ -4,7 +4,7 @@
 Copies index.html and only the files under static/ that the page references into DIR (default: ../supp_webpage_package/webpage), so
 the archive holds no build tools, manifests or unused media. Checks, and fails on: a reference to a missing file, any URL that leaves the
 folder (http, https, protocol-relative), identifying strings in text files (user, cluster, organisation and repository names, absolute
-paths), and metadata in the mp4 files (encoder tags are allowed). Prints the total size against the 100 MB limit of the venue.
+paths), and metadata in the mp4 files (encoder tags are allowed). Prints the total size against the page budget (135 MB of the 200 MB supplementary archive).
 """
 import argparse
 import re
@@ -70,7 +70,9 @@ def main():
             m = re.search(pat, runs, flags=re.I)
             if m:
                 problems.append(f'{p.relative_to(a.out)}: identifying text "{runs[max(0, m.start()-20):m.end()+20]}"')
-    print(f'{len(files)+1} files, {total/1e6:.1f} MB in {a.out}')
+    print(f'{len(files)+1} files, {total/1e6:.1f} MB in {a.out} (page budget 135 MB)')
+    if total > 135e6:
+        problems.append(f'page is {total/1e6:.1f} MB, over the 135 MB budget')
     by = {}
     for r in files:
         k = '/'.join(r.split('/')[:3]); by[k] = by.get(k, 0)+(WEB/r).stat().st_size
