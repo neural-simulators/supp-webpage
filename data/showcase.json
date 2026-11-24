@@ -9546,46 +9546,46 @@
    }
   },
   {
-   "id": "catapult__r2009__a2__factual",
-   "record_id": "catapult__r2009/a2/factual",
-   "family": "catapult",
-   "family_title": "Catapult",
-   "group": "Mechanisms",
-   "description": "A pusher knocks the trigger of a loaded catapult, whose arm throws a ball across the room.",
+   "id": "books_ball_catch__r1117__a5__factual",
+   "record_id": "books_ball_catch__r1117/a5/factual",
+   "family": "books_ball_catch",
+   "family_title": "Books and ball",
+   "group": "Furniture and catching",
+   "description": "A pusher tips the first of a row of books standing on a table. They fall one onto the next, and the last book knocks a ball off the table into a box.",
    "role": "forward",
-   "novelty": "new room",
-   "furniture_pieces": 16,
+   "novelty": "new structure",
+   "furniture_pieces": 24,
    "duration_s": 5.0,
-   "moving_bodies": 3,
+   "moving_bodies": 11,
    "physics": {
-    "video": "static/media/showcase/catapult__r2009__a2__factual/physics.mp4",
-    "first": "static/media/showcase/catapult__r2009__a2__factual/first.jpg",
-    "last": "static/media/showcase/catapult__r2009__a2__factual/last.jpg",
-    "first_annotated": "static/media/showcase/catapult__r2009__a2__factual/first_annotated.jpg"
+    "video": "static/media/showcase/books_ball_catch__r1117__a5__factual/physics.mp4",
+    "first": "static/media/showcase/books_ball_catch__r1117__a5__factual/first.jpg",
+    "last": "static/media/showcase/books_ball_catch__r1117__a5__factual/last.jpg",
+    "first_annotated": "static/media/showcase/books_ball_catch__r1117__a5__factual/first_annotated.jpg"
    },
    "action": {
     "kind": "force",
-    "label": "pull, 8.0 N, 0.45 to 0.85 s",
-    "object": "catapult arm",
-    "instruction": "pull the trigger pin"
+    "label": "push, 1.9 N, 0.35 to 0.75 s",
+    "object": "first book",
+    "instruction": "push the first book over"
    },
    "action_overlay": {
     "true": [
      {
       "point": [
-       0.28322792440013816,
-       0.5489314954561602
+       0.23534769596466792,
+       0.3708093481178206
       ],
       "tip": [
-       0.33915052738342244,
-       0.43589513040788713
+       0.4153476959646679,
+       0.3708093481178206
       ],
-      "label": "pull, 8.0 N, 0.45 to 0.85 s",
-      "object": "catapult arm",
+      "label": "push, 1.9 N, 0.35 to 0.75 s",
+      "object": "first book",
       "scale_note": "The arrow shows the direction only; its length is not to scale.",
-      "force_N": 7.969115257263184,
-      "onset_s": 0.45000001788139343,
-      "end_s": 0.8500000238418579
+      "force_N": 1.932877779006958,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
      }
     ]
    },
@@ -9601,16 +9601,16 @@
     "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
     "camera": {
      "eye": [
-      -1.9218672240913888,
-      2.8592361899839336,
-      1.7761297467340986
+      -0.36051427975636796,
+      -3.1593660138686146,
+      1.2385393882111768
      ],
      "target": [
-      -1.921867224091389,
-      -1.1299998481600833,
-      0.6322347200935539
+      -0.3605142797563675,
+      -0.7562117740228183,
+      0.5494459986686793
      ],
-     "focal_mm": 16.0,
+     "focal_mm": 12.0,
      "aperture_mm": 20.955,
      "resolution": [
       1280,
@@ -9622,19 +9622,19 @@
     "fwd": {
      "variants": {
       "reg": {
-       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__reg.mp4",
-       "error_m": 0.0506,
-       "final_error_m": 0.0536
+       "video": "static/media/showcase/books_ball_catch__r1117__a5__factual/fwd__reg.mp4",
+       "error_m": 0.0182,
+       "final_error_m": 0.0196
       },
       "fm": {
-       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__fm.mp4",
-       "error_m": 0.0757,
-       "final_error_m": 0.0291
+       "video": "static/media/showcase/books_ball_catch__r1117__a5__factual/fwd__fm.mp4",
+       "error_m": 0.0198,
+       "final_error_m": 0.0182
       },
       "ddpm": {
-       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__ddpm.mp4",
-       "error_m": 0.1262,
-       "final_error_m": 0.0285
+       "video": "static/media/showcase/books_ball_catch__r1117__a5__factual/fwd__ddpm.mp4",
+       "error_m": 0.0174,
+       "final_error_m": 0.0188
       }
      },
      "given_s": [

@@ -89,6 +89,12 @@ def props_table(rows, total):
             '<tr><th>inferred</th><th class="tr">true</th><th>inferred</th><th class="tr">true</th><th>inferred</th><th class="tr">true</th></tr></thead><tbody>' + body + '</tbody></table>' + more)
 
 
+WEAK = {('gravity_change__r3049__a4__factual', 'cause', 'fm'), ('carrying_cart__r2035__a0__factual', 'cause', 'ddpm')}   # inferred timing far from the true one: not shown
+TITLE = {'books_ball_catch__r1117__a5__factual': 'A longer row of books'}
+FORWARD_ORDER = ['ramp_spring_domino', 'books_ball_catch__r1203', 'carrying_cart', 'rubble', 'books_ball_catch__r1117', 'rolling_race', 'trampoline', 'pendulum_jenga', 'diving_board', 'ramp_lever_projectile',
+                 'catapult', 'gravity_change', 'hinge_slider', 'chair_spill', 'lever', 'crate_drop_table', 'sliding', 'chair_push_table', 'slip_roll', 'crank', 'drop', 'coupled_springs', 'drag_wind', 'pulley']
+
+
 def showcase_scenes(sc):
     scenes = []
     for r in sc['records']:
@@ -101,6 +107,7 @@ def showcase_scenes(sc):
             name = SHOW_MODES.get(key)
             if not name or not m.get('variants'):
                 continue
+            m = dict(m, variants={v: x for v, x in m['variants'].items() if (r['id'], key, v) not in WEAK})
             out = {'seconds': T, 'physics': ph['video'], 'first': ph['first'], 'last': ph['last'], 'action_given': r['action']['label']}
             if name == 'property':
                 out['variants'] = {v: {} for v in m['variants']}
@@ -232,12 +239,13 @@ def forward_section(v1, showcase=None):
     rows = {short_id(r): r for r in (v1 or {'forward': []})['forward']}; cards = []; used = []
     skip = {'catapult__r2009__a2__factual'}                          # a second catapult scene; its diffusion variant is 0.13 m off
     recs = [r for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg') and r['id'] not in skip]
+    recs.sort(key=lambda r: next((i for i, k in enumerate(FORWARD_ORDER) if r['id'].startswith(k)), 99))
     for r in recs:
         f = r['modes']['fwd']['variants']; group = r['group']; used.append(group); ph = r['physics']
         variants = {k: v['video'] for k, v in f.items()}; errs = {k: f"{v['error_m']:.2f} m" for k, v in f.items()}
         note = f"Test scene ({r['novelty']})"
         cards.append(f'''<div class="card-x" data-group="{e(group)}"><div class="pair sync-group">{vid(ph['video'], ph['first'], 'PhysX', 'tag-ref')}{vid(variants['reg'], ph['first'], VARIANT['reg'], 'tag-ours', variants)}</div>
-<p class="cap"><b>{e(r['family_title'])}.</b> {e(r['description'])} <span class="m">{e(note)}. Position error <span data-err='{e(json.dumps(errs))}'>{errs['reg']}</span>.</span></p></div>''')
+<p class="cap"><b>{e(TITLE.get(r['id'], r['family_title']))}.</b> {e(r['description'])} <span class="m">{e(note)}. Position error <span data-err='{e(json.dumps(errs))}'>{errs['reg']}</span>.</span></p></div>''')
     for sid in ([] if len(recs) >= 10 else V1_FORWARD):
         if sid not in rows:
             continue
