@@ -190,9 +190,27 @@
   function initPickers() {
     all('.picker[data-picker]').forEach(function (host) {
       var data = (SUPP.pickers || {})[host.dataset.picker]; if (!data || !data.items.length) { return; }
-      var current = data.items[0].id;
+      var current = data.items[0].id, variant = 'reg';
+      function tileHtml(it, t) {
+        var ar = it.aspect ? ' style="aspect-ratio:' + esc(it.aspect) + '"' : '';
+        var src = t.variants ? (t.variants[variant] || t.variants.reg) : t.src, label = t.variants ? VARIANT_LABEL[t.variants[variant] ? variant : 'reg'] : t.label;
+        var note = t.notes ? (t.notes[t.variants && t.variants[variant] ? variant : 'reg'] || '') : (t.note || '');
+        return '<div class="pk-tile ' + (t.cls || '') + '"><h4>' + esc(label) + (t.sub ? '<span>' + esc(t.sub) + '</span>' : '') + '</h4><div class="vid"' + ar + '><video data-src="' + esc(src) + '" poster="' + esc(t.poster || it.poster || '') + '" muted playsinline preload="none"></video>' + (t.overlay || '') + '</div>' + (note ? '<p class="pk-note">' + note + '</p>' : '') + '</div>';
+      }
       function render() {
-        var it = data.items.filter(function (x) { return x.id === current; })[0], n = it.tiles.length;
+        var it = data.items.filter(function (x) { return x.id === current; })[0], n = (it.tiles || []).length;
+        if (it.rows) {
+          var bar = data.variants ? '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + data.variants.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>' : '';
+          var rowsHtml = bar + '<div class="wf sync-group">' + it.rows.map(function (r) {
+            return '<div class="wf-row"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + (r.text || '') + '</div>' + r.tiles.map(function (t) { return tileHtml(it, t); }).join('') + '</div>';
+          }).join('') + '</div><div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
+          if (data.items.length > 1) { rowsHtml += '<div class="mv-scenes">' + data.items.map(function (x) { return '<button type="button" data-item="' + esc(x.id) + '" class="' + (x.id === current ? 'on' : '') + '"><img src="' + esc(x.thumb) + '" alt="" loading="lazy"><span>' + esc(x.short || x.title) + '</span></button>'; }).join('') + '</div>'; }
+          all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });
+          host.innerHTML = rowsHtml;
+          var gg = watch(host.querySelector('.sync-group')), rr = host.getBoundingClientRect(); gg.visible = rr.top < window.innerHeight && rr.bottom > 0; gg.update();
+          var ovs = all('.ov, .ov-label', host); gg.onTime = function (t) { ovs.forEach(function (o) { var a = parseFloat(o.dataset.from || '0'), b = parseFloat(o.dataset.to || '1.4'); o.style.opacity = (t >= a && t < b) ? 1 : 0; }); };
+          return;
+        }
         var html = '<div class="pk-tiles sync-group" style="--n:' + n + '">' + it.tiles.map(function (t) {
           var ar = it.aspect ? ' style="aspect-ratio:' + esc(it.aspect) + '"' : '';
           var media = t.image ? '<div class="vid"' + ar + '><img src="' + esc(t.image) + '" alt="" loading="lazy"></div>'
@@ -207,7 +225,10 @@
         host.innerHTML = html;
         var g = watch(host.querySelector('.sync-group')), rect = host.getBoundingClientRect(); g.visible = rect.top < window.innerHeight && rect.bottom > 0; g.update();
       }
-      host.addEventListener('click', function (ev) { var b = ev.target.closest('button[data-item]'); if (b) { current = b.dataset.item; render(); } });
+      host.addEventListener('click', function (ev) {
+        var b = ev.target.closest('button[data-item]'); if (b) { current = b.dataset.item; render(); return; }
+        var v = ev.target.closest('button[data-pkvar]'); if (v) { variant = v.dataset.pkvar; render(); }
+      });
       render();
     });
   }

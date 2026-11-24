@@ -269,6 +269,34 @@ def forward_section(v1, showcase=None):
 </div></section>'''
 
 
+def whatif_section(d, pickers):
+    if not d or not d.get('sets'):
+        return ''
+    items = []; kinds = {'factual': 'The action as planned', 'counterfactual': 'What if: one stated change', 'intervention': 'What if: a change during the motion'}
+    for st in d['sets']:
+        rows = []
+        for br in st['branches']:
+            variants = {k: v['video'] for k, v in br['variants'].items()}
+            notes = {k: f"Position error {v['error_m']:.2f} m" for k, v in br['variants'].items() if v.get('error_m') is not None}
+            ov = br.get('action_overlay'); ov = ov.get('true') if isinstance(ov, dict) else ov
+            text = (f'<span class="oc"><i>PhysX:</i> {e(br.get("outcome_physx", ""))}</span><span class="oc"><i style="color:var(--gen)">NeuWorld:</i> {e(br.get("outcome_neuworld", ""))}</span>')
+            rows.append({'kind': kinds.get(br['kind'], br['kind']), 'label': br['stated_change'][0].upper() + br['stated_change'][1:], 'text': text, 'cls': 'ref' if br['kind'] == 'factual' else '',
+                         'tiles': [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': br['physics']['video'], 'poster': br['physics'].get('first'), 'overlay': overlay_svg(ov, '#2563c9') if ov else ''},
+                                   {'sub': 'given this scene, these properties and this action', 'cls': 'ours', 'variants': variants, 'notes': notes, 'poster': br['physics'].get('first')}]})
+        items.append({'id': st['id'], 'title': st['family_title'], 'short': st['family_title'], 'thumb': st['branches'][0]['physics'].get('first'), 'rows': rows,
+                      'caption': f"<b>{e(st['family_title'])}.</b> {e(st['description'])} <span class=\"m\">Test scene ({e(st.get('novelty', 'not seen in training'))}).</span>"})
+    have = [k for k in ('reg', 'fm', 'ddpm') if any(k in br['variants'] for st in d['sets'] for br in st['branches'])]
+    pickers['whatif'] = {'items': items, 'variants': have}
+    rule = d.get('notes', {}); rule = rule.get('outcome_rule') or rule.get('outcomes') or '' if isinstance(rule, dict) else str(rule)
+    return f'''<section class="section sp-section" id="what-if"><div class="sp-container sp-wide">
+<h2 class="title is-3 has-text-centered">What if? Counterfactuals and interventions</h2>
+<p class="sp-lead">The same scene and action, simulated again under one stated change: a property, a shape, gravity, or a change of the action during the motion.
+NeuWorld is given the changed scene graph or action and predicts the new outcome. Each row is one run, and all rows play together.</p>
+<div class="picker" data-picker="whatif"></div>
+<p class="sp-note" style="margin-top:0.7rem">The outcome under each run is measured from the PhysX states and from the predicted states with the same rule. {e(rule)}</p>
+</div></section>'''
+
+
 def table_html(columns, rows, ours=('NeuWorld',)):
     head = ''.join(f'<th>{e(c)}</th>' for c in columns)
     fmt = lambda c: ('%.2f' % c) if isinstance(c, float) else c
@@ -604,6 +632,7 @@ def main():
     v1 = load('v1.json'); showcase = load('showcase.json')
     md = modes_data(v1, showcase); pickers = {}
     sections = [('modes', 'Inference modes', modes_section(md, showcase)), ('forward', 'Forward prediction', forward_section(v1, showcase)),
+                ('what-if', 'What if?', whatif_section(load('whatif.json'), pickers)),
                 ('video-models', 'Video models', vdm_section(load('compare_vdm.json'), pickers)),
                 ('llm-vla', 'Language models and robot policy', others_section(load('compare_llm.json'), load('compare_vla.json'), pickers)),
                 ('twins', 'Real-room scans', twins_section(load('twins.json'), pickers)), ('dataset', 'Dataset', dataset_section(load('dataset.json'), pickers)),

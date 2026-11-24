@@ -160,6 +160,17 @@ table.props td b { color: var(--gen); }
 .mv-more { margin: 0.5rem 0.1rem 0; font-size: 0.84rem; }
 .mv-more > summary { cursor: pointer; font-weight: 600; color: var(--gen); margin-bottom: 0.3rem; }
 
+.wf { display: grid; gap: 0.7rem; }
+.wf-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: 0.7rem; align-items: stretch; }
+@media screen and (max-width: 900px) { .wf-row { grid-template-columns: 1fr; } }
+.wf-text { border-radius: 10px; padding: 0.8rem 0.9rem; background: var(--given-soft); font-size: 0.9rem; line-height: 1.45; }
+.wf-text.ref { background: var(--ref-soft); }
+.wf-text small { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--given); }
+.wf-text.ref small { color: var(--ref); }
+.wf-text b { display: block; font-size: 1rem; margin: 0.1rem 0 0.5rem; }
+.wf-text .oc { display: block; margin-top: 0.25rem; }
+.wf-text .oc i { font-style: normal; font-weight: 600; }
+
 /* ---------- Galleries ---------- */
 .gal-bar { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; justify-content: center; align-items: center; margin-bottom: 1.1rem; }
 .gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(540px, 100%), 1fr)); gap: 1rem; }
