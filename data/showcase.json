@@ -1,0 +1,6974 @@
+{
+ "schema": "showcase-1",
+ "variants": {
+  "reg": "NeuWorld+Reg",
+  "fm": "NeuWorld+FM",
+  "ddpm": "NeuWorld+DDPM"
+ },
+ "modes": {
+  "fwd": {
+   "title": "Forward",
+   "given": "scene graph, start state, every physical property, the action",
+   "generated": "the whole motion"
+  },
+  "unk100": {
+   "title": "Unknown properties",
+   "given": "scene graph, start state, the action; every mass, friction and restitution hidden",
+   "generated": "the whole motion and the hidden properties"
+  },
+  "prefix": {
+   "title": "Completion",
+   "given": "scene graph, properties, the action and the first part of the motion",
+   "generated": "the rest of the motion"
+  },
+  "bridge": {
+   "title": "Infilling",
+   "given": "scene graph, properties, the action, the start and the end of the motion",
+   "generated": "the middle of the motion"
+  },
+  "cause": {
+   "title": "Backward",
+   "given": "scene graph, properties, the start state (at rest) and the end state",
+   "generated": "the action and the whole motion"
+  },
+  "prop": {
+   "title": "Property inference",
+   "given": "scene graph, the action and the whole motion",
+   "generated": "mass, friction and restitution of every movable object"
+  }
+ },
+ "groups": [
+  "Falls, throws and flight",
+  "Slides, rolls and collisions",
+  "Toppling, towers and dominoes",
+  "Furniture and catching",
+  "Pendulums, springs and elastic parts",
+  "Mechanisms"
+ ],
+ "tile": {
+  "width": 960,
+  "height": 540,
+  "fps": 30
+ },
+ "notes": {
+  "models": "The three 200M NeuWorld variants at 150k updates; the answers use the test scoring settings (10 sampling steps, question seed 0).",
+  "spans": "For completion the first 30% of the motion is given; for infilling the first and the last 20%. These spans are fixed for the page; the test set draws them per simulation.",
+  "error": "error_m is the position error in metres on this simulation: the mean distance of the moving objects from PhysX over the generated frames.",
+  "render": "Colours and textures of the floor and walls are changed at render time only; the motion is the simulation's. A piece a model puts below the floor is lifted onto it.",
+  "overlay": "Arrow coordinates are normalised to the tile (0..1 from the top-left); arrows show direction only."
+ },
+ "records": [
+  {
+   "id": "ramp_spring_domino__r9__a2__factual",
+   "record_id": "ramp_spring_domino__r9/a2/factual",
+   "family": "ramp_spring_domino",
+   "family_title": "Ramp, spring and dominoes",
+   "group": "Mechanisms",
+   "description": "A gripper lets go of a ball at the top of a ramp. The ball rolls down, pushes a spring-mounted block and topples a row of tiles.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 23,
+   "duration_s": 6.0,
+   "moving_bodies": 8,
+   "physics": {
+    "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/physics.mp4",
+    "first": "static/media/showcase/ramp_spring_domino__r9__a2__factual/first.jpg",
+    "last": "static/media/showcase/ramp_spring_domino__r9__a2__factual/last.jpg",
+    "first_annotated": "static/media/showcase/ramp_spring_domino__r9__a2__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "ball",
+    "instruction": "release the ball at the top of the ramp"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.8108897112867888,
+       0.4425955979219477
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.8108897112867888,
+       0.4425955979219477
+      ],
+      "tip": null,
+      "label": "release at 0.70 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.6982421875
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      0.17560292065631009,
+      2.4993482563487217,
+      2.192171505282962
+     ],
+     "target": [
+      0.1756029206563099,
+      -0.8999999761581422,
+      0.3847059885572846
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/fwd__reg.mp4",
+       "error_m": 0.0215,
+       "final_error_m": 0.0368
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/unk100__reg.mp4",
+       "error_m": 0.0242,
+       "final_error_m": 0.0405,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.7333
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.7183
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.5476
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.523
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.571
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4936
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0668
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4069
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3293
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0728
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4293
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3071
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0718
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4638
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2725
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0716
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4485
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2901
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0696
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3371
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3766
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0726
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4817
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2647
+         }
+        }
+       ],
+       "properties_total": 8
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/prefix__reg.mp4",
+       "error_m": 0.0289,
+       "final_error_m": 0.0359
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/bridge__reg.mp4",
+       "error_m": 0.0228,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/bridge__fm.mp4",
+       "error_m": 0.0288,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/cause__reg.mp4",
+       "error_m": 0.0184,
+       "final_error_m": 0.0144,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 44.7 N from 0.30 s to 0.70 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.698,
+       "release_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "release at 0.75 s",
+      "object": "ball",
+      "kind": "release",
+      "text": "The gripper pulls with 43.3 N from 0.35 s to 0.75 s, then lets go."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.4789
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.6667
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.4981
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.5194
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5596
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.487
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0694
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4005
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3227
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0701
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4474
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2932
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0713
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4835
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2363
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0706
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4547
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2755
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0668
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3333
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.382
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0713
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.489
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2562
+         }
+        }
+       ],
+       "objects_total": 8
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.2382
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.849
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3887
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3006
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3525
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0716
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4994
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2518
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0684
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5026
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0689
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4971
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2518
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0689
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5005
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0709
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4537
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0666
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3181
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3809
+         }
+        }
+       ],
+       "objects_total": 8
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.3569
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8505
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3833
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2968
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3521
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0736
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5023
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0689
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5015
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2551
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0699
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5019
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2485
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0682
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3112
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3337
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0701
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.504
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0713
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3492
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4382
+         }
+        }
+       ],
+       "objects_total": 8
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "gravity_change__r3049__a4__factual",
+   "record_id": "gravity_change__r3049/a4/factual",
+   "family": "gravity_change",
+   "family_title": "Changing gravity",
+   "group": "Falls, throws and flight",
+   "description": "A gripper throws a ball, and gravity changes while it is in flight.",
+   "role": "modes",
+   "novelty": "new arrangement",
+   "furniture_pieces": 12,
+   "duration_s": 6.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/gravity_change__r3049__a4__factual/physics.mp4",
+    "first": "static/media/showcase/gravity_change__r3049__a4__factual/first.jpg",
+    "last": "static/media/showcase/gravity_change__r3049__a4__factual/last.jpg",
+    "first_annotated": "static/media/showcase/gravity_change__r3049__a4__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "throw, 2.0 N, 0.35 to 0.69 s, then let go",
+    "object": "ball",
+    "instruction": "throw"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.3679755257872578,
+       0.24914938781015844
+      ],
+      "tip": [
+       0.5478367290415742,
+       0.23658519394753263
+      ],
+      "label": "throw, 2.0 N, 0.35 to 0.69 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 1.9706059427930411,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.6916666626930237
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.3679755257872578,
+       0.24914938781015844
+      ],
+      "tip": [
+       0.5546921754896132,
+       -0.036024097119202514
+      ],
+      "label": "throw, 2.7 N, 0.19 to 0.42 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.6949077042000624,
+      "onset_s": 0.185546875,
+      "end_s": 0.4248046875
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.30183507502079054,
+      -3.123838873865613,
+      1.3955998164305454
+     ],
+     "target": [
+      -0.30183507502079016,
+      -0.9610000580043956,
+      0.7754157658422973
+     ],
+     "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/fwd__reg.mp4",
+       "error_m": 0.0237,
+       "final_error_m": 0.0327
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/unk100__reg.mp4",
+       "error_m": 0.0266,
+       "final_error_m": 0.0503,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 4.6044
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4615
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3019
+         }
+        }
+       ],
+       "properties_total": 1
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/prefix__reg.mp4",
+       "error_m": 0.0344,
+       "final_error_m": 0.0417
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/bridge__reg.mp4",
+       "error_m": 0.016,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/bridge__fm.mp4",
+       "error_m": 0.0309,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/cause__reg.mp4",
+       "error_m": 0.0158,
+       "final_error_m": 0.01,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 2.7 N from 0.19 s to 0.42 s, then lets go.",
+       "loop_closes": false,
+       "force_N": 2.69,
+       "force_true_N": 1.97,
+       "onset_s": 0.186,
+       "end_s": 0.425,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.692
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "throw, 2.0 N, 0.35 to 0.69 s, then let go",
+      "object": "ball",
+      "kind": "force",
+      "text": "The gripper pulls with 2.0 N from 0.35 s to 0.69 s, then lets go."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 3.398
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5304
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2403
+         }
+        }
+       ],
+       "objects_total": 1
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 3.7429
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5032
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        }
+       ],
+       "objects_total": 1
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 4.2382
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5011
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2462
+         }
+        }
+       ],
+       "objects_total": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "books_ball_catch__r1203__a1__factual",
+   "record_id": "books_ball_catch__r1203/a1/factual",
+   "family": "books_ball_catch",
+   "family_title": "Books and ball",
+   "group": "Furniture and catching",
+   "description": "A pusher tips the first of a row of books standing on a table. They fall one onto the next, and the last book knocks a ball off the table into a box.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 7,
+   "physics": {
+    "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/physics.mp4",
+    "first": "static/media/showcase/books_ball_catch__r1203__a1__factual/first.jpg",
+    "last": "static/media/showcase/books_ball_catch__r1203__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/books_ball_catch__r1203__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "push, 2.7 N, 0.35 to 0.75 s",
+    "object": "first book",
+    "instruction": "push the first book over"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.23991912011377609,
+       0.3270682950734378
+      ],
+      "tip": [
+       0.4199191201137761,
+       0.3270682950734378
+      ],
+      "label": "push, 2.7 N, 0.35 to 0.75 s",
+      "object": "first book",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.658254623413086,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.23991912011377609,
+       0.3270682950734378
+      ],
+      "tip": [
+       0.4109737213112021,
+       0.3294341457321662
+      ],
+      "label": "push, 2.5 N, 0.50 to 0.91 s",
+      "object": "first book",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.526224696275116,
+      "onset_s": 0.498046875,
+      "end_s": 0.908203125
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.058165868968018564,
+      -3.151818795229753,
+      1.2385393882111906
+     ],
+     "target": [
+      -0.05816586896801812,
+      -0.7486645553839567,
+      0.549445998668693
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/fwd__reg.mp4",
+       "error_m": 0.0172,
+       "final_error_m": 0.0152
+      },
+      "fm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/fwd__fm.mp4",
+       "error_m": 0.0213,
+       "final_error_m": 0.026
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/unk100__reg.mp4",
+       "error_m": 0.0366,
+       "final_error_m": 0.0444,
+       "properties": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2169
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5509
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1483
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2829
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.315
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.3288
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.249
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5509
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.152
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2372
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5467
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1534
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2542
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5452
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1512
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2464
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5512
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.149
+         }
+        }
+       ],
+       "properties_total": 6
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/prefix__reg.mp4",
+       "error_m": 0.0158,
+       "final_error_m": 0.0128
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.6
+      ]
+     ],
+     "generated_s": [
+      [
+       1.62,
+       5.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/bridge__reg.mp4",
+       "error_m": 0.0138,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/bridge__fm.mp4",
+       "error_m": 0.0145,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       4.02,
+       5.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.02,
+       4.0
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/cause__reg.mp4",
+       "error_m": 0.0207,
+       "final_error_m": 0.0085,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 2.5 N from 0.50 s to 0.91 s.",
+       "loop_closes": false,
+       "force_N": 2.53,
+       "force_true_N": 2.66,
+       "onset_s": 0.498,
+       "end_s": 0.908,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "true_action": {
+      "label": "push, 2.7 N, 0.35 to 0.75 s",
+      "object": "first book",
+      "kind": "force",
+      "text": "The tool pushes with 2.7 N from 0.35 s to 0.75 s."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2206
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5512
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.146
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2447
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.1168
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.1985
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2516
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5474
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.152
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2456
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5482
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1527
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2533
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5478
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.146
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2456
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5474
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1468
+         }
+        }
+       ],
+       "objects_total": 6
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2038
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5474
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1475
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2389
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.1213
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.1963
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2542
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.549
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1527
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2507
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5486
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1497
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2464
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5497
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1497
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.249
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.549
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1497
+         }
+        }
+       ],
+       "objects_total": 6
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.234
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5512
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1453
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2372
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.1198
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.2008
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2507
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5509
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.149
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2551
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5516
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1512
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2481
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5493
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1483
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2551
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5543
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.149
+         }
+        }
+       ],
+       "objects_total": 6
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "diving_board__r1__a1__factual",
+   "record_id": "diving_board__r1/a1/factual",
+   "family": "diving_board",
+   "family_title": "Springy board",
+   "group": "Pendulums, springs and elastic parts",
+   "description": "A gripper drops a ball onto the free end of a board made of spring-hinged segments. The board bends, and the ball bounces off it into a box.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 23,
+   "duration_s": 6.0,
+   "moving_bodies": 6,
+   "physics": {
+    "video": "static/media/showcase/diving_board__r1__a1__factual/physics.mp4",
+    "first": "static/media/showcase/diving_board__r1__a1__factual/first.jpg",
+    "last": "static/media/showcase/diving_board__r1__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/diving_board__r1__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "ball",
+    "instruction": "release the ball above the free end of the board"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.5818724955440606,
+       0.1798621590239023
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.5818724955440606,
+       0.1798621590239023
+      ],
+      "tip": null,
+      "label": "release at 0.76 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.7568359375
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      0.036544958577945916,
+      2.5124790444228857,
+      1.9919127757412163
+     ],
+     "target": [
+      0.03654495857794571,
+      -0.8999999761581422,
+      1.0134001625908704
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/fwd__reg.mp4",
+       "error_m": 0.015,
+       "final_error_m": 0.0297
+      },
+      "fm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/fwd__fm.mp4",
+       "error_m": 0.019,
+       "final_error_m": 0.022
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/unk100__reg.mp4",
+       "error_m": 0.0286,
+       "final_error_m": 0.075,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.8779
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4206
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3393
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1445
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5053
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2585
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1736
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3667
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3514
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1562
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.455
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2318
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1654
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3955
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3237
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.157
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4598
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3043
+         }
+        }
+       ],
+       "properties_total": 6
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/prefix__reg.mp4",
+       "error_m": 0.0179,
+       "final_error_m": 0.0312
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/bridge__reg.mp4",
+       "error_m": 0.013,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/bridge__fm.mp4",
+       "error_m": 0.0189,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/cause__reg.mp4",
+       "error_m": 0.0127,
+       "final_error_m": 0.008,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 9.9 N from 0.34 s to 0.76 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.757,
+       "release_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "release at 0.75 s",
+      "object": "ball",
+      "kind": "release",
+      "text": "The gripper pulls with 9.8 N from 0.35 s to 0.75 s, then lets go."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.854
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3955
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3257
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1347
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5197
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.234
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1721
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.356
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3613
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1483
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4607
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2267
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1637
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.429
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2744
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1578
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4666
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2958
+         }
+        }
+       ],
+       "objects_total": 6
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.9537
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.8505
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.6408
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1471
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5061
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1454
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5032
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.247
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1496
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5026
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1507
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.503
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1541
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3036
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3503
+         }
+        }
+       ],
+       "objects_total": 6
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.9406
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5212
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2592
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.144
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5061
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2466
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1463
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3036
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3455
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1476
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5015
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1476
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5011
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2503
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1454
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4515
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2684
+         }
+        }
+       ],
+       "objects_total": 6
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "carrying_cart__r2035__a0__factual",
+   "record_id": "carrying_cart__r2035/a0/factual",
+   "family": "carrying_cart",
+   "family_title": "Cart with cargo",
+   "group": "Slides, rolls and collisions",
+   "description": "A pusher shoves a wheeled cart that carries a loose block. The cart rolls into a buffer block and stops with its cargo still on board.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 13,
+   "duration_s": 6.0,
+   "moving_bodies": 8,
+   "physics": {
+    "video": "static/media/showcase/carrying_cart__r2035__a0__factual/physics.mp4",
+    "first": "static/media/showcase/carrying_cart__r2035__a0__factual/first.jpg",
+    "last": "static/media/showcase/carrying_cart__r2035__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/carrying_cart__r2035__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "push, 5.1 N, 0.35 to 0.75 s",
+    "object": "cart",
+    "instruction": "push"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.363809271565967,
+       0.5282950819082501
+      ],
+      "tip": [
+       0.543809271565967,
+       0.5282950819082501
+      ],
+      "label": "push, 5.1 N, 0.35 to 0.75 s",
+      "object": "cart",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 5.129873275756836,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.363809271565967,
+       0.5282950819082501
+      ],
+      "tip": [
+       0.5136104930365464,
+       0.5481051580395009
+      ],
+      "label": "push, 4.3 N, 0.52 to 0.79 s",
+      "object": "cart",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 4.281024583191499,
+      "onset_s": 0.517578125,
+      "end_s": 0.791015625
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.7859429728508044,
+      -3.1181094077337708,
+      0.9063716350999431
+     ],
+     "target": [
+      -0.785942972850804,
+      -0.9072075070756374,
+      0.2724057167208452
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0239,
+       "final_error_m": 0.0286
+      },
+      "fm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0265,
+       "final_error_m": 0.029
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/unk100__reg.mp4",
+       "error_m": 0.0447,
+       "final_error_m": 0.1155,
+       "properties": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 1.2746
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.6956
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.5876
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.4848
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4591
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3964
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0775
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8262
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6467
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0828
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4371
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3165
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.076
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4994
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.413
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0819
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3454
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3642
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.8193
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5672
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4515
+         }
+        }
+       ],
+       "properties_total": 7
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/prefix__reg.mp4",
+       "error_m": 0.0274,
+       "final_error_m": 0.0219
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/bridge__reg.mp4",
+       "error_m": 0.0263,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/bridge__fm.mp4",
+       "error_m": 0.0298,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/cause__reg.mp4",
+       "error_m": 0.0354,
+       "final_error_m": 0.0167,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 4.3 N from 0.52 s to 0.79 s.",
+       "loop_closes": false,
+       "force_N": 4.28,
+       "force_true_N": 5.13,
+       "onset_s": 0.518,
+       "end_s": 0.791,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "push, 5.1 N, 0.35 to 0.75 s",
+      "object": "cart",
+      "kind": "force",
+      "text": "The tool pushes with 5.1 N from 0.35 s to 0.75 s."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 1.0361
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3606
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4411
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.5761
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2938
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3483
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0839
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.7685
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.5964
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0825
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4479
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3099
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0755
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3781
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3723
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0836
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3515
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3557
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.8658
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.6196
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4825
+         }
+        }
+       ],
+       "objects_total": 7
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 0.9804
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3507
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4507
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.5451
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2991
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3371
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0829
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3051
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3532
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0823
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.312
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3644
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.082
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.846
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6482
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0775
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.4998
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.2477
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.797
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2945
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3435
+         }
+        }
+       ],
+       "objects_total": 7
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 0.9277
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3507
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4522
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.5451
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3089
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3131
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0794
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3378
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.4337
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0808
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.296
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3531
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0813
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.353
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.453
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0802
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.4958
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.7753
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2998
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3479
+         }
+        }
+       ],
+       "objects_total": 7
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "ramp_lever_projectile__r9__a0__factual",
+   "record_id": "ramp_lever_projectile__r9/a0/factual",
+   "family": "ramp_lever_projectile",
+   "family_title": "Ramp, lever and projectile",
+   "group": "Mechanisms",
+   "description": "A heavy ball is released at the top of a ramp, lands on one end of a lever and flings a small ball from the other end.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 25,
+   "duration_s": 6.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/physics.mp4",
+    "first": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/first.jpg",
+    "last": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "heavy ball",
+    "instruction": "release the heavy ball at the top of the ramp"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.8130888716951961,
+       0.37860755840465726
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "heavy ball",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.8130888716951961,
+       0.37860755840465726
+      ],
+      "tip": null,
+      "label": "release at 0.84 s",
+      "object": "heavy ball",
+      "scale_note": null,
+      "release_s": 0.83984375
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.11187028884887674,
+      2.5617188953928163,
+      1.4907294121356074
+     ],
+     "target": [
+      -0.11187028884887695,
+      -0.8988232099851272,
+      0.49843493119441173
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0197,
+       "final_error_m": 0.02
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0249,
+       "final_error_m": 0.0443
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0297,
+       "final_error_m": 0.0361
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/unk100__reg.mp4",
+       "error_m": 0.0297,
+       "final_error_m": 0.035,
+       "properties": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 2.0668
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3302
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3561
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3807
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.492
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2374
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.0476
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5087
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4737
+         }
+        }
+       ],
+       "properties_total": 3
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/prefix__reg.mp4",
+       "error_m": 0.0265,
+       "final_error_m": 0.0152
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/bridge__reg.mp4",
+       "error_m": 0.0229,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/bridge__fm.mp4",
+       "error_m": 0.0412,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/cause__reg.mp4",
+       "error_m": 0.0182,
+       "final_error_m": 0.0149,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 17.7 N from 0.31 s to 0.84 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.84,
+       "release_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "release at 0.75 s",
+      "object": "heavy ball",
+      "kind": "release",
+      "text": "The gripper pulls with 19.6 N from 0.35 s to 0.75 s, then lets go."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 2.0955
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3143
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.355
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3504
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5005
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.234
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.048
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4103
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4315
+         }
+        }
+       ],
+       "objects_total": 3
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 2.0105
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3029
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.359
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3968
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5053
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.247
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.0502
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3469
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4485
+         }
+        }
+       ],
+       "objects_total": 3
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 1.9025
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3067
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3609
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.4164
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2518
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.0502
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3469
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4478
+         }
+        }
+       ],
+       "objects_total": 3
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "trampoline__r4__a0__factual",
+   "record_id": "trampoline__r4/a0/factual",
+   "family": "trampoline",
+   "family_title": "Elastic net",
+   "group": "Pendulums, springs and elastic parts",
+   "description": "A gripper drops a block onto a net of sixteen spring-linked tiles. The net sags and bounces the block.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 25,
+   "duration_s": 5.0,
+   "moving_bodies": 17,
+   "physics": {
+    "video": "static/media/showcase/trampoline__r4__a0__factual/physics.mp4",
+    "first": "static/media/showcase/trampoline__r4__a0__factual/first.jpg",
+    "last": "static/media/showcase/trampoline__r4__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/trampoline__r4__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "block",
+    "instruction": "release the ball above the net"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.5002975945944157,
+       0.27387823019759927
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "block",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.5002975945944157,
+       0.27387823019759927
+      ],
+      "tip": null,
+      "label": "release at 1.00 s",
+      "object": "block",
+      "scale_note": null,
+      "release_s": 1.0009765625
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      1.5707120454809096,
+      -2.270013312151716,
+      2.210913993950217
+     ],
+     "target": [
+      -0.7997185959601536,
+      -0.9014445432203795,
+      0.755552149313957
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0288,
+       "final_error_m": 0.0313
+      },
+      "fm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0336,
+       "final_error_m": 0.0361
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/unk100__reg.mp4",
+       "error_m": 0.0285,
+       "final_error_m": 0.0276,
+       "properties": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 1.9829
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.7518
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.5757
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.02
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.394
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3783
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4009
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3812
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0215
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3792
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.382
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0214
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3648
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4215
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0209
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3765
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.409
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0208
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4487
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.467
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0218
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3781
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4182
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0217
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4892
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.5018
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3834
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.423
+         }
+        }
+       ],
+       "properties_total": 17
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/prefix__reg.mp4",
+       "error_m": 0.0321,
+       "final_error_m": 0.0307
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.6
+      ]
+     ],
+     "generated_s": [
+      [
+       1.62,
+       5.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/bridge__reg.mp4",
+       "error_m": 0.0319,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/bridge__fm.mp4",
+       "error_m": 0.0413,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       4.02,
+       5.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.02,
+       4.0
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/cause__reg.mp4",
+       "error_m": 0.0256,
+       "final_error_m": 0.0126,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 19.7 N from 0.45 s to 1.00 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 1.001,
+       "release_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "true_action": {
+      "label": "release at 0.75 s",
+      "object": "block",
+      "kind": "release",
+      "text": "The gripper pulls with 20.4 N from 0.35 s to 0.75 s, then lets go."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 2.0105
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8065
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6438
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0194
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3834
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3801
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0212
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4012
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3916
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0208
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3769
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3864
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0214
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3674
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4241
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0191
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3788
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3934
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0215
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4149
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4507
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0218
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3686
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4212
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4986
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4907
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0197
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3781
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4167
+         }
+        }
+       ],
+       "objects_total": 17
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 1.9289
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8566
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0208
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3515
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.4441
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3135
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3831
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0202
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.353
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4478
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0194
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.849
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6453
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.296
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3401
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0205
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.356
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4507
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0211
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3515
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.447
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3515
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4463
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0205
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3462
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4434
+         }
+        }
+       ],
+       "objects_total": 17
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 1.8764
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8414
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6497
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0197
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.453
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3135
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3875
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0202
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3469
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4485
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.8475
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6497
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.2945
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3479
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0205
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3477
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.45
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0212
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3492
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.447
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4522
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0202
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3462
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.45
+         }
+        }
+       ],
+       "objects_total": 17
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "pendulum_jenga__r3079__a5__factual",
+   "record_id": "pendulum_jenga__r3079/a5/factual",
+   "family": "pendulum_jenga",
+   "family_title": "Pendulum and tower",
+   "group": "Toppling, towers and dominoes",
+   "description": "A pendulum is released and swings into a tower of loose blocks.",
+   "role": "modes",
+   "novelty": "new arrangement",
+   "furniture_pieces": 12,
+   "duration_s": 6.0,
+   "moving_bodies": 16,
+   "physics": {
+    "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/physics.mp4",
+    "first": "static/media/showcase/pendulum_jenga__r3079__a5__factual/first.jpg",
+    "last": "static/media/showcase/pendulum_jenga__r3079__a5__factual/last.jpg",
+    "first_annotated": "static/media/showcase/pendulum_jenga__r3079__a5__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "none",
+    "label": "release the pendulum",
+    "object": "pendulum bob",
+    "instruction": "release the pendulum"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.7398856838697356,
+       0.5120408591617961
+      ],
+      "tip": null,
+      "label": "release the pendulum",
+      "object": "pendulum bob",
+      "scale_note": null
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.7398856838697356,
+       0.5120408591617961
+      ],
+      "tip": null,
+      "label": "no applied action",
+      "object": "pendulum bob",
+      "scale_note": null
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.5709514370930691,
+      2.6883526649573444,
+      2.088102324940503
+     ],
+     "target": [
+      -0.5709514370930693,
+      -0.8683156100144307,
+      1.0682441084176075
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/fwd__reg.mp4",
+       "error_m": 0.0218,
+       "final_error_m": 0.0371
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/unk100__reg.mp4",
+       "error_m": 0.025,
+       "final_error_m": 0.0508,
+       "properties": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.8193
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4231
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3775
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0621
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4001
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3775
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0624
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4765
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2836
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0562
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5281
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3342
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0592
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3568
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3748
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0596
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.402
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3182
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0619
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4789
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2747
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.057
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5748
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3537
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.059
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4449
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.327
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0615
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4467
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2867
+         }
+        }
+       ],
+       "properties_total": 16
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/prefix__reg.mp4",
+       "error_m": 0.0187,
+       "final_error_m": 0.0313
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.8
+      ]
+     ],
+     "generated_s": [
+      [
+       1.82,
+       6.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/bridge__reg.mp4",
+       "error_m": 0.0182,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/bridge__fm.mp4",
+       "error_m": 0.0189,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ],
+      [
+       4.82,
+       6.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.8
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/cause__reg.mp4",
+       "error_m": 0.0178,
+       "final_error_m": 0.0142,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "no action",
+       "loop_closes": false
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ],
+     "true_action": {
+      "label": "release the pendulum",
+      "object": "pendulum bob",
+      "kind": "none",
+      "text": "no action"
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.9406
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4111
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3834
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0621
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3986
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3775
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.06
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4873
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2651
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0554
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4973
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3045
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.059
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3576
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3831
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0572
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4195
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.306
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0607
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4857
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2762
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0574
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5418
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3163
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0607
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4301
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3259
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0604
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4371
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2995
+         }
+        }
+       ],
+       "objects_total": 16
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.8081
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2945
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3528
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0592
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3302
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4097
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0607
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5005
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2514
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0594
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5019
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0596
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.5036
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.06
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5019
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2477
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.06
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5002
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2488
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5007
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2525
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0604
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4983
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0592
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3469
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4493
+         }
+        }
+       ],
+       "objects_total": 16
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.8193
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5004
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2466
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0615
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3355
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4156
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0602
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4998
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.059
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5015
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2492
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.2991
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3483
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0607
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5011
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.059
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4981
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2481
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0584
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5017
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2485
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0619
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4884
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2525
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0596
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4567
+         }
+        }
+       ],
+       "objects_total": 16
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "catapult__r109__a2__factual",
+   "record_id": "catapult__r109/a2/factual",
+   "family": "catapult",
+   "family_title": "Catapult",
+   "group": "Mechanisms",
+   "description": "A pusher knocks the trigger of a loaded catapult, whose arm throws a ball across the room.",
+   "role": "modes",
+   "novelty": "new arrangement",
+   "furniture_pieces": 0,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/catapult__r109__a2__factual/physics.mp4",
+    "first": "static/media/showcase/catapult__r109__a2__factual/first.jpg",
+    "last": "static/media/showcase/catapult__r109__a2__factual/last.jpg",
+    "first_annotated": "static/media/showcase/catapult__r109__a2__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "pull, 9.6 N, 0.45 to 0.85 s",
+    "object": "catapult arm",
+    "instruction": "pull the trigger pin"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.3181820141833904,
+       0.5231379013154949
+      ],
+      "tip": [
+       0.3627159523678956,
+       0.39829959750884314
+      ],
+      "label": "pull, 9.6 N, 0.45 to 0.85 s",
+      "object": "catapult arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 9.642809867858887,
+      "onset_s": 0.45000001788139343,
+      "end_s": 0.8500000238418579
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.3181820141833904,
+       0.5231379013154949
+      ],
+      "tip": [
+       0.34862179192237935,
+       0.40546320451430623
+      ],
+      "label": "pull, 7.2 N, 0.46 to 0.91 s",
+      "object": "catapult arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 7.167127313682289,
+      "onset_s": 0.458984375,
+      "end_s": 0.9130859375
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -1.5952943676512306,
+      3.0973623214635104,
+      1.7554489571999368
+     ],
+     "target": [
+      -1.5952943676512308,
+      -0.9879998862743378,
+      0.5839901949776922
+     ],
+     "focal_mm": 20.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/fwd__reg.mp4",
+       "error_m": 0.0416,
+       "final_error_m": 0.0234
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/unk100__reg.mp4",
+       "error_m": 0.0801,
+       "final_error_m": 0.0545,
+       "properties": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.5643
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3059
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3324
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.4949
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.808
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.5994
+         }
+        }
+       ],
+       "properties_total": 2
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/prefix__reg.mp4",
+       "error_m": 0.0246,
+       "final_error_m": 0.0126
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.6
+      ]
+     ],
+     "generated_s": [
+      [
+       1.62,
+       5.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/bridge__reg.mp4",
+       "error_m": 0.0402,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/bridge__fm.mp4",
+       "error_m": 0.0397,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       4.02,
+       5.0
+      ]
+     ],
+     "generated_s": [
+      [
+       1.02,
+       4.0
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/cause__reg.mp4",
+       "error_m": 0.0373,
+       "final_error_m": 0.0285,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 7.2 N from 0.46 s to 0.91 s.",
+       "loop_closes": false,
+       "force_N": 7.17,
+       "force_true_N": 9.64,
+       "onset_s": 0.459,
+       "end_s": 0.913,
+       "onset_true_s": 0.45,
+       "end_true_s": 0.85
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "true_action": {
+      "label": "pull, 9.6 N, 0.45 to 0.85 s",
+      "object": "catapult arm",
+      "kind": "force",
+      "text": "The tool pushes with 9.6 N from 0.45 s to 0.85 s."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.5801
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3165
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3472
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.5451
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4517
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3079
+         }
+        }
+       ],
+       "objects_total": 2
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.5882
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.846
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.6482
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.5018
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.808
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.1801
+         }
+        }
+       ],
+       "objects_total": 2
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.6216
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3363
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4245
+         }
+        },
+        {
+         "object": "cargo",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.5053
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5269
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.24
+         }
+        }
+       ],
+       "objects_total": 2
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "hinge_slider__r15__a0__factual",
+   "record_id": "hinge_slider__r15/a0/factual",
+   "family": "hinge_slider",
+   "family_title": "Slider on a guide",
+   "group": "Mechanisms",
+   "description": "A pusher drives a block along its guide rail.",
+   "role": "modes",
+   "novelty": "new room",
+   "furniture_pieces": 13,
+   "duration_s": 4.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/hinge_slider__r15__a0__factual/physics.mp4",
+    "first": "static/media/showcase/hinge_slider__r15__a0__factual/first.jpg",
+    "last": "static/media/showcase/hinge_slider__r15__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/hinge_slider__r15__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "push, 2.5 N, 0.35 to 0.75 s",
+    "object": "sliding block",
+    "instruction": "push the block along its guide"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.3944197285103953,
+       0.5207607581695517
+      ],
+      "tip": [
+       0.5744197285103954,
+       0.5207607581695517
+      ],
+      "label": "push, 2.5 N, 0.35 to 0.75 s",
+      "object": "sliding block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.5292422771453857,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ],
+    "reg": [
+     {
+      "point": [
+       0.3944197285103953,
+       0.5207607581695517
+      ],
+      "tip": [
+       0.6017032594906009,
+       0.5260043699500766
+      ],
+      "label": "push, 2.9 N, 0.32 to 0.86 s",
+      "object": "sliding block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.912907464781915,
+      "onset_s": 0.32470703125,
+      "end_s": 0.8642578125
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.5827305525541311,
+      -3.158964961613191,
+      0.9227477861699479
+     ],
+     "target": [
+      -0.5827305525541306,
+      -0.8999999761581421,
+      0.275
+     ],
+     "focal_mm": 24.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0082,
+       "final_error_m": 0.0138
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ]
+    },
+    "unk100": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/unk100__reg.mp4",
+       "error_m": 0.0215,
+       "final_error_m": 0.0459,
+       "properties": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 0.967
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5831
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4544
+         }
+        }
+       ],
+       "properties_total": 1
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ]
+    },
+    "prefix": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/prefix__reg.mp4",
+       "error_m": 0.0117,
+       "final_error_m": 0.0252
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       1.2
+      ]
+     ],
+     "generated_s": [
+      [
+       1.22,
+       4.0
+      ]
+     ]
+    },
+    "bridge": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/bridge__reg.mp4",
+       "error_m": 0.0116,
+       "final_error_m": null
+      },
+      "fm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/bridge__fm.mp4",
+       "error_m": 0.0168,
+       "final_error_m": null
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.8
+      ],
+      [
+       3.22,
+       4.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.82,
+       3.2
+      ]
+     ]
+    },
+    "cause": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/cause__reg.mp4",
+       "error_m": 0.0198,
+       "final_error_m": 0.0091,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 2.9 N from 0.32 s to 0.86 s.",
+       "loop_closes": false,
+       "force_N": 2.91,
+       "force_true_N": 2.53,
+       "onset_s": 0.325,
+       "end_s": 0.864,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ],
+     "true_action": {
+      "label": "push, 2.5 N, 0.35 to 0.75 s",
+      "object": "sliding block",
+      "kind": "force",
+      "text": "The tool pushes with 2.5 N from 0.35 s to 0.75 s."
+     }
+    },
+    "prop": {
+     "variants": {
+      "reg": {
+       "objects": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 1.1102
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5243
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4086
+         }
+        }
+       ],
+       "objects_total": 1
+      },
+      "fm": {
+       "objects": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 1.095
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.4225
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.1638
+         }
+        }
+       ],
+       "objects_total": 1
+      },
+      "ddpm": {
+       "objects": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 0.9537
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3507
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.1431
+         }
+        }
+       ],
+       "objects_total": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "rubble__r2117__a5__factual",
+   "record_id": "rubble__r2117/a5/factual",
+   "family": "rubble",
+   "family_title": "Rubble pile",
+   "group": "Toppling, towers and dominoes",
+   "description": "A gripper pulls the support block out from under two columns of blocks that carry a beam. The pile comes down.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 4.0,
+   "moving_bodies": 10,
+   "physics": {
+    "video": "static/media/showcase/rubble__r2117__a5__factual/physics.mp4",
+    "first": "static/media/showcase/rubble__r2117__a5__factual/first.jpg",
+    "last": "static/media/showcase/rubble__r2117__a5__factual/last.jpg",
+    "first_annotated": "static/media/showcase/rubble__r2117__a5__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "pull, 19.0 N, 0.25 to 1.10 s, then let go",
+    "object": "support block",
+    "instruction": "pull the support block out"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.7610952527306434,
+       0.6033795272826029
+      ],
+      "tip": [
+       0.6389242874983523,
+       0.4843513525955588
+      ],
+      "label": "pull, 19.0 N, 0.25 to 1.10 s, then let go",
+      "object": "support block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 19.03755958975647,
+      "onset_s": 0.25,
+      "end_s": 1.100000023841858
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      1.179555591547979,
+      3.1520094349800347,
+      1.7735479173065336
+     ],
+     "target": [
+      1.1795555915479787,
+      -0.9333527727578135,
+      0.602089155084289
+     ],
+     "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/rubble__r2117__a5__factual/fwd__reg.mp4",
+       "error_m": 0.0255,
+       "final_error_m": 0.0244
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "chair_spill__r11__a2__factual",
+   "record_id": "chair_spill__r11/a2/factual",
+   "family": "chair_spill",
+   "family_title": "Loaded chair",
+   "group": "Furniture and catching",
+   "description": "A chair with a ball on its seat is tipped over. The chair falls and the ball rolls away.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/chair_spill__r11__a2__factual/physics.mp4",
+    "first": "static/media/showcase/chair_spill__r11__a2__factual/first.jpg",
+    "last": "static/media/showcase/chair_spill__r11__a2__factual/last.jpg",
+    "first_annotated": "static/media/showcase/chair_spill__r11__a2__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "launch",
+    "label": "tip, 0.7 m/s, spin 3.9 rad/s",
+    "object": "chair",
+    "instruction": "tip the loaded chair"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.7632407227666153,
+       0.5311866887901977
+      ],
+      "tip": [
+       0.5897835571621832,
+       0.5354130968029842
+      ],
+      "label": "tip, 0.7 m/s, spin 3.9 rad/s",
+      "object": "chair",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "speed_m_s": 0.7081957100645033
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      0.8933648018378562,
+      2.45269104758317,
+      2.286374170750765
+     ],
+     "target": [
+      0.8933648018378559,
+      -0.8583624256378014,
+      0.5258558103036769
+     ],
+     "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/chair_spill__r11__a2__factual/fwd__reg.mp4",
+       "error_m": 0.0335,
+       "final_error_m": 0.0681
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "pulley__r3009__a0__factual",
+   "record_id": "pulley__r3009/a0/factual",
+   "family": "pulley",
+   "family_title": "Pulleys",
+   "group": "Mechanisms",
+   "description": "Loads hanging from ropes over guided pulleys are released, and the heavier side pulls the rope links over.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 6.0,
+   "moving_bodies": 33,
+   "physics": {
+    "video": "static/media/showcase/pulley__r3009__a0__factual/physics.mp4",
+    "first": "static/media/showcase/pulley__r3009__a0__factual/first.jpg",
+    "last": "static/media/showcase/pulley__r3009__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/pulley__r3009__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "none",
+    "label": "release the guided pulley loads",
+    "object": "load",
+    "instruction": "release the guided pulley loads"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.4602042121398166,
+       0.660399432602821
+      ],
+      "tip": null,
+      "label": "release the guided pulley loads",
+      "object": "load",
+      "scale_note": null
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.8000000119209288,
+      2.8969837227982116,
+      2.241363544159486
+     ],
+     "target": [
+      -0.8000000119209291,
+      -0.8999999761581421,
+      1.1525959886823411
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/pulley__r3009__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0256,
+       "final_error_m": 0.0244
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "sliding__r2036__a5__factual",
+   "record_id": "sliding__r2036/a5/factual",
+   "family": "sliding",
+   "family_title": "Sliding block",
+   "group": "Slides, rolls and collisions",
+   "description": "A pusher shoves a block, which slides across the floor until friction stops it.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 4.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/sliding__r2036__a5__factual/physics.mp4",
+    "first": "static/media/showcase/sliding__r2036__a5__factual/first.jpg",
+    "last": "static/media/showcase/sliding__r2036__a5__factual/last.jpg",
+    "first_annotated": "static/media/showcase/sliding__r2036__a5__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "push, 33.1 N, 0.35 to 0.75 s",
+    "object": "block",
+    "instruction": "push"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.27806406119887367,
+       0.5657576297444611
+      ],
+      "tip": [
+       0.45806406119887366,
+       0.5657576297444611
+      ],
+      "label": "push, 33.1 N, 0.35 to 0.75 s",
+      "object": "block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 33.12179183959961,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.8255109958233935,
+      -2.9100192619022938,
+      0.7710142333715436
+     ],
+     "target": [
+      -0.8255109958233932,
+      -0.8913697004318237,
+      0.19217578615584516
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/sliding__r2036__a5__factual/fwd__reg.mp4",
+       "error_m": 0.0401,
+       "final_error_m": 0.0497
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "chair_push_table__r2077__a1__factual",
+   "record_id": "chair_push_table__r2077/a1/factual",
+   "family": "chair_push_table",
+   "family_title": "Armchair and table",
+   "group": "Furniture and catching",
+   "description": "A pusher shoves an armchair into a table.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/chair_push_table__r2077__a1__factual/physics.mp4",
+    "first": "static/media/showcase/chair_push_table__r2077__a1__factual/first.jpg",
+    "last": "static/media/showcase/chair_push_table__r2077__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/chair_push_table__r2077__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "push, 202.0 N, 0.35 to 0.75 s",
+    "object": "armchair",
+    "instruction": "push the armchair into the table"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.7051063818459233,
+       0.530638705200596
+      ],
+      "tip": [
+       0.5251063818459234,
+       0.530638705200596
+      ],
+      "label": "push, 202.0 N, 0.35 to 0.75 s",
+      "object": "armchair",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 202.02117919921875,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.25286691584489407,
+      2.5512498555008354,
+      1.4347526739303995
+     ],
+     "target": [
+      -0.2528669158448943,
+      -0.909292249877108,
+      0.4424581929892039
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/chair_push_table__r2077__a1__factual/fwd__reg.mp4",
+       "error_m": 0.0182,
+       "final_error_m": 0.0204
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "lever__r57__a5__factual",
+   "record_id": "lever__r57/a5/factual",
+   "family": "lever",
+   "family_title": "Lever",
+   "group": "Mechanisms",
+   "description": "A gripper presses one arm of a lever down, which throws the object resting on the other arm.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/lever__r57__a5__factual/physics.mp4",
+    "first": "static/media/showcase/lever__r57__a5__factual/first.jpg",
+    "last": "static/media/showcase/lever__r57__a5__factual/last.jpg",
+    "first_annotated": "static/media/showcase/lever__r57__a5__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "press, 15.6 N, 0.35 to 0.75 s",
+    "object": "lever arm",
+    "instruction": "press the lever arm down"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.29828373467331815,
+       0.6305573968990041
+      ],
+      "tip": [
+       0.3122638144658783,
+       0.949590788209601
+      ],
+      "label": "press, 15.6 N, 0.35 to 0.75 s",
+      "object": "lever arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 15.57463550567627,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -1.9410478049363677,
+      3.137299146782791,
+      2.1398376245854096
+     ],
+     "target": [
+      -1.941047804936368,
+      -0.8999999761581422,
+      0.9821607301540148
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/lever__r57__a5__factual/fwd__reg.mp4",
+       "error_m": 0.0271,
+       "final_error_m": 0.0262
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "rolling_race__r3076__a0__factual",
+   "record_id": "rolling_race__r3076/a0/factual",
+   "family": "rolling_race",
+   "family_title": "Rolling race",
+   "group": "Slides, rolls and collisions",
+   "description": "Three round bodies are released together at the top of a ramp and race down.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/rolling_race__r3076__a0__factual/physics.mp4",
+    "first": "static/media/showcase/rolling_race__r3076__a0__factual/first.jpg",
+    "last": "static/media/showcase/rolling_race__r3076__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/rolling_race__r3076__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "none",
+    "label": "release the three racers together",
+    "object": "racers",
+    "instruction": "release the three racers together"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.17126636542167606,
+       0.5929476681879815
+      ],
+      "tip": null,
+      "label": "release the three racers together",
+      "object": "racers",
+      "scale_note": null
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.28019784980748225,
+      -2.857564472758984,
+      0.8620677306150786
+     ],
+     "target": [
+      -0.28019784980748186,
+      -0.6947256568977664,
+      0.24188368002683042
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/rolling_race__r3076__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0362,
+       "final_error_m": 0.0603
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "crate_drop_table__r3071__a3__factual",
+   "record_id": "crate_drop_table__r3071/a3/factual",
+   "family": "crate_drop_table",
+   "family_title": "Crate onto a table",
+   "group": "Furniture and catching",
+   "description": "A crate is released above a table and lands on it.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/crate_drop_table__r3071__a3__factual/physics.mp4",
+    "first": "static/media/showcase/crate_drop_table__r3071__a3__factual/first.jpg",
+    "last": "static/media/showcase/crate_drop_table__r3071__a3__factual/last.jpg",
+    "first_annotated": "static/media/showcase/crate_drop_table__r3071__a3__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "none",
+    "label": "release the crate above the table",
+    "object": "crate",
+    "instruction": "release the crate above the table"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.5000005918445879,
+       0.3214453324551027
+      ],
+      "tip": null,
+      "label": "release the crate above the table",
+      "object": "crate",
+      "scale_note": null
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -2.896335658424395,
+      -2.324030852612878,
+      2.363136286830297
+     ],
+     "target": [
+      -0.39890451332190674,
+      -0.8821383087054007,
+      1.5362242193793005
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/crate_drop_table__r3071__a3__factual/fwd__reg.mp4",
+       "error_m": 0.0154,
+       "final_error_m": 0.0199
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "double_pendulum__r3003__a3__factual",
+   "record_id": "double_pendulum__r3003/a3/factual",
+   "family": "double_pendulum",
+   "family_title": "Double pendulum",
+   "group": "Pendulums, springs and elastic parts",
+   "description": "A double pendulum is set swinging.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 6.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/double_pendulum__r3003__a3__factual/physics.mp4",
+    "first": "static/media/showcase/double_pendulum__r3003__a3__factual/first.jpg",
+    "last": "static/media/showcase/double_pendulum__r3003__a3__factual/last.jpg",
+    "first_annotated": "static/media/showcase/double_pendulum__r3003__a3__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "launch",
+    "label": "swing, 1.7 m/s",
+    "object": "pendulum",
+    "instruction": "swing"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.4992790829785476,
+       0.6801690255741727
+      ],
+      "tip": [
+       0.6792764341181419,
+       0.6819050533189188
+      ],
+      "label": "swing, 1.7 m/s",
+      "object": "pendulum",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "speed_m_s": 1.7418929735771067
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.7978896796703343,
+      -2.966748206398459,
+      1.6012522894652428
+     ],
+     "target": [
+      -0.797889679670334,
+      -0.900035560131073,
+      1.0086319744586945
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/double_pendulum__r3003__a3__factual/fwd__reg.mp4",
+       "error_m": 0.0374,
+       "final_error_m": 0.0267
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       8.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "drag_wind__r3017__a3__factual",
+   "record_id": "drag_wind__r3017/a3/factual",
+   "family": "drag_wind",
+   "family_title": "Air drag",
+   "group": "Falls, throws and flight",
+   "description": "A light sheet is released above a ball, and air drag slows its fall.",
+   "role": "forward",
+   "novelty": "new structure",
+   "furniture_pieces": 12,
+   "duration_s": 6.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/drag_wind__r3017__a3__factual/physics.mp4",
+    "first": "static/media/showcase/drag_wind__r3017__a3__factual/first.jpg",
+    "last": "static/media/showcase/drag_wind__r3017__a3__factual/last.jpg",
+    "first_annotated": "static/media/showcase/drag_wind__r3017__a3__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "sheet",
+    "instruction": "release the sheet above the ball"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.4992411412675471,
+       0.18118288694292528
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "sheet",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      2.4480444473757315,
+      -2.771066572637447,
+      2.1033508162164267
+     ],
+     "target": [
+      -0.7986160412575012,
+      -0.8966062655577263,
+      1.0283651285301316
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/drag_wind__r3017__a3__factual/fwd__reg.mp4",
+       "error_m": 0.0171,
+       "final_error_m": 0.0199
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "slip_roll__r2007__a1__factual",
+   "record_id": "slip_roll__r2007/a1/factual",
+   "family": "slip_roll",
+   "family_title": "Slipping to rolling",
+   "group": "Slides, rolls and collisions",
+   "description": "A ball is set down spinning. It slips on the floor at first and then rolls.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 0,
+   "duration_s": 5.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/slip_roll__r2007__a1__factual/physics.mp4",
+    "first": "static/media/showcase/slip_roll__r2007__a1__factual/first.jpg",
+    "last": "static/media/showcase/slip_roll__r2007__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/slip_roll__r2007__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "spin, 6.2 N, 0.35 to 0.75 s, then let go",
+    "object": "ball",
+    "instruction": "spin"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.2735167832708383,
+       0.5310766505826222
+      ],
+      "tip": [
+       0.3073088634575344,
+       0.21676626688986972
+      ],
+      "label": "spin, 6.2 N, 0.35 to 0.75 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 6.213052490636046,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "sage green",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.3282058395237577,
+      -3.1208284051615767,
+      0.9358261531800092
+     ],
+     "target": [
+      -0.3282058395237573,
+      -0.9579895893003594,
+      0.315642102591761
+     ],
+     "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/slip_roll__r2007__a1__factual/fwd__reg.mp4",
+       "error_m": 0.0177,
+       "final_error_m": 0.0508
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  }
+ ]
+}

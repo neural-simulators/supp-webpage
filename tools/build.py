@@ -72,7 +72,57 @@ MODE_INFO = {
                  'what': 'NeuWorld is given only <b class="g">the start state and the end state</b>. It <b class="o">generates the action and the motion</b> that connect them.',
                  'given_short': 'start state and end state', 'gen_short': 'the action and the motion'},
 }
-MODE_ORDER = ['forward', 'unknown', 'completion', 'infilling', 'backward']
+MODE_INFO['property'] = {'label': 'Property inference', 'props': 'gen', 'action': 'given', 'motion': 'given', 'given_view': 'clip', 'output': 'values',
+                         'what': 'NeuWorld observes <b class="g">the whole motion</b> and <b class="g">the action</b>. It <b class="o">infers the mass, friction and restitution</b> of every movable object.',
+                         'given_short': 'the action and the whole motion', 'gen_short': 'the physical properties'}
+MODE_ORDER = ['forward', 'unknown', 'completion', 'infilling', 'backward', 'property']
+SHOW_MODES = {'fwd': 'forward', 'unk100': 'unknown', 'prefix': 'completion', 'bridge': 'infilling', 'cause': 'backward', 'prop': 'property'}
+
+
+def props_table(rows, total):
+    def cell(v, unit=''):
+        t, x = v['true'], v['estimate']
+        return f'<td><b>{x:.3g}</b>{unit}</td><td class="tr">{t:.3g}{unit}</td>'
+    body = ''.join(f'<tr><td>{e(r["object"])}</td>{cell(r["mass_kg"])}{cell(r["friction"])}{cell(r["restitution"])}</tr>' for r in rows)
+    more = f'<p class="sp-note">{len(rows)} of {total} movable objects shown.</p>' if total and total > len(rows) else ''
+    return ('<table class="props"><thead><tr><th rowspan="2">Object</th><th colspan="2">Mass (kg)</th><th colspan="2">Friction</th><th colspan="2">Restitution</th></tr>'
+            '<tr><th>inferred</th><th class="tr">true</th><th>inferred</th><th class="tr">true</th><th>inferred</th><th class="tr">true</th></tr></thead><tbody>' + body + '</tbody></table>' + more)
+
+
+def showcase_scenes(sc):
+    scenes = []
+    for r in sc['records']:
+        if r.get('role') != 'modes':
+            continue
+        ph = r['physics']; T = r['duration_s']; ov = r.get('action_overlay') or {}
+        scene = {'id': r['id'], 'title': r['family_title'], 'short': r['family_title'], 'caption': f"{r['description']} Test scene ({r['novelty']}), {r['furniture_pieces']} pieces of furniture." if r.get('furniture_pieces') else f"{r['description']} Test scene ({r['novelty']}).",
+                 'action_overlay': ov, 'modes': {}}
+        for key, m in r['modes'].items():
+            name = SHOW_MODES.get(key)
+            if not name or not m.get('variants'):
+                continue
+            out = {'seconds': T, 'physics': ph['video'], 'first': ph['first'], 'last': ph['last'], 'action_given': r['action']['label']}
+            if name == 'property':
+                out['variants'] = {v: {} for v in m['variants']}
+                out['values_html'] = {v: props_table(x['objects'], x.get('objects_total')) for v, x in m['variants'].items()}
+            else:
+                out['variants'] = {v: {'video': x['video'], 'error_m': x.get('error_m')} for v, x in m['variants'].items()}
+                below = {v: props_table(x['properties'], x.get('properties_total')) for v, x in m['variants'].items() if x.get('properties')}
+                if below:
+                    out['values_below'] = below
+            if name in ('completion', 'infilling'):
+                out['given'] = m.get('given_s') or []
+            if name == 'backward':
+                out['given'] = [[0, .06], [T-.06, T]]
+                ta = m.get('true_action') or {}
+                out['action'] = {'true': ta.get('text') or ta.get('label') or r['action']['label'], **{v: x.get('action_text') for v, x in m['variants'].items() if x.get('action_text')}}
+            scene['modes'][name] = out
+        if scene['modes']:
+            scenes.append(scene)
+    return scenes
+
+
+
 
 
 def e(s):
@@ -152,30 +202,42 @@ def modes_data(v1, showcase):
                 r = fwd[sid]; title, caption = V1_TEXT[sid]
                 s = scenes.setdefault(sid, {'id': sid, 'title': title, 'short': title, 'caption': caption + ' ' + note_of(r).capitalize() + '.', 'modes': {}})
                 s['modes']['forward'] = {'seconds': r['seconds'], 'physics': r['physics'], 'first': r['first'], 'last': r['last'], 'variants': r['variants']}
-    order = [m for m in MODE_ORDER if any(m in s['modes'] for s in scenes.values())]
     rank = {sid: i for i, sid in enumerate(['ramp_spring_domino__r9', 'launcher_tower__r112', 'books_ball_catch__r1077', 'pendulum_jenga__r43', *sum(V1_MODES.values(), [])])}
     ordered = sorted(scenes.values(), key=lambda s: rank.get(s['id'], 99))
-    return {'order': order, 'info': MODE_INFO, 'default_variant': 'reg', 'scenes': ordered} if scenes else None
+    if showcase:
+        new = showcase_scenes(showcase)
+        ordered = new if len(new) >= 6 else new + ordered            # the first-version clips step aside once enough re-rendered scenes exist
+        scenes = {s['id']: s for s in ordered}
+    order = [m for m in MODE_ORDER if any(m in s['modes'] for s in ordered)]
+    return {'order': order, 'info': MODE_INFO, 'default_variant': 'reg', 'scenes': ordered} if ordered else None
 
 
-def modes_section(md):
+def modes_section(md, showcase=None):
     if not md:
         return ''
-    return '''<section class="section sp-section sp-band" id="modes"><div class="sp-container sp-wide">
+    spans = ' For completion, the first 30% of the motion is given; for infilling, the first and the last 20%.' if showcase else ''
+    return f'''<section class="section sp-section sp-band" id="modes"><div class="sp-container sp-wide">
 <h2 class="title is-3 has-text-centered">One network, several inference modes</h2>
 <p class="sp-lead">The modes differ only in which tokens are hidden. Pick a mode to see what NeuWorld is given (blue), what it generates (magenta), and the PhysX simulation
 of the same scene, which the model never sees. The bar under <i>Motion</i> marks the given and the generated part of the trajectory, with the current time.</p>
 <div class="mv" id="mode-viewer"></div>
 <p class="sp-note" style="margin-top:0.8rem">The same weights answer every mode. Switch between the three variants of NeuWorld (regression, flow matching, diffusion) with the buttons on the right.
-In completion and infilling, the generated clip also shows the given frames, with a blue outline while a frame is copied from the input and a magenta outline while it is generated.</p>
+In completion and infilling, the generated clip also shows the given frames, with a blue outline while a frame is copied from the input and a magenta outline while it is generated.{spans}</p>
 </div></section>'''
 
 
-def forward_section(v1):
-    if not v1:
+def forward_section(v1, showcase=None):
+    if not v1 and not showcase:
         return ''
-    rows = {short_id(r): r for r in v1['forward']}; cards = []; used = []
-    for sid in V1_FORWARD:
+    rows = {short_id(r): r for r in (v1 or {'forward': []})['forward']}; cards = []; used = []
+    recs = [r for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg')]
+    for r in recs:
+        f = r['modes']['fwd']['variants']; group = r['group']; used.append(group); ph = r['physics']
+        variants = {k: v['video'] for k, v in f.items()}; errs = {k: f"{v['error_m']:.2f} m" for k, v in f.items()}
+        note = f"Test scene ({r['novelty']})"
+        cards.append(f'''<div class="card-x" data-group="{e(group)}"><div class="pair sync-group">{vid(ph['video'], ph['first'], 'PhysX', 'tag-ref')}{vid(variants['reg'], ph['first'], VARIANT['reg'], 'tag-ours', variants)}</div>
+<p class="cap"><b>{e(r['family_title'])}.</b> {e(r['description'])} <span class="m">{e(note)}. Position error <span data-err='{e(json.dumps(errs))}'>{errs['reg']}</span>.</span></p></div>''')
+    for sid in ([] if len(recs) >= 10 else V1_FORWARD):
         if sid not in rows:
             continue
         r = rows[sid]; title, caption = V1_TEXT[sid]; group = GROUP_OF.get(r['family'], 'Mechanisms'); used.append(group)
@@ -524,7 +586,7 @@ def footer():
 def main():
     v1 = load('v1.json'); showcase = load('showcase.json')
     md = modes_data(v1, showcase); pickers = {}
-    sections = [('modes', 'Inference modes', modes_section(md)), ('forward', 'Forward prediction', forward_section(v1)),
+    sections = [('modes', 'Inference modes', modes_section(md, showcase)), ('forward', 'Forward prediction', forward_section(v1, showcase)),
                 ('video-models', 'Video models', vdm_section(load('compare_vdm.json'), pickers)),
                 ('llm-vla', 'Language models and robot policy', others_section(load('compare_llm.json'), load('compare_vla.json'), pickers)),
                 ('twins', 'Real-room scans', twins_section(load('twins.json'), pickers)), ('dataset', 'Dataset', dataset_section(load('dataset.json'), pickers)),

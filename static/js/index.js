@@ -152,6 +152,7 @@
         ocol += facts([info.action !== 'given' && m.action && m.action[state.variant] ? ['Action', esc(m.action[state.variant])] : null,
           v.props_html ? ['Properties', v.props_html] : null,
           v.error_m != null ? ['Error', v.error_m.toFixed(2) + ' m mean distance from PhysX over the generated frames'] : null]);
+        if (m.values_below && m.values_below[state.variant]) { ocol += '<details class="mv-more" open><summary>Properties it inferred along with the motion</summary><div class="mv-values">' + m.values_below[state.variant] + '</div></details>'; }
       }
       rcol = vid(m.physics, m.first, 'PhysX', 'tag-ref', actionGiven ? '' : overlay(ovTrue, GREY, true)) + facts([info.action !== 'given' && m.action && m.action['true'] ? ['Action', esc(m.action['true'])] : null, m.truth_html ? ['Properties', m.truth_html] : null]);
       html += '<div class="mv-cols sync-group">' +
