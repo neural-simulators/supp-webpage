@@ -33,7 +33,9 @@
      "stated_change": "the action as recorded",
      "outcome_physx": "6 of 6 tiles fall",
      "outcome_neuworld": {
-      "reg": "6 of 6 tiles fall"
+      "reg": "6 of 6 tiles fall",
+      "fm": "6 of 6 tiles fall",
+      "ddpm": "6 of 6 tiles fall"
      },
      "physics": {
       "video": "static/media/whatif/ramp_spring_domino/factual__physics.mp4",
@@ -44,6 +46,14 @@
      "variants": {
       "reg": {
        "video": "static/media/whatif/ramp_spring_domino/factual__reg.mp4",
+       "error_m": 0.0216
+      },
+      "fm": {
+       "video": "static/media/whatif/ramp_spring_domino/factual__fm.mp4",
+       "error_m": 0.0227
+      },
+      "ddpm": {
+       "video": "static/media/whatif/ramp_spring_domino/factual__ddpm.mp4",
        "error_m": 0.0216
       }
      },
@@ -74,7 +84,9 @@
      "stated_change": "the ball is replaced by a cube of the same mass (4.3 kg)",
      "outcome_physx": "0 of 6 tiles fall",
      "outcome_neuworld": {
-      "reg": "0 of 6 tiles fall"
+      "reg": "0 of 6 tiles fall",
+      "fm": "0 of 6 tiles fall",
+      "ddpm": "0 of 6 tiles fall"
      },
      "physics": {
       "video": "static/media/whatif/ramp_spring_domino/counterfactual_shape__physics.mp4",
@@ -86,6 +98,14 @@
       "reg": {
        "video": "static/media/whatif/ramp_spring_domino/counterfactual_shape__reg.mp4",
        "error_m": 0.0145
+      },
+      "fm": {
+       "video": "static/media/whatif/ramp_spring_domino/counterfactual_shape__fm.mp4",
+       "error_m": 0.0134
+      },
+      "ddpm": {
+       "video": "static/media/whatif/ramp_spring_domino/counterfactual_shape__ddpm.mp4",
+       "error_m": 0.0123
       }
      },
      "action": {
@@ -325,6 +345,608 @@
       0.2810938758688658
      ],
      "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   }
+  },
+  {
+   "id": "carrying_cart",
+   "family": "carrying_cart",
+   "family_title": "Cart with cargo",
+   "description": "A pusher shoves a wheeled cart that carries a loose block toward a buffer block.",
+   "novelty": "new room",
+   "duration_s": 6.0,
+   "outcome_rule": "The cargo is on the cart when it ends above the cart body and within 0.4 m of it; the distance is the cart's horizontal travel.",
+   "branches": [
+    {
+     "branch": "factual",
+     "kind": "factual",
+     "stated_change": "the action as recorded",
+     "outcome_physx": "the cargo stays on the cart, which rolls 0.8 m",
+     "outcome_neuworld": {
+      "reg": "the cargo stays on the cart, which rolls 0.8 m"
+     },
+     "physics": {
+      "video": "static/media/whatif/carrying_cart/factual__physics.mp4",
+      "first": "static/media/whatif/carrying_cart/factual__first.jpg",
+      "last": "static/media/whatif/carrying_cart/factual__last.jpg",
+      "first_annotated": "static/media/whatif/carrying_cart/factual__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/carrying_cart/factual__reg.mp4",
+       "error_m": 0.0239
+      }
+     },
+     "action": {
+      "kind": "force",
+      "label": "push, 5.1 N, 0.35 to 0.75 s",
+      "object": "cart",
+      "instruction": "push"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.3326268940257081,
+        0.5436791610334956
+       ],
+       "tip": [
+        0.5126268940257082,
+        0.5436791610334956
+       ],
+       "label": "push, 5.1 N, 0.35 to 0.75 s",
+       "object": "cart",
+       "scale_note": "The arrow shows the direction only; its length is not to scale.",
+       "force_N": 5.129872746783919,
+       "onset_s": 0.35,
+       "end_s": 0.75
+      }
+     ],
+     "record_id": "carrying_cart__r2035/a0/factual"
+    },
+    {
+     "branch": "counterfactual_shape",
+     "kind": "counterfactual",
+     "stated_change": "the cargo is a ball instead of a block",
+     "outcome_physx": "the cargo ends on the floor; the cart rolls 0.5 m",
+     "outcome_neuworld": {
+      "reg": "the cargo ends on the floor; the cart rolls 0.4 m"
+     },
+     "physics": {
+      "video": "static/media/whatif/carrying_cart/counterfactual_shape__physics.mp4",
+      "first": "static/media/whatif/carrying_cart/counterfactual_shape__first.jpg",
+      "last": "static/media/whatif/carrying_cart/counterfactual_shape__last.jpg",
+      "first_annotated": "static/media/whatif/carrying_cart/counterfactual_shape__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/carrying_cart/counterfactual_shape__reg.mp4",
+       "error_m": 0.0367
+      }
+     },
+     "action": {
+      "kind": "force",
+      "label": "push, 5.1 N, 0.35 to 0.75 s",
+      "object": "cart",
+      "instruction": "push"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.3326268940257081,
+        0.5436791610334956
+       ],
+       "tip": [
+        0.5126268940257082,
+        0.5436791610334956
+       ],
+       "label": "push, 5.1 N, 0.35 to 0.75 s",
+       "object": "cart",
+       "scale_note": "The arrow shows the direction only; its length is not to scale.",
+       "force_N": 5.129872746783919,
+       "onset_s": 0.35,
+       "end_s": 0.75
+      }
+     ],
+     "record_id": "carrying_cart__r2035/a0/counterfactual_shape"
+    },
+    {
+     "branch": "removal",
+     "kind": "counterfactual",
+     "stated_change": "the buffer block is removed",
+     "outcome_physx": "the cargo stays on the cart, which rolls 1.4 m",
+     "outcome_neuworld": {
+      "reg": "the cargo stays on the cart, which rolls 1.4 m"
+     },
+     "physics": {
+      "video": "static/media/whatif/carrying_cart/removal__physics.mp4",
+      "first": "static/media/whatif/carrying_cart/removal__first.jpg",
+      "last": "static/media/whatif/carrying_cart/removal__last.jpg",
+      "first_annotated": "static/media/whatif/carrying_cart/removal__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/carrying_cart/removal__reg.mp4",
+       "error_m": 0.0351
+      }
+     },
+     "action": {
+      "kind": "force",
+      "label": "push, 5.1 N, 0.35 to 0.75 s",
+      "object": "cart",
+      "instruction": "push"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.3326268940257081,
+        0.5436791610334956
+       ],
+       "tip": [
+        0.5126268940257082,
+        0.5436791610334956
+       ],
+       "label": "push, 5.1 N, 0.35 to 0.75 s",
+       "object": "cart",
+       "scale_note": "The arrow shows the direction only; its length is not to scale.",
+       "force_N": 5.129872746783919,
+       "onset_s": 0.35,
+       "end_s": 0.75
+      }
+     ],
+     "record_id": "carrying_cart__r2035/a0/removal"
+    }
+   ],
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.5314613466334461,
+      -3.0717006778838973,
+      0.944818175391442
+     ],
+     "target": [
+      -0.5314613466334457,
+      -0.90886186202268,
+      0.3246341248031938
+     ],
+     "focal_mm": 12.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   }
+  },
+  {
+   "id": "crate_drop_table",
+   "family": "crate_drop_table",
+   "family_title": "Crate onto a table",
+   "description": "A crate is released above a table that carries a cup.",
+   "novelty": "new room",
+   "duration_s": 5.0,
+   "outcome_rule": "The crate ends on the table when its centre rests above 0.6 m, otherwise on the floor.",
+   "branches": [
+    {
+     "branch": "factual",
+     "kind": "factual",
+     "stated_change": "the action as recorded",
+     "outcome_physx": "the crate ends on the table",
+     "outcome_neuworld": {
+      "reg": "the crate ends on the table",
+      "fm": "the crate ends on the table",
+      "ddpm": "the crate ends on the table"
+     },
+     "physics": {
+      "video": "static/media/whatif/crate_drop_table/factual__physics.mp4",
+      "first": "static/media/whatif/crate_drop_table/factual__first.jpg",
+      "last": "static/media/whatif/crate_drop_table/factual__last.jpg",
+      "first_annotated": "static/media/whatif/crate_drop_table/factual__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/crate_drop_table/factual__reg.mp4",
+       "error_m": 0.0308
+      },
+      "fm": {
+       "video": "static/media/whatif/crate_drop_table/factual__fm.mp4",
+       "error_m": 0.0477
+      },
+      "ddpm": {
+       "video": "static/media/whatif/crate_drop_table/factual__ddpm.mp4",
+       "error_m": 0.0474
+      }
+     },
+     "action": {
+      "kind": "none",
+      "label": "release the crate above the table",
+      "object": "crate",
+      "instruction": "release the crate above the table"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.4744537114854013,
+        0.2798826630005039
+       ],
+       "tip": null,
+       "label": "release the crate above the table",
+       "object": "crate",
+       "scale_note": null
+      }
+     ],
+     "record_id": "crate_drop_table__r21/a0/factual"
+    },
+    {
+     "branch": "removal",
+     "kind": "counterfactual",
+     "stated_change": "the table is removed",
+     "outcome_physx": "the crate ends on the floor",
+     "outcome_neuworld": {
+      "reg": "the crate ends on the floor",
+      "fm": "the crate ends on the floor",
+      "ddpm": "the crate ends on the floor"
+     },
+     "physics": {
+      "video": "static/media/whatif/crate_drop_table/removal__physics.mp4",
+      "first": "static/media/whatif/crate_drop_table/removal__first.jpg",
+      "last": "static/media/whatif/crate_drop_table/removal__last.jpg",
+      "first_annotated": "static/media/whatif/crate_drop_table/removal__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/crate_drop_table/removal__reg.mp4",
+       "error_m": 0.012
+      },
+      "fm": {
+       "video": "static/media/whatif/crate_drop_table/removal__fm.mp4",
+       "error_m": 0.0212
+      },
+      "ddpm": {
+       "video": "static/media/whatif/crate_drop_table/removal__ddpm.mp4",
+       "error_m": 0.0175
+      }
+     },
+     "action": {
+      "kind": "none",
+      "label": "release the crate above the table",
+      "object": "crate",
+      "instruction": "release the crate above the table"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.4744537114854013,
+        0.2798826630005039
+       ],
+       "tip": null,
+       "label": "release the crate above the table",
+       "object": "crate",
+       "scale_note": null
+      }
+     ],
+     "record_id": "crate_drop_table__r21/a0/removal"
+    }
+   ],
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      3.461312050357154,
+      -2.9249116872895433,
+      2.265415541863389
+     ],
+     "target": [
+      -0.1599631100414503,
+      -0.8341674986237013,
+      1.0663930440594442
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   }
+  },
+  {
+   "id": "catapult",
+   "family": "catapult",
+   "family_title": "Catapult",
+   "description": "A pusher knocks the trigger of a loaded catapult, whose arm throws a ball across the room.",
+   "novelty": "new arrangement",
+   "duration_s": 5.0,
+   "outcome_rule": "The distance is the horizontal distance of the ball between its first and last state; below 0.5 m it counts as staying.",
+   "branches": [
+    {
+     "branch": "factual",
+     "kind": "factual",
+     "stated_change": "the action as recorded",
+     "outcome_physx": "the ball lands 2.9 m from its start",
+     "outcome_neuworld": {
+      "reg": "the ball lands 2.9 m from its start",
+      "fm": "the ball lands 2.9 m from its start",
+      "ddpm": "the ball lands 2.9 m from its start"
+     },
+     "physics": {
+      "video": "static/media/whatif/catapult/factual__physics.mp4",
+      "first": "static/media/whatif/catapult/factual__first.jpg",
+      "last": "static/media/whatif/catapult/factual__last.jpg",
+      "first_annotated": "static/media/whatif/catapult/factual__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/catapult/factual__reg.mp4",
+       "error_m": 0.0416
+      },
+      "fm": {
+       "video": "static/media/whatif/catapult/factual__fm.mp4",
+       "error_m": 0.0703
+      },
+      "ddpm": {
+       "video": "static/media/whatif/catapult/factual__ddpm.mp4",
+       "error_m": 0.0727
+      }
+     },
+     "action": {
+      "kind": "force",
+      "label": "pull, 9.6 N, 0.45 to 0.85 s",
+      "object": "catapult arm",
+      "instruction": "pull the trigger pin"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.5827967202638411,
+        0.5731164722801686
+       ],
+       "tip": [
+        0.4063309311670623,
+        0.6362169478397528
+       ],
+       "label": "pull, 9.6 N, 0.45 to 0.85 s",
+       "object": "catapult arm",
+       "scale_note": "The arrow shows the direction only; its length is not to scale.",
+       "force_N": 9.642809488074322,
+       "onset_s": 0.45,
+       "end_s": 0.85
+      }
+     ],
+     "record_id": "catapult__r109/a2/factual"
+    },
+    {
+     "branch": "counterfactual",
+     "kind": "counterfactual",
+     "stated_change": "the catapult spring is half as stiff (25 N/m to 12.5 N/m)",
+     "outcome_physx": "the ball stays in the cup",
+     "outcome_neuworld": {
+      "reg": "the ball stays in the cup",
+      "fm": "the ball stays in the cup",
+      "ddpm": "the ball stays in the cup"
+     },
+     "physics": {
+      "video": "static/media/whatif/catapult/counterfactual__physics.mp4",
+      "first": "static/media/whatif/catapult/counterfactual__first.jpg",
+      "last": "static/media/whatif/catapult/counterfactual__last.jpg",
+      "first_annotated": "static/media/whatif/catapult/counterfactual__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/catapult/counterfactual__reg.mp4",
+       "error_m": 0.0271
+      },
+      "fm": {
+       "video": "static/media/whatif/catapult/counterfactual__fm.mp4",
+       "error_m": 0.033
+      },
+      "ddpm": {
+       "video": "static/media/whatif/catapult/counterfactual__ddpm.mp4",
+       "error_m": 0.054
+      }
+     },
+     "action": {
+      "kind": "force",
+      "label": "pull, 9.6 N, 0.45 to 0.85 s",
+      "object": "catapult arm",
+      "instruction": "pull the trigger pin"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.5827967202638411,
+        0.5731164722801686
+       ],
+       "tip": [
+        0.4063309311670623,
+        0.6362169478397528
+       ],
+       "label": "pull, 9.6 N, 0.45 to 0.85 s",
+       "object": "catapult arm",
+       "scale_note": "The arrow shows the direction only; its length is not to scale.",
+       "force_N": 9.642809488074322,
+       "onset_s": 0.45,
+       "end_s": 0.85
+      }
+     ],
+     "record_id": "catapult__r109/a2/counterfactual"
+    }
+   ],
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      2.2757239072576216,
+      -3.178933374272858,
+      1.8657038995267359
+     ],
+     "target": [
+      -1.5952943676512308,
+      -0.9439999312162685,
+      0.5839901949776922
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   }
+  },
+  {
+   "id": "ramp_lever_projectile",
+   "family": "ramp_lever_projectile",
+   "family_title": "Ramp, lever and projectile",
+   "description": "A heavy ball is released at the top of a ramp, lands on one end of a lever and flings a small ball from the other end.",
+   "novelty": "new room",
+   "duration_s": 6.0,
+   "outcome_rule": "The small ball counts as flung when it rises more than 0.2 m above its start; the height is its highest point.",
+   "branches": [
+    {
+     "branch": "factual",
+     "kind": "factual",
+     "stated_change": "the action as recorded",
+     "outcome_physx": "the small ball is flung 0.4 m up",
+     "outcome_neuworld": {
+      "reg": "the small ball is flung 0.4 m up",
+      "fm": "the small ball is flung 0.5 m up"
+     },
+     "physics": {
+      "video": "static/media/whatif/ramp_lever_projectile/factual__physics.mp4",
+      "first": "static/media/whatif/ramp_lever_projectile/factual__first.jpg",
+      "last": "static/media/whatif/ramp_lever_projectile/factual__last.jpg",
+      "first_annotated": "static/media/whatif/ramp_lever_projectile/factual__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/ramp_lever_projectile/factual__reg.mp4",
+       "error_m": 0.0199
+      },
+      "fm": {
+       "video": "static/media/whatif/ramp_lever_projectile/factual__fm.mp4",
+       "error_m": 0.0303
+      }
+     },
+     "action": {
+      "kind": "release",
+      "label": "release at 0.75 s",
+      "object": "heavy ball",
+      "instruction": "release the heavy ball at the top of the ramp"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.7829721742742799,
+        0.38362319943666423
+       ],
+       "tip": null,
+       "label": "release at 0.75 s",
+       "object": "heavy ball",
+       "scale_note": null,
+       "release_s": 0.75
+      }
+     ],
+     "record_id": "ramp_lever_projectile__r9/a0/factual"
+    },
+    {
+     "branch": "removal",
+     "kind": "counterfactual",
+     "stated_change": "the ramp is removed",
+     "outcome_physx": "the small ball stays on the lever",
+     "outcome_neuworld": {
+      "reg": "the small ball stays on the lever",
+      "fm": "the small ball stays on the lever"
+     },
+     "physics": {
+      "video": "static/media/whatif/ramp_lever_projectile/removal__physics.mp4",
+      "first": "static/media/whatif/ramp_lever_projectile/removal__first.jpg",
+      "last": "static/media/whatif/ramp_lever_projectile/removal__last.jpg",
+      "first_annotated": "static/media/whatif/ramp_lever_projectile/removal__first_annotated.jpg"
+     },
+     "variants": {
+      "reg": {
+       "video": "static/media/whatif/ramp_lever_projectile/removal__reg.mp4",
+       "error_m": 0.0162
+      },
+      "fm": {
+       "video": "static/media/whatif/ramp_lever_projectile/removal__fm.mp4",
+       "error_m": 0.0235
+      }
+     },
+     "action": {
+      "kind": "release",
+      "label": "release at 0.75 s",
+      "object": "heavy ball",
+      "instruction": "release the heavy ball at the top of the ramp"
+     },
+     "action_overlay": [
+      {
+       "point": [
+        0.7829721742742799,
+        0.38362319943666423
+       ],
+       "tip": null,
+       "label": "release at 0.75 s",
+       "object": "heavy ball",
+       "scale_note": null,
+       "release_s": 0.75
+      }
+     ],
+     "record_id": "ramp_lever_projectile__r9/a0/removal"
+    }
+   ],
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.19498242074507965,
+      2.705319766697056,
+      1.5320750155081573
+     ],
+     "target": [
+      -0.19498242074507988,
+      -0.8994115930716347,
+      0.49843493119441173
+     ],
+     "focal_mm": 16.0,
      "aperture_mm": 20.955,
      "resolution": [
       1280,
