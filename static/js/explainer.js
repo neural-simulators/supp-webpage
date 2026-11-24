@@ -5,7 +5,7 @@
    sampling steps: every hidden value (property numbers, the action, and the motion at all of its time steps) starts as noise and moves
    to the output together, drawn on the straight path x = (1 - s) output + s noise with one fixed noise sample, so each step shows a
    cleaner version of the whole answer and step 10 is the complete trajectory. The slider steps through the same states by hand.
-   "Play the motion" then plays the finished motion over time. Plain script, no modules, no network requests. */
+   A generated motion is then played once over time, and "Play the motion" plays it again. Plain script, no modules, no network requests. */
 (function () {
   'use strict';
   var root = document.getElementById('ex-masking'); if (!root) { return; }
@@ -97,7 +97,7 @@
     setCard(card('motion-in'), state, head('Motion', inText) + '<div class="ex-vw"><svg aria-hidden="true"></svg><div class="ex-cover">hidden from the network</div></div>' + timeline(sp, 'in'));
     setCard(card('props-out'), m.props ? 'gen' : 'off', head('Properties', m.props ? 'generated' : 'given, so not generated') + (m.props ? propsTable(D.props[m.key]) : ''));
     setCard(card('action-out'), m.action ? 'gen' : 'off', head('Action', m.action ? 'generated' : 'given, so not generated') + (m.action ? actionText(D.action.backward) : ''));
-    setCard(card('motion-out'), motionGen ? 'gen' : 'off', head('Motion', outText) + (motionGen ? '<div class="ex-vw"><svg aria-hidden="true"></svg></div>' + timeline(sp, 'out') : ''));
+    setCard(card('motion-out'), motionGen ? 'gen' : 'off', head('Motion', outText) + (motionGen ? '<div class="ex-vw"><svg aria-hidden="true"></svg><span class="ex-playtag">the generated motion, played back</span></div>' + timeline(sp, 'out') : ''));
     views.min = makeView(q('svg', card('motion-in'))); views.mout = motionGen ? makeView(q('svg', card('motion-out'))) : null;
     q('[data-ex-ask]').textContent = m.ask; q('[data-ex-given]').textContent = m.given; q('[data-ex-gen]').textContent = m.gen;
     all('.ex-tab').forEach(function (b) { var on = b.getAttribute('data-ex-mode') === m.key; b.classList.toggle('ex-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
@@ -141,7 +141,7 @@
       dots(c.vout.dz, c.src, c.h0 + (c.h0 > 0 ? 1 : 0), c.h1, s, c.eD);
     }
   }
-  function stop() { runId++; if (raf) { cancelAnimationFrame(raf); raf = null; } root.classList.remove('ex-running'); if (ctx) { ctx.heads.forEach(function (x) { x.style.opacity = 0; }); } }
+  function stop() { runId++; if (raf) { cancelAnimationFrame(raf); raf = null; } root.classList.remove('ex-running'); root.classList.remove('ex-playing'); if (ctx) { ctx.heads.forEach(function (x) { x.style.opacity = 0; }); } }
 
   /* a run: the observed motion once (if any), then the ten sampling steps */
   function run(animate) {
@@ -164,7 +164,11 @@
         if (!root.classList.contains('ex-running')) { root.classList.add('ex-running'); c.heads[0].style.opacity = 0; inputRest(c); }
         uu = (el - A) / (B / 10); kk = Math.min(9, Math.floor(uu)); f = Math.min(1, (uu - kk) / 0.7); f = f * f * (3 - 2 * f);
         drawSigma(c, Math.max(0, 1 - (kk + f) / 10));                   /* each step moves every hidden value a tenth of the way, then holds */
-      } else { root.classList.remove('ex-running'); drawSigma(c, 0); return; }
+      } else {                                                         /* step 10: the whole answer is there; a generated motion is then played once */
+        root.classList.remove('ex-running'); drawSigma(c, 0);
+        if (c.vout) { setTimeout(function () { if (id === runId) { play(); } }, 650); }
+        return;
+      }
       raf = requestAnimationFrame(frame);
     }
     raf = requestAnimationFrame(frame);
@@ -174,7 +178,7 @@
     var c = ctx, id, t0 = null, B = 3400, k = c.m.key;
     stop(); id = runId; inputRest(c); drawSigma(c, 0);
     if (reduced) { return; }
-    c.heads.forEach(function (x) { x.style.opacity = 1; });
+    c.heads.forEach(function (x) { x.style.opacity = 1; }); root.classList.add('ex-playing');
     function frame(now) {
       if (id !== runId) { return; }
       if (t0 === null) { t0 = now; }
@@ -182,7 +186,7 @@
       c.heads.forEach(function (x) { x.style.left = (100 * t / DUR) + '%'; });
       showInput(c, i, given);
       if (c.vout) { look(c.vout, (i <= c.h0 && c.h0 > 0) || i > c.h1 || i === 0 ? 'ex-v-copy' : 'ex-v-gen'); pose(c.vout, c.src, i); }
-      if (el >= B) { c.heads.forEach(function (x) { x.style.opacity = 0; }); inputRest(c); drawSigma(c, 0); return; }
+      if (el >= B) { c.heads.forEach(function (x) { x.style.opacity = 0; }); root.classList.remove('ex-playing'); inputRest(c); drawSigma(c, 0); return; }
       raf = requestAnimationFrame(frame);
     }
     raf = requestAnimationFrame(frame);

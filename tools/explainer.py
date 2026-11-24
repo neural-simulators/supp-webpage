@@ -30,7 +30,7 @@ LEAD = ('NeuWorld reads a scene as tokens. The scene graph with the start state 
         'in whole or in part. The network generates exactly the hidden tokens, so every mode uses the same weights and differs only in the mask. Pick a mode to see it on one test scene.')
 NOTE = ('The example is the test scene of Fig. 4 of the paper, seen from the side; the generated trajectories and numbers are the outputs of NeuWorld+FM. '
         'All hidden tokens are generated together: the properties, the action, and the motion at every time step. They enter as noise and are denoised in ten sampling steps '
-        'while the given tokens stay fixed, so each step holds a cleaner version of the whole answer and the tenth is the complete trajectory '
+        'while the given tokens stay fixed, so each step holds a cleaner version of the whole answer and the tenth is the complete trajectory, which is then played back '
         '(NeuWorld+Reg predicts the hidden tokens in one pass from zeros). The intermediate steps are drawn on the straight path from one noise sample to the output. '
         'The loss is computed on the hidden tokens only. '
         'More detail: Sec. 3.2 (inference modes), Sec. 3.3 (tokens) and Sec. 3.4 (masked joint modeling, Eqs. 2 and 3) of the paper; '

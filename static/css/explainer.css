@@ -105,3 +105,5 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
   .ex-two { grid-template-columns: 1fr; }
   .ex { padding: 0.6rem 0.5rem; }
 }
+.ex-playtag { position: absolute; right: 0.35rem; top: 0.3rem; font-size: 0.68rem; font-weight: 600; color: var(--gen); background: rgba(255, 255, 255, 0.9); border: 1px solid #f1c4dd; border-radius: 5px; padding: 0.02rem 0.4rem; opacity: 0; transition: opacity 0.15s; }
+.ex-playing .ex-playtag { opacity: 1; }

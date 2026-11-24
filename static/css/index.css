@@ -276,18 +276,26 @@ blockquote.sp-prompt { border-left: 3px solid var(--line); margin: 0.4rem 0; pad
 ul.sp-points { max-width: 880px; margin: 0 auto 1rem; padding-left: 1.2rem; list-style: disc; font-size: 0.98rem; line-height: 1.55; }
 ul.sp-points li { margin: 0.25rem 0; }
 
-/* ---------- Contents ---------- */
-.sp-toc { border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem 1.2rem 1rem; margin: 1.1rem 0 1.3rem; background: #fff; }
-.sp-toc h2 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
-.sp-toc ol { margin: 0; padding-left: 1.3rem; columns: 2; column-gap: 2.2rem; font-size: 0.95rem; }
-@media screen and (max-width: 700px) { .sp-toc ol { columns: 1; } }
-.sp-toc li { break-inside: avoid; margin: 0 0 0.55rem; line-height: 1.35; }
-.sp-toc li a { font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: #b6bdc1; text-underline-offset: 2px; }
-.sp-toc li a:hover { color: #3273dc; text-decoration-color: #3273dc; }
-.sp-toc li span { display: block; font-size: 0.84rem; color: var(--muted); }
+/* ---------- Contents: one clickable card per section ---------- */
+.sp-toc { margin: 1.3rem 0 1.4rem; }
+.sp-toc h2 { font-size: 1.25rem; font-weight: 700; color: var(--ink); margin: 0 0 0.6rem; text-align: center; }
+.sp-toc h2 small { display: block; font-size: 0.84rem; font-weight: 400; color: var(--muted); margin-top: 0.1rem; }
+.sp-toc ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(var(--rows, 5), auto); grid-auto-flow: column; gap: 0.5rem 0.7rem; }
+@media screen and (max-width: 760px) { .sp-toc ol { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; } }
+.sp-toc li { margin: 0; }
+.sp-toc a { display: flex; align-items: center; gap: 0.75rem; height: 100%; padding: 0.6rem 0.8rem; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--ink); text-decoration: none; transition: border-color 0.12s, background-color 0.12s, box-shadow 0.12s; }
+.sp-toc a:hover, .sp-toc a:focus-visible { border-color: var(--dark); background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+.sp-toc .n { flex: 0 0 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--dark); color: #fff; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+.sp-toc .t { flex: 1 1 auto; min-width: 0; }
+.sp-toc .t b { display: block; font-size: 1.05rem; font-weight: 700; line-height: 1.3; color: #2a5db8; }
+.sp-toc a:hover .t b { text-decoration: underline; }
+.sp-toc .t i { display: block; font-style: normal; font-size: 0.85rem; line-height: 1.35; color: var(--muted); margin-top: 0.1rem; }
+.sp-toc .go { flex: 0 0 auto; font-size: 1.2rem; color: #9aa3a8; transition: transform 0.12s, color 0.12s; }
+.sp-toc a:hover .go { color: var(--dark); transform: translateX(3px); }
 /* ---------- Dataset comparison ---------- */
 table.sp-table.dc { font-size: 0.86rem; }
 table.sp-table.dc td.yes { color: #1e7a34; }
 table.sp-table.dc td.no { color: #a9b0b4; }
 table.sp-table.dc tr.ours td { background: #f3f6fb; font-weight: 600; }
 table.sp-table.dc u { text-decoration-color: #9aa3a8; text-underline-offset: 2px; }
+#overview .sp-lead, #overview .sp-note { max-width: 880px; margin-inline: auto; }
