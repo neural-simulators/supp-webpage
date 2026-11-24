@@ -368,12 +368,12 @@ def real_section(pickers):
     return f'''<section class="section sp-section" id="real"><div class="sp-container sp-wide">
 <h2 class="title is-3 has-text-centered">Filmed scenes on a real pool table</h2>
 <p class="sp-lead">Two scenes filmed with a phone above a real pool table are rebuilt as digital twins from the footage, simulated with PhysX and predicted by NeuWorld,
-and compared with the motion measured from the film. NeuWorld is fine-tuned here on simulated pool-table scenes; the film is never used for training.</p>
+and compared with the motion measured from the film.</p>
 <div class="picker" data-picker="real"></div>
 <details class="sp-more"><summary>Errors against the film</summary><p class="sp-note" style="margin:0.5rem 0">Ball error: mean distance between predicted and filmed ball centres, over the balls that move.
 Onset error: mean error of the moment each domino starts to fall.</p>{table_html(cols, rows)}</details>
 <p class="sp-note" style="margin-top:0.7rem">Clips play at half speed. In the film the tracked ball centres are drawn in white; in the PhysX and NeuWorld panels the white lines are the filmed ball paths
-and the coloured lines the predicted ones. The recording, the twins and the measurements are described in the appendix.</p>
+and the coloured lines the predicted ones. The recording, the twins, the model and the measurements are described in the appendix.</p>
 </div></section>'''
 
 
