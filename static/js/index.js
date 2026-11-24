@@ -202,7 +202,7 @@
         if (it.rows) {
           var bar = data.variants ? '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + data.variants.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>' : '';
           var rowsHtml = bar + '<div class="wf sync-group">' + it.rows.map(function (r) {
-            return '<div class="wf-row"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + (r.text || '') + '</div>' + r.tiles.map(function (t) { return tileHtml(it, t); }).join('') + '</div>';
+            return '<div class="wf-row"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + (r.texts ? (r.texts[variant] || r.texts.reg || '') : (r.text || '')) + '</div>' + r.tiles.map(function (t) { return tileHtml(it, t); }).join('') + '</div>';
           }).join('') + '</div><div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
           if (data.items.length > 1) { rowsHtml += '<div class="mv-scenes">' + data.items.map(function (x) { return '<button type="button" data-item="' + esc(x.id) + '" class="' + (x.id === current ? 'on' : '') + '"><img src="' + esc(x.thumb) + '" alt="" loading="lazy"><span>' + esc(x.short || x.title) + '</span></button>'; }).join('') + '</div>'; }
           all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });

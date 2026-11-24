@@ -279,21 +279,24 @@ def whatif_section(d, pickers):
             variants = {k: v['video'] for k, v in br['variants'].items()}
             notes = {k: f"Position error {v['error_m']:.2f} m" for k, v in br['variants'].items() if v.get('error_m') is not None}
             ov = br.get('action_overlay'); ov = ov.get('true') if isinstance(ov, dict) else ov
-            text = (f'<span class="oc"><i>PhysX:</i> {e(br.get("outcome_physx", ""))}</span><span class="oc"><i style="color:var(--gen)">NeuWorld:</i> {e(br.get("outcome_neuworld", ""))}</span>')
-            rows.append({'kind': kinds.get(br['kind'], br['kind']), 'label': br['stated_change'][0].upper() + br['stated_change'][1:], 'text': text, 'cls': 'ref' if br['kind'] == 'factual' else '',
-                         'tiles': [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': br['physics']['video'], 'poster': br['physics'].get('first'), 'overlay': overlay_svg(ov, '#2563c9') if ov else ''},
+            on = br.get('outcome_neuworld', ''); on = on if isinstance(on, dict) else {k: on for k in br['variants']}
+            texts = {k: (f'<span class="oc"><i>PhysX:</i> {e(br.get("outcome_physx", ""))}</span><span class="oc"><i style="color:var(--gen)">{VARIANT[k]}:</i> {e(on.get(k, ""))}</span>') for k in br['variants']}
+            label = 'The action as recorded' if br['kind'] == 'factual' else br['stated_change'][0].upper() + br['stated_change'][1:]
+            rows.append({'kind': kinds.get(br['kind'], br['kind']) if br['kind'] != 'factual' else 'The recorded run', 'label': label, 'texts': texts, 'cls': 'ref' if br['kind'] == 'factual' else '',
+                         'tiles': [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': br['physics']['video'], 'poster': br['physics'].get('first'), 'overlay': overlay_svg(ov, '#2563c9', timed=True) if ov else ''},
                                    {'sub': 'given this scene, these properties and this action', 'cls': 'ours', 'variants': variants, 'notes': notes, 'poster': br['physics'].get('first')}]})
         items.append({'id': st['id'], 'title': st['family_title'], 'short': st['family_title'], 'thumb': st['branches'][0]['physics'].get('first'), 'rows': rows,
-                      'caption': f"<b>{e(st['family_title'])}.</b> {e(st['description'])} <span class=\"m\">Test scene ({e(st.get('novelty', 'not seen in training'))}).</span>"})
+                      'caption': f"<b>{e(st['family_title'])}.</b> {e(st['description'])} <span class=\"m\">Test scene ({e(st.get('novelty', 'not seen in training'))}). {e(st.get('outcome_rule', ''))}</span>"})
     have = [k for k in ('reg', 'fm', 'ddpm') if any(k in br['variants'] for st in d['sets'] for br in st['branches'])]
     pickers['whatif'] = {'items': items, 'variants': have}
-    rule = d.get('notes', {}); rule = rule.get('outcome_rule') or rule.get('outcomes') or '' if isinstance(rule, dict) else str(rule)
+    rule = ''
     return f'''<section class="section sp-section" id="what-if"><div class="sp-container sp-wide">
 <h2 class="title is-3 has-text-centered">What if? Counterfactuals and interventions</h2>
 <p class="sp-lead">The same scene and action, simulated again under one stated change: a property, a shape, gravity, or a change of the action during the motion.
 NeuWorld is given the changed scene graph or action and predicts the new outcome. Each row is one run, and all rows play together.</p>
 <div class="picker" data-picker="whatif"></div>
-<p class="sp-note" style="margin-top:0.7rem">The outcome under each run is measured from the PhysX states and from the predicted states with the same rule. {e(rule)}</p>
+<p class="sp-note" style="margin-top:0.7rem">The outcome next to each run is measured from the PhysX states and from the predicted states with the same rule, stated under the clips.
+NeuWorld is given each run's own scene graph, properties and action, as in forward prediction. The dot or arrow on the PhysX clip marks the action, and a change during the motion appears when it happens.</p>
 </div></section>'''
 
 
@@ -435,8 +438,12 @@ The view is from above the cut walls, with the scan as background and each scann
 </div></section>'''
 
 
-def overlay_svg(items, color='#2563c9'):
-    """An action drawn on a start frame (the same drawing as the page script's overlay): a dot on the acted object, an arrow along the force or launch direction."""
+def overlay_svg(items, color='#2563c9', timed=False):
+    """An action drawn on a start frame (the same drawing as the page script's overlay): a dot on the acted object, an arrow along the force or launch direction.
+    timed: one drawing per entry, shown for 1.4 s from the entry's time (an intervention appears when it happens)."""
+    if timed:
+        return ''.join(overlay_svg([o], color).replace('class="ov"', 'class="ov" data-from="%.2f" data-to="%.2f" style="opacity:0"' % (o.get('time_s') or 0., (o.get('time_s') or 0.) + 1.6))
+                       .replace('class="ov-label ', 'data-from="%.2f" data-to="%.2f" class="ov-label ' % (o.get('time_s') or 0., (o.get('time_s') or 0.) + 1.6)) for o in items or [] if o and o.get('point'))
     W, H = 1600, 900; out = f'<svg class="ov" viewBox="0 0 {W} {H}" preserveAspectRatio="none" aria-hidden="true">'; labels = ''
     for o in items or []:
         if not o or not o.get('point'):
