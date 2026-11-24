@@ -55,6 +55,12 @@ a { color: #3273dc; }
 .sp-links a { background: var(--dark); color: #fff; border-radius: 999px; padding: 0.5rem 1.15rem; font-size: 0.95rem; text-decoration: none; }
 .sp-links a:hover { background: #111; color: #fff; }
 
+.sp-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; margin: 0.4rem 0 1.5rem; }
+@media screen and (max-width: 760px) { .sp-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sp-stats div { background: var(--surface-2); border-radius: 10px; padding: 0.8rem 0.9rem; text-align: center; }
+.sp-stats b { display: block; font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+.sp-stats span { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.35; margin-top: 0.2rem; }
+
 /* ---------- Legend chips ---------- */
 .chip { display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 999px; padding: 0.16rem 0.7rem; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
 .chip.given { background: var(--given-soft); color: var(--given); }
@@ -142,7 +148,7 @@ a { color: #3273dc; }
 
 /* ---------- Galleries ---------- */
 .gal-bar { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; justify-content: center; align-items: center; margin-bottom: 1.1rem; }
-.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1rem; }
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(540px, 1fr)); gap: 1rem; }
 @media screen and (max-width: 520px) { .gal { grid-template-columns: 1fr; } }
 .card-x { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 0.6rem; }
 .card-x .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
@@ -167,6 +173,11 @@ table.llm-grid td.rowh { font-weight: 700; font-size: 0.9rem; background: none; 
 table.llm-grid td.rowh.ours { color: var(--gen); }
 table.llm-grid td.rowh.ref { color: var(--ref); }
 table.llm-grid .ans { font-size: 0.82rem; line-height: 1.5; padding: 0.3rem 0.1rem 0.05rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+.kf-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.2rem; margin-top: 0.7rem; }
+.kf { display: grid; grid-template-columns: 5.2rem repeat(var(--n, 3), minmax(0, 1fr)); gap: 0.3rem; align-items: center; }
+.kf-t { font-size: 0.78rem; color: var(--muted); text-align: center; }
+.kf-l { font-size: 0.8rem; font-weight: 600; }
 
 /* ---------- Tables ---------- */
 .sp-table-wrap { overflow-x: auto; }

@@ -64,7 +64,7 @@
    "record": "ball_block_catch__r2106/a1/factual",
    "recorded_action_kind": "pushed by a tool in the recording",
    "description": "Recorded motion: an arm pushes the ball, which knocks the block into the box and follows it in.",
-   "policy_note": "The policy grasps the red ball, lifts it and drops it off the table next to the box; the block never moves.",
+   "policy_note": "The policy grasps the red ball and carries it away from the box; the block never moves.",
    "notes_by_eye": true,
    "instruction": "get the blue block and the red ball into the wooden box on the floor. Masses: ball 0.4 kg, block 0.28 kg.",
    "instruction_kind": "end state only",
