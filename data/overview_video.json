@@ -1,0 +1,7 @@
+{
+ "src": "static/media/overview/neuworld_overview.mp4",
+ "poster": "static/media/overview/neuworld_overview.jpg",
+ "title": "Overview video",
+ "caption": "(2 min 18 s, no sound; press play). A rescue robot has to pull a skid out from under a brick bridge without dropping the bridge on a person. A video model, a robot policy, a physics engine and NeuWorld are each asked what will happen. Then: test scenes across motion families, scenes with the action or the properties hidden, video models given the same first frame, and the dataset.",
+ "source": "the paper's teaser video, fifth silent cut (1920 x 1080, 30 fps, H.264, no audio track, no metadata)"
+}

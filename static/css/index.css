@@ -299,3 +299,9 @@ table.sp-table.dc td.no { color: #a9b0b4; }
 table.sp-table.dc tr.ours td { background: #f3f6fb; font-weight: 600; }
 table.sp-table.dc u { text-decoration-color: #9aa3a8; text-underline-offset: 2px; }
 #overview .sp-lead, #overview .sp-note { max-width: 880px; margin-inline: auto; }
+
+/* Overview video above the contents: played with the browser's controls (not on hover), loaded when the reader presses play. */
+.sp-film { margin: 0 auto 1.5rem; max-width: 960px; }
+.sp-film video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #111; border-radius: 8px; }
+.sp-film figcaption { color: var(--muted); font-size: 0.9rem; line-height: 1.5; text-align: center; margin: 0.55rem auto 0; max-width: 880px; }
+.sp-film figcaption b { color: var(--ink); }
