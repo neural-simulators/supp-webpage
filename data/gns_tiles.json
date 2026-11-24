@@ -1,0 +1,25 @@
+{
+ "schema": "supp-gns-1",
+ "model": "the GNS baseline of the paper (6.6M parameters, trained on the same training simulations), forward prediction",
+ "look": "the renderer, lights and camera of the PhysX and NeuWorld tiles of the same item",
+ "items": {
+  "launcher_tower": {
+   "src": "static/media/compare_vdm/launcher_tower/gns.mp4",
+   "position_error_m": 0.187,
+   "note": "The ball knocks four blocks out of the two lowest layers; the upper layers drop onto the remaining blocks and stay stacked, whereas in PhysX the whole tower comes down.",
+   "record": "launcher_tower__r112/a0/factual",
+   "label": "GNS",
+   "sub": "graph network simulator; input: scene graph and action",
+   "position_error_source": "mean distance of the moving objects from the PhysX states over the whole simulation (6 s), as for the NeuWorld tile"
+  },
+  "pendulum_jenga": {
+   "src": "static/media/compare_vdm/pendulum_jenga/gns.mp4",
+   "position_error_m": 0.098,
+   "note": "The pendulum knocks two of the three top-layer blocks to the floor and the third stays on the tower, whereas in PhysX all three fall.",
+   "record": "pendulum_jenga__r3079/a3/factual",
+   "label": "GNS",
+   "sub": "graph network simulator; input: scene graph and action",
+   "position_error_source": "mean distance of the moving objects from the PhysX states over the whole simulation (6 s), as for the NeuWorld tile"
+  }
+ }
+}

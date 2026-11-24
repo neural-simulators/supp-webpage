@@ -5,7 +5,7 @@ One worked example, the test scene of the paper's mode figure (a ball released o
 tiles), drawn as a side view. The reader picks an inference mode; the cards on the left show what the network is given and what is
 hidden from it, with the record's values, and the cards on the right show what it generates: the trajectories and numbers are the
 saved outputs of NeuWorld+FM for that mode (data/explainer.json, written by scripts/supp_webpage/explainer_data.py of the project).
-Nothing switches on its own: a mode runs once when it is chosen (ten sampling steps, then the motion played once) and then rests.
+Nothing switches on its own: a mode runs once when it is chosen (the observed motion, then the ten sampling steps over every hidden value at once) and then rests; a slider steps through the sampling steps and a button plays the finished motion.
 The page needs static/css/explainer.css and static/js/explainer.js for it.
 """
 import html
@@ -29,8 +29,10 @@ TITLE = 'How masking selects the inference mode'
 LEAD = ('NeuWorld reads a scene as tokens. The scene graph with the start state is always given; the physical properties, the action and the motion can each be given or hidden, '
         'in whole or in part. The network generates exactly the hidden tokens, so every mode uses the same weights and differs only in the mask. Pick a mode to see it on one test scene.')
 NOTE = ('The example is the test scene of Fig. 4 of the paper, seen from the side; the generated trajectories and numbers are the outputs of NeuWorld+FM. '
-        'Hidden tokens enter as noise and are denoised in ten sampling steps while the given tokens stay fixed (NeuWorld+Reg predicts them in one pass from zeros); '
-        'the intermediate steps are drawn on the straight path from noise to the output. The loss is computed on the hidden tokens only. '
+        'All hidden tokens are generated together: the properties, the action, and the motion at every time step. They enter as noise and are denoised in ten sampling steps '
+        'while the given tokens stay fixed, so each step holds a cleaner version of the whole answer and the tenth is the complete trajectory '
+        '(NeuWorld+Reg predicts the hidden tokens in one pass from zeros). The intermediate steps are drawn on the straight path from one noise sample to the output. '
+        'The loss is computed on the hidden tokens only. '
         'More detail: Sec. 3.2 (inference modes), Sec. 3.3 (tokens) and Sec. 3.4 (masked joint modeling, Eqs. 2 and 3) of the paper; '
         'Appendix B.2 (token contents) and Appendix B.5 (samplers and mode curriculum).')
 
@@ -66,9 +68,10 @@ def explainer_section():
 <div class="ex-card" data-ex-card="motion-in"></div>
 </div>
 <div class="ex-mid"><svg class="ex-arrow" viewBox="0 0 28 12" aria-hidden="true"><path d="M1.5 6h23M19.5 1.5 25 6l-5.5 4.5"/></svg>
-<div class="ex-net"><b>NeuWorld</b><small>one transformer</small><span class="ex-ticks" aria-hidden="true">{'<i></i>' * 10}</span><small class="ex-step" data-ex-step>&nbsp;</small></div>
+<div class="ex-net"><b>NeuWorld</b><small>one transformer</small><span class="ex-ticks" aria-hidden="true">{'<i></i>' * 10}</span><small class="ex-step" data-ex-step>&nbsp;</small>
+<input type="range" class="ex-scrub" min="0" max="10" step="1" value="10" data-ex-scrub aria-label="Sampling step"><small class="ex-hint">drag to step through</small></div>
 <svg class="ex-arrow" viewBox="0 0 28 12" aria-hidden="true"><path d="M1.5 6h23M19.5 1.5 25 6l-5.5 4.5"/></svg>
-<button type="button" class="ex-replay" data-ex-replay>Replay</button></div>
+<div class="ex-btns"><button type="button" class="ex-replay" data-ex-replay>Run again</button><button type="button" class="ex-replay" data-ex-play>Play the motion</button></div></div>
 <div class="ex-panel ex-out">
 <div class="ex-ph"><b>Output</b><small>generated where the input was hidden</small></div>
 <div class="ex-card ex-ask"><p class="ex-q" data-ex-ask></p><p class="ex-gg"><span class="ex-k ex-kg">Given</span><span data-ex-given></span></p><p class="ex-gg"><span class="ex-k ex-ko">Generated</span><span data-ex-gen></span></p></div>

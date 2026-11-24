@@ -1,13 +1,17 @@
 /* The masking explainer: one test scene seen from the side, one inference mode at a time, chosen by the reader.
    Left: what the network is given (blue) and what is hidden from it (hatched). Right: what it generates (magenta), with the saved
-   outputs of the flow-matching model for that mode. A mode runs once when it is chosen: ten sampling steps, drawn on the straight
-   path from noise to the output, then the motion played once; then it rests. Plain script, no modules, no network requests. */
+   outputs of the flow-matching model for that mode.
+   A run has two parts, in the order of the computation. First the input: an observed part of the motion is played once. Then the ten
+   sampling steps: every hidden value (property numbers, the action, and the motion at all of its time steps) starts as noise and moves
+   to the output together, drawn on the straight path x = (1 - s) output + s noise with one fixed noise sample, so each step shows a
+   cleaner version of the whole answer and step 10 is the complete trajectory. The slider steps through the same states by hand.
+   "Play the motion" then plays the finished motion over time. Plain script, no modules, no network requests. */
 (function () {
   'use strict';
   var root = document.getElementById('ex-masking'); if (!root) { return; }
   var D = JSON.parse(root.getAttribute('data-ex')), G = D.geom, N = D.times.length, DUR = D.seconds;
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var S = 100, V = G.view, W = (V[1] - V[0]) * S, H = (V[3] - V[2]) * S + 8;
+  var S = 100, V = G.view, W = (V[1] - V[0]) * S, H = (V[3] - V[2]) * S + 8, NS = 'http://www.w3.org/2000/svg';
   function X(x) { return +((x - V[0]) * S).toFixed(1); }
   function Y(z) { return +((V[3] - z) * S + 3).toFixed(1); }
   function q(sel, el) { return (el || root).querySelector(sel); }
@@ -15,33 +19,39 @@
   function card(name) { return q('[data-ex-card="' + name + '"]'); }
   function frameAt(t) { return Math.max(0, Math.min(N - 1, Math.round(t / DUR * (N - 1)))); }
   function sec(x) { return String(Math.round(x * 10) / 10); }
+  function mix(a, b, s) { return (1 - s) * a + s * b; }
 
-  /* ---- the side view: floor, ramp, the spring-mounted block, six tiles and the ball ---- */
+  /* ---- the side view: floor, ramp, the spring-mounted block, six tiles, the ball, and the ball's path as one dot per 0.1 s ---- */
   function makeView(svg) {
     var tw = G.tile[0] * S, th = G.tile[1] * S, bw = G.bumper[0] * S, bh = G.bumper[1] * S, h = '', k;
     svg.setAttribute('viewBox', '0 0 ' + W.toFixed(0) + ' ' + H.toFixed(0));
     h += '<line class="ex-floor" x1="0" x2="' + W + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/>';
     h += '<polygon class="ex-ramp" points="' + G.ramp.map(function (p) { return X(p[0]) + ',' + Y(p[1]); }).join(' ') + '"/>';
-    h += '<polyline class="ex-trail ex-t-given" points=""/><polyline class="ex-trail ex-t-gen" points=""/><g class="ex-bodies">';
+    h += '<g class="ex-dots ex-d-given"></g><g class="ex-dots ex-d-gen"></g><g class="ex-bodies">';
     h += '<rect class="ex-bumper" y="' + (Y(G.bumper[2]) - bh / 2) + '" width="' + bw + '" height="' + bh + '" rx="2"/>';
     for (k = 0; k < 6; k++) { h += '<rect class="ex-tile" x="' + (-tw / 2) + '" y="' + (-th / 2) + '" width="' + tw + '" height="' + th + '" rx="1"/>'; }
     h += '<circle class="ex-ball" r="' + (G.ball_r * S) + '"/></g>';
     svg.innerHTML = h;
-    return { svg: svg, ball: q('.ex-ball', svg), bump: q('.ex-bumper', svg), tiles: all('.ex-tile', svg), tg: q('.ex-t-given', svg), to: q('.ex-t-gen', svg) };
+    return { svg: svg, ball: q('.ex-ball', svg), bump: q('.ex-bumper', svg), tiles: all('.ex-tile', svg), dg: q('.ex-d-given', svg), dz: q('.ex-d-gen', svg) };
   }
-  function pose(v, src, i, amp, rnd) {
-    var s = D.src[src], b = s.ball[i];
-    function j(f) { return amp ? (rnd() - 0.5) * 2 * amp * f : 0; }
-    v.ball.setAttribute('cx', X(b[0] + j(1))); v.ball.setAttribute('cy', Y(Math.max(G.ball_r, b[1] + j(0.5))));
-    v.bump.setAttribute('x', X(s.bumper[i] - G.bumper[0] / 2 + j(0.5)));
-    s.tiles[i].forEach(function (t, k) {
-      v.tiles[k].setAttribute('transform', 'translate(' + X(t[0] + j(0.6)) + ',' + Y(Math.max(0.02, t[1] + j(0.3))) + ') rotate(' + ((t[2] + j(2)) * 180 / Math.PI).toFixed(1) + ')');
+  /* the bodies at frame i of a source; with s > 0 they sit on the straight path between that pose and the noise sample e */
+  function pose(v, src, i, s, e) {
+    var d = D.src[src], b = d.ball[i]; s = s || 0;
+    v.ball.setAttribute('cx', X(s ? mix(b[0], e.ball[0], s) : b[0])); v.ball.setAttribute('cy', Y(s ? mix(b[1], e.ball[1], s) : b[1]));
+    v.bump.setAttribute('x', X((s ? mix(d.bumper[i], e.bump, s) : d.bumper[i]) - G.bumper[0] / 2));
+    d.tiles[i].forEach(function (t, k) {
+      var n = s ? e.tiles[k] : t;
+      v.tiles[k].setAttribute('transform', 'translate(' + X(mix(t[0], n[0], s)) + ',' + Y(mix(t[1], n[1], s)) + ') rotate(' + (mix(t[2], n[2], s) * 180 / Math.PI).toFixed(1) + ')');
     });
   }
-  function trail(el, src, i0, i1, amp, rnd) {
-    var s = D.src[src], pts = [], i;
-    for (i = i0; i <= i1; i++) { pts.push(X(s.ball[i][0] + (amp ? (rnd() - 0.5) * 2 * amp : 0)) + ',' + Y(Math.max(G.ball_r, s.ball[i][1] + (amp ? (rnd() - 0.5) * amp : 0)))); }
-    el.setAttribute('points', i1 > i0 ? pts.join(' ') : '');
+  function dots(g, src, i0, i1, s, e) {
+    var d = D.src[src], n = Math.max(0, i1 - i0 + 1), k, c, p;
+    while (g.childNodes.length < n) { c = document.createElementNS(NS, 'circle'); c.setAttribute('r', '1.7'); g.appendChild(c); }
+    while (g.childNodes.length > n) { g.removeChild(g.lastChild); }
+    for (k = 0; k < n; k++) {
+      p = d.ball[i0 + k]; c = g.childNodes[k];
+      c.setAttribute('cx', X(s ? mix(p[0], e[i0 + k][0], s) : p[0])); c.setAttribute('cy', Y(s ? mix(p[1], e[i0 + k][1], s) : p[1]));
+    }
   }
   function look(v, cls) { v.svg.setAttribute('class', 'ex-v ' + cls); }
 
@@ -72,7 +82,7 @@
   }
   function inGiven(sp, t) { return sp.some(function (r) { return t >= r[0] - 0.02 && t <= r[1] + 0.02; }); }
 
-  var views = {}, modes = D.order, current = modes[0], runId = 0, raf = null;
+  var views = {}, modes = D.order, current = modes[0], runId = 0, raf = null, scrub = q('[data-ex-scrub]'), ctx = null;
   views.scene = makeView(q('[data-ex-view="scene"]')); look(views.scene, 'ex-v-given'); pose(views.scene, 'physx', 0);
 
   function render(m) {
@@ -81,7 +91,7 @@
     else if (!g.length) { inText = md.end_given ? 'hidden; only the start and the end state are given' : 'hidden: 0 to ' + sec(DUR) + ' s'; state = 'hidden'; }
     else if (g.length === 1) { inText = 'given: 0 to ' + sec(g[0][1]) + ' s &middot; hidden: ' + sec(g[0][1]) + ' to ' + sec(DUR) + ' s'; state = 'mixed'; }
     else { inText = 'given: 0 to ' + sec(g[0][1]) + ' s and ' + sec(g[1][0]) + ' to ' + sec(DUR) + ' s &middot; hidden: ' + sec(g[0][1]) + ' to ' + sec(g[1][0]) + ' s'; state = 'mixed'; }
-    outText = !motionGen ? 'given, so not generated' : !g.length ? 'generated: 0 to ' + sec(DUR) + ' s' : g.length === 1 ? 'generated: ' + sec(g[0][1]) + ' to ' + sec(DUR) + ' s' : 'generated: ' + sec(g[0][1]) + ' to ' + sec(g[1][0]) + ' s';
+    outText = !motionGen ? 'given, so not generated' : !g.length ? 'generated: 0 to ' + sec(DUR) + ' s, all time steps together' : g.length === 1 ? 'generated: ' + sec(g[0][1]) + ' to ' + sec(DUR) + ' s, all time steps together' : 'generated: ' + sec(g[0][1]) + ' to ' + sec(g[1][0]) + ' s, all time steps together';
     setCard(card('props-in'), m.props ? 'hidden' : 'given', head('Properties', m.props ? 'hidden' : D.props.objects.length + ' of ' + D.counts.movable + ' movable objects') + propsTable(m.props ? null : D.props['true']));
     setCard(card('action-in'), m.action ? 'hidden' : 'given', head('Action', m.action ? 'hidden' : '') + (m.action ? '<p class="ex-at ex-unk">?</p>' : actionText(D.action['true'])));
     setCard(card('motion-in'), state, head('Motion', inText) + '<div class="ex-vw"><svg aria-hidden="true"></svg><div class="ex-cover">hidden from the network</div></div>' + timeline(sp, 'in'));
@@ -91,78 +101,105 @@
     views.min = makeView(q('svg', card('motion-in'))); views.mout = motionGen ? makeView(q('svg', card('motion-out'))) : null;
     q('[data-ex-ask]').textContent = m.ask; q('[data-ex-given]').textContent = m.given; q('[data-ex-gen]').textContent = m.gen;
     all('.ex-tab').forEach(function (b) { var on = b.getAttribute('data-ex-mode') === m.key; b.classList.toggle('ex-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    ctx = context(m);
   }
 
-  function run(m, animate) {
-    var id = ++runId, md = D.modes[m.key], sp = spansOf(m.key), src = md.src, vin = views.min, vout = views.mout, cover = q('.ex-cover', card('motion-in'));
-    var g = md.given, h0 = g.length ? frameAt(g[0][1]) : 0, h1 = g.length > 1 ? frameAt(g[1][0]) : N - 1;        /* the hidden span of the motion, in frames */
-    var heads = all('.ex-head'), ticks = all('.ex-ticks i'), stepEl = q('[data-ex-step]');
-    var nums = all('.ex-is-gen [data-ex-n]'), acts = all('.ex-is-gen [data-ex-a]'), finalP = m.props ? D.props[m.key] : null, finalA = m.action ? D.action.backward : null;
-    var seed = 12345; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  /* everything a mode needs to be drawn at any sampling step or time: its spans, its outputs, and one fixed noise sample */
+  function context(m) {
+    var md = D.modes[m.key], g = md.given, seed = 20261 + m.key.length * 977, c;
+    function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    function u(a, b) { return a + (b - a) * rnd(); }
+    c = { m: m, md: md, sp: spansOf(m.key), src: md.src, vin: views.min, vout: views.mout, cover: q('.ex-cover', card('motion-in')),
+          h0: g.length ? frameAt(g[0][1]) : 0, h1: g.length > 1 ? frameAt(g[1][0]) : N - 1,                 /* the hidden span of the motion, in frames */
+          heads: all('.ex-head'), ticks: all('.ex-ticks i'), stepEl: q('[data-ex-step]'),
+          nums: all('.ex-is-gen [data-ex-n]'), acts: all('.ex-is-gen [data-ex-a]'), finalP: m.props ? D.props[m.key] : null, finalA: m.action ? D.action.backward : null };
+    c.eN = c.nums.map(function (el) { return el.getAttribute('data-ex-n').split(',')[1] === '0' ? u(0.02, 5) : u(0.05, 0.95); });
+    c.eA = [u(5, 80), u(0, 1.5), u(0.3, 2.2)];
+    c.eB = { ball: [u(-1.2, 1.5), u(0.15, 0.6)], bump: u(-1.1, 1.5), tiles: [0, 1, 2, 3, 4, 5].map(function () { return [u(-1.3, 1.7), u(0.12, 0.5), u(-1.6, 1.6)]; }) };
+    c.eD = []; for (var i = 0; i < N; i++) { c.eD.push([u(-1.5, 1.8), u(0.06, 0.68)]); }
+    return c;
+  }
+  function inputRest(c) {                                              /* the motion as the network is given it */
+    var k = c.m.key, hasSpan = c.md.given.length > 0;
+    if (k === 'property') { showInput(c, N - 1, true); dots(c.vin.dg, 'physx', 0, N - 1); }
+    else if (hasSpan) { showInput(c, c.h0, true); dots(c.vin.dg, 'physx', 0, c.h0); }
+    else if (c.md.end_given) { showInput(c, N - 1, true); dots(c.vin.dg, 'physx', 0, -1); }
+    else { showInput(c, 0, false); dots(c.vin.dg, 'physx', 0, -1); }
+  }
+  function showInput(c, i, given) { c.cover.classList.toggle('ex-on', !given); look(c.vin, given ? 'ex-v-given' : 'ex-v-none'); if (given) { pose(c.vin, 'physx', i); } }
+  /* the output at noise level s (1 = noise, 0 = the output): every hidden value at once, the given ones untouched */
+  function drawSigma(c, s) {
+    var k = Math.round((1 - s) * 10);
+    c.ticks.forEach(function (t, i) { t.classList.toggle('ex-on', i < k); });
+    c.stepEl.textContent = 'step ' + k + ' of 10'; scrub.value = k;
+    c.nums.forEach(function (el, n) { var ik = el.getAttribute('data-ex-n').split(','); el.textContent = fmt(Math.max(0, mix(c.finalP[+ik[0]][+ik[1]], c.eN[n], s))); });
+    c.acts.forEach(function (el) { var a = +el.getAttribute('data-ex-a'), x = Math.max(0, mix(c.finalA[a], c.eA[a], s)); el.textContent = a === 0 ? x.toFixed(1) : fmt(x); });
+    root.classList.toggle('ex-noisy', s > 0.001);
+    if (c.vout) {
+      look(c.vout, 'ex-v-gen'); pose(c.vout, c.src, c.h1, s, c.eB);
+      dots(c.vout.dg, c.src, 0, c.h0 > 0 ? c.h0 : -1);
+      dots(c.vout.dz, c.src, c.h0 + (c.h0 > 0 ? 1 : 0), c.h1, s, c.eD);
+    }
+  }
+  function stop() { runId++; if (raf) { cancelAnimationFrame(raf); raf = null; } root.classList.remove('ex-running'); if (ctx) { ctx.heads.forEach(function (x) { x.style.opacity = 0; }); } }
 
-    function numbers(tau) {
-      nums.forEach(function (el) { var ik = el.getAttribute('data-ex-n').split(','), v = finalP[+ik[0]][+ik[1]]; el.textContent = fmt(Math.max(0, v + (tau ? (rnd() - 0.5) * 2 * tau * (ik[1] === '0' ? Math.max(0.25, 0.6 * v) : 0.45) : 0))); });
-      acts.forEach(function (el) { var k = +el.getAttribute('data-ex-a'), v = finalA[k], x = Math.max(0, v + (tau ? (rnd() - 0.5) * 2 * tau * (k === 0 ? 20 : 0.5) : 0)); el.textContent = k === 0 ? x.toFixed(1) : fmt(x); });
-    }
-    function steps(k) { ticks.forEach(function (t, i) { t.classList.toggle('ex-on', i < k); }); stepEl.textContent = k ? 'step ' + k + ' of 10' : ' '; }
-    function inputAt(i, given) {                                       /* the motion as the network sees it at one time */
-      cover.classList.toggle('ex-on', !given);
-      look(vin, given ? 'ex-v-given' : 'ex-v-none');
-      if (given) { pose(vin, 'physx', i); }
-      trail(vin.tg, 'physx', 0, Math.min(i, m.key === 'property' ? N - 1 : h0), 0);
-    }
-    function outputAt(i, amp) {
-      if (!vout) { return; }
-      var given = i < h0 || (g.length > 1 && i > h1) || (i === 0);
-      look(vout, given && !amp ? 'ex-v-copy' : 'ex-v-gen');
-      pose(vout, src, i, amp, rnd);
-      trail(vout.tg, src, 0, Math.min(i, h0), 0);
-      trail(vout.to, src, h0, Math.max(h0, Math.min(i, h1)), amp, rnd);
-    }
-    function rest() {
-      numbers(0); steps(10); stepEl.textContent = '10 sampling steps'; root.classList.remove('ex-running');
-      heads.forEach(function (x) { x.style.opacity = 0; });
-      if (m.key === 'property') { inputAt(N - 1, true); }
-      else if (g.length) { inputAt(h0, true); }
-      else if (md.end_given) { inputAt(N - 1, true); vin.tg.setAttribute('points', ''); }
-      else { inputAt(0, false); }
-      if (vout) { outputAt(h1, 0); look(vout, 'ex-v-gen'); }
-    }
-    if (!animate || reduced) { rest(); return; }
-
-    var A = 1300, B = 3400, t0 = null, last = -1, playing = false;
-    root.classList.add('ex-running');
-    if (g.length || md.end_given || m.key === 'property') { inputAt(m.key === 'property' ? N - 1 : md.end_given && !g.length ? N - 1 : h0, true); if (md.end_given && !g.length) { vin.tg.setAttribute('points', ''); } } else { inputAt(0, false); }
+  /* a run: the observed motion once (if any), then the ten sampling steps */
+  function run(animate) {
+    var c = ctx, id, t0 = null, A, B = 3000, k = c.m.key;
+    stop(); id = runId;
+    if (!animate || reduced) { inputRest(c); drawSigma(c, 0); return; }
+    A = k === 'property' ? 1700 : c.md.given.length ? 1300 : 450;      /* time spent on the input before the steps start */
+    inputRest(c); drawSigma(c, 1);
     function frame(now) {
       if (id !== runId) { return; }
       if (t0 === null) { t0 = now; }
-      var el = now - t0;
-      if (el < A) {                                                    /* ten sampling steps: noise to output */
-        var k = Math.min(9, Math.floor(el / A * 10));
-        if (k !== last) { last = k; var tau = 1 - (k + 1) / 10; steps(k + 1); numbers(tau); outputAt(h1, 0.32 * tau); }
-      } else if (el < A + B) {                                         /* the motion, played once */
-        if (!playing) { playing = true; numbers(0); steps(10); root.classList.remove('ex-running'); heads.forEach(function (x) { x.style.opacity = 1; }); }
-        var t = (el - A) / B * DUR, i = frameAt(t);
-        heads.forEach(function (x) { x.style.left = (100 * t / DUR) + '%'; });
-        inputAt(i, m.key === 'property' || inGiven(sp, t));
-        outputAt(i, 0);
-      } else { rest(); return; }
+      var el = now - t0, t, i, uu, kk, f;
+      if (el < A) {
+        if (A > 500) {                                                 /* the observed part of the motion, played once on the input side */
+          t = el / A * DUR; i = frameAt(t);
+          c.heads[0].style.opacity = 1; c.heads[0].style.left = (100 * t / DUR) + '%';
+          showInput(c, i, k === 'property' || inGiven(c.sp, t));
+        }
+      } else if (el < A + B) {
+        if (!root.classList.contains('ex-running')) { root.classList.add('ex-running'); c.heads[0].style.opacity = 0; inputRest(c); }
+        uu = (el - A) / (B / 10); kk = Math.min(9, Math.floor(uu)); f = Math.min(1, (uu - kk) / 0.7); f = f * f * (3 - 2 * f);
+        drawSigma(c, Math.max(0, 1 - (kk + f) / 10));                   /* each step moves every hidden value a tenth of the way, then holds */
+      } else { root.classList.remove('ex-running'); drawSigma(c, 0); return; }
+      raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  /* the finished motion over time: the given spans on the input side, the generated span on the output side */
+  function play() {
+    var c = ctx, id, t0 = null, B = 3400, k = c.m.key;
+    stop(); id = runId; inputRest(c); drawSigma(c, 0);
+    if (reduced) { return; }
+    c.heads.forEach(function (x) { x.style.opacity = 1; });
+    function frame(now) {
+      if (id !== runId) { return; }
+      if (t0 === null) { t0 = now; }
+      var el = now - t0, t = Math.min(DUR, el / B * DUR), i = frameAt(t), given = k === 'property' || inGiven(c.sp, t);
+      c.heads.forEach(function (x) { x.style.left = (100 * t / DUR) + '%'; });
+      showInput(c, i, given);
+      if (c.vout) { look(c.vout, (i <= c.h0 && c.h0 > 0) || i > c.h1 || i === 0 ? 'ex-v-copy' : 'ex-v-gen'); pose(c.vout, c.src, i); }
+      if (el >= B) { c.heads.forEach(function (x) { x.style.opacity = 0; }); inputRest(c); drawSigma(c, 0); return; }
       raf = requestAnimationFrame(frame);
     }
     raf = requestAnimationFrame(frame);
   }
 
-  function show(key, animate) { current = modes.filter(function (m) { return m.key === key; })[0] || modes[0]; render(current); run(current, animate); }
+  function show(key, animate) { current = modes.filter(function (m) { return m.key === key; })[0] || modes[0]; stop(); render(current); run(animate); }
   root.addEventListener('click', function (ev) {
     var b = ev.target.closest('button'); if (!b) { return; }
     if (b.hasAttribute('data-ex-mode')) { show(b.getAttribute('data-ex-mode'), true); }
-    else if (b.hasAttribute('data-ex-replay')) { run(current, true); }
+    else if (b.hasAttribute('data-ex-replay')) { run(true); }
+    else if (b.hasAttribute('data-ex-play')) { play(); }
   });
+  scrub.addEventListener('input', function () { stop(); inputRest(ctx); drawSigma(ctx, 1 - (+scrub.value) / 10); });
   show(modes[0].key, false);
   /* the first mode runs once when the figure first comes into view; after that only the reader starts a run */
   if ('IntersectionObserver' in window && !reduced) {
-    var io = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { io.disconnect(); run(current, true); } }, { threshold: 0.6 });
+    var io = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { io.disconnect(); run(true); } }, { threshold: 0.6 });
     io.observe(root);
   }
 }());

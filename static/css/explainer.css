@@ -40,9 +40,8 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
 .ex-cover.ex-on { opacity: 1; }
 .ex-floor { stroke: #aab1b6; stroke-width: 1.5; }
 .ex-ramp { fill: #dfe3e6; stroke: #aab1b6; stroke-width: 1; }
-.ex-trail { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 0.1 5.5; }
-.ex-t-given { stroke: var(--given); }
-.ex-t-gen { stroke: var(--gen); }
+.ex-d-given circle { fill: var(--given); }
+.ex-d-gen circle { fill: var(--gen); }
 .ex-tile { stroke-width: 0.8; }
 .ex-v-given .ex-ball { fill: var(--given); }
 .ex-v-given .ex-bumper { fill: #5f8fdc; }
@@ -53,7 +52,7 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
 .ex-v-copy .ex-ball { fill: #8fb0e6; }
 .ex-v-copy .ex-bumper { fill: #b7cdf2; }
 .ex-v-copy .ex-tile { fill: #dbe6f8; stroke: #8fb0e6; }
-.ex-v-none .ex-bodies, .ex-v-none .ex-trail { display: none; }
+.ex-v-none .ex-bodies, .ex-v-none .ex-dots { display: none; }
 
 .ex-tl { position: relative; height: 9px; border-radius: 5px; margin-top: 0.35rem; overflow: hidden; }
 .ex-tl i { position: absolute; top: 0; bottom: 0; }
@@ -73,7 +72,7 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
 
 .ex-mid { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.45rem; }
 .ex-arrow { width: 30px !important; height: 13px !important; fill: none; stroke: #7b858b; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.ex-net { width: 100%; background: var(--dark); color: #fff; border-radius: 10px; padding: 0.75rem 0.4rem 0.65rem; text-align: center; border: 3px solid transparent; transition: border-color 0.2s; }
+.ex-net { width: 100%; background: var(--dark); color: #fff; border-radius: 10px; padding: 0.7rem 0.55rem 0.55rem; text-align: center; border: 3px solid transparent; transition: border-color 0.2s; }
 .ex-running .ex-net { border-color: #f1c4dd; }
 .ex-net b { display: block; font-size: 1.02rem; }
 .ex-net small { display: block; font-size: 0.7rem; opacity: 0.85; }
@@ -81,7 +80,10 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
 .ex-ticks i { width: 7px; height: 4px; border-radius: 2px; background: #6b6b6b; transition: background-color 0.1s; }
 .ex-ticks i.ex-on { background: #f29ccb; }
 .ex-step { min-height: 1em; white-space: nowrap; }
-.ex-replay { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 0.22rem 0.8rem; font: inherit; font-size: 0.8rem; cursor: pointer; }
+.ex-replay { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 0.22rem 0.7rem; font: inherit; font-size: 0.78rem; cursor: pointer; white-space: nowrap; }
+.ex-btns { display: flex; flex-direction: column; gap: 0.3rem; align-items: stretch; width: 100%; }
+.ex-scrub { width: 100%; margin: 0.35rem 0 0; accent-color: #f29ccb; cursor: pointer; }
+.ex-hint { font-size: 0.64rem !important; opacity: 0.7 !important; }
 .ex-replay:hover { border-color: #9aa3a8; }
 
 .ex-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1.1rem; margin-top: 0.65rem; font-size: 0.78rem; color: var(--muted); }
@@ -95,6 +97,7 @@ table.ex-pt td:first-child { text-align: left; font-weight: 400; white-space: no
 @media screen and (max-width: 860px) {
   .ex-stage { grid-template-columns: 1fr; }
   .ex-mid { flex-direction: row; flex-wrap: wrap; }
+  .ex-btns { flex-direction: row; width: auto; }
   .ex-arrow { transform: rotate(90deg); }
   .ex-net { width: auto; flex: 1 1 10rem; padding: 0.5rem 0.6rem; }
 }

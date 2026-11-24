@@ -340,10 +340,10 @@ VDM_TILES = {'physx': ('PhysX', 'ground truth', 'ref'), 'neuworld': ('NeuWorld',
              'wan14b': ('Wan2.2 14B', 'input: first frame and text', ''), 'cosmos14b': ('Cosmos-Predict2.5 14B', 'input: first frame and text', '')}
 
 
-def vdm_section(d, pickers):
+def vdm_section(d, pickers, gns=None):
     if not d:
         return ''
-    items = []
+    items = []; gns = (gns or {}).get('items', {})
     for it in d['items']:
         tiles = []
         for t in it['tiles']:
@@ -355,12 +355,15 @@ def vdm_section(d, pickers):
                 tile['info'] = (f'<div class="vid"><img src="{e(it["first_frame"])}" alt="first frame" loading="lazy"><span class="vid-tag">first frame</span></div>'
                                 f'<div><b>{e(label)}</b> generated this clip from the first frame and this prompt:<blockquote class="sp-prompt">{e(prompt)}</blockquote></div>')
             tiles.append(tile)
+            if t['key'] == 'neuworld' and it['id'] in gns:           # the graph network simulator of Fig. 2 of the paper, same renderer and camera
+                tiles.append({'label': 'GNS', 'sub': 'input: scene graph and action', 'cls': '', 'src': gns[it['id']]['src'], 'poster': it.get('poster')})
         cap = (f"<b>{e(it['description'])}</b> <span class=\"m\">Test scene, not seen in training.</span><br>"
-               f"<b style=\"color:var(--gen)\">NeuWorld:</b> {e(it['neuworld_note'])} <b>Video models:</b> {e(it['video_model_note'])}")
+               f"<b style=\"color:var(--gen)\">NeuWorld:</b> {e(it['neuworld_note'])} " + (f"<b>GNS:</b> {e(gns[it['id']]['note'])} " if it['id'] in gns else '')
+               + f"<b>Video models:</b> {e(it['video_model_note'])}")
         title = it['family'].replace('_', ' ')
         items.append({'id': it['id'], 'title': title, 'short': title, 'thumb': it.get('poster') or it['first_frame'], 'poster': it.get('poster'), 'tiles': tiles, 'caption': cap})
     pickers['vdm'] = {'items': items}
-    t = d.get('table')
+    t = d.get('table'); gns_line = ' The two scenes of Fig. 2 of the paper also show its graph network simulator (GNS) baseline.' if gns else ''
     table = ''
     if t:
         table = (f'<details class="sp-more" open><summary>Measured over 36 test scenes</summary><p class="sp-note" style="margin:0.5rem 0">{e(t["caption"])}</p>'
@@ -368,7 +371,7 @@ def vdm_section(d, pickers):
     return f'''<section class="section sp-section" id="video-models"><div class="sp-container sp-wide">
 <h2 class="title is-3 has-text-centered">Comparison with video diffusion models</h2>
 <p class="sp-lead">The video models are conditioned on the rendered first frame and a text prompt that states the action and, in order, what happens.
-NeuWorld is conditioned on the scene graph and the action; it receives no image and no description of the outcome. The <i>i</i> button on a video-model clip shows its prompt.</p>
+NeuWorld is conditioned on the scene graph and the action; it receives no image and no description of the outcome. The <i>i</i> button on a video-model clip shows its prompt.{gns_line}</p>
 <div class="picker" data-picker="vdm"></div>
 {table}
 <p class="sp-note" style="margin-top:0.7rem">The remarks on what each model does are observations by eye.</p>
@@ -772,7 +775,7 @@ def main():
                 ('families', 'Test scenes across motion families', f'PhysX next to NeuWorld on {n_fwd} test scenes, grouped by kind of motion.', forward_section(v1, showcase)),
                 ('what-if', 'Counterfactuals and interventions', 'One scene simulated again under a stated change, with measured outcomes.', whatif_section(whatif, pickers, load('whatif_fig4.json'))),
                 ('one-scene', 'One scene, all methods', 'Fig. 1 of the paper as video: PhysX, NeuWorld, video models, a robot policy and language models.', teaser_section(teaser, llm, pickers)),
-                ('video-models', 'Comparison with video diffusion models', f"{len(vdm['items'])} test scenes with the prompt of every generated clip, and the measured comparison." if vdm else '', vdm_section(vdm, pickers)),
+                ('video-models', 'Comparison with video diffusion models', f"{len(vdm['items'])} test scenes with the prompt of every generated clip, and the measured comparison." if vdm else '', vdm_section(vdm, pickers, load('gns_tiles.json'))),
                 ('llm-vla', 'Language-model planner and robot policy' if teaser else 'Comparison with language models and a robot policy', 'A planner that tries its actions in simulation first, and a zero-shot robot policy in the test scenes.',
                  others_section(llm, load('compare_vla.json'), pickers, grid=not teaser, teaser=teaser)),
                 ('twins', 'Scans of real rooms', 'NeuWorld in scenes reconstructed from scans of real places.', twins_section(load('twins.json'), pickers)),
