@@ -200,7 +200,9 @@
       function render() {
         var it = data.items.filter(function (x) { return x.id === current; })[0], n = (it.tiles || []).length;
         if (it.rows) {
-          var bar = data.variants ? '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + data.variants.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>' : '';
+          var avail = (data.variants || []).filter(function (k) { return it.rows.every(function (r) { return r.tiles.some(function (t) { return t.variants && t.variants[k]; }); }); });
+          if (avail.indexOf(variant) < 0) { variant = 'reg'; }
+          var bar = avail.length > 1 ? '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + avail.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>' : '';
           var rowsHtml = bar + '<div class="wf sync-group">' + it.rows.map(function (r) {
             return '<div class="wf-row"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + (r.texts ? (r.texts[variant] || r.texts.reg || '') : (r.text || '')) + '</div>' + r.tiles.map(function (t) { return tileHtml(it, t); }).join('') + '</div>';
           }).join('') + '</div><div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
