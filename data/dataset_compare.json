@@ -1,0 +1,38 @@
+{
+ "schema": "supp-dataset-compare-1",
+ "source": "Table 6 in Sec. D.1 (Datasets and Metrics) of the appendix",
+ "transcribed_from": "tables/dataset_comparison_full.tex of the paper source (label tab:datasets_full), every cell",
+ "groups": [["", 1], ["Scale", 5], ["Channels", 3], ["Content", 5], ["Causes", 3]],
+ "columns": ["Dataset", "Simulations", "Scenes", "Families", "Stored rate (Hz)", "Objects", "Depth", "Optical flow", "Scene flow", "Properties", "Timed actions", "Joints",
+             "Deformable, fluid", "Realistic scenes", "Counterfactual runs", "Interventions", "Q&A pairs"],
+ "rows": [
+  ["CoPhy", "572k", "143k", "3", "20", "2–6", "✓", "✗", "✗", "✓", "✗", "✗", "✗", "✗", "✓", "✗", "✗"],
+  ["CLEVRER", "20k", "20k", "1", "25", "–", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "✗", "305k"],
+  ["Physion", "25k", "25k", "8", "30", "7 (15)", "✓", "✓", "✗", "✓", "✗", "✓", "✓", "✗", "✗", "✗", "✗"],
+  ["ComPhy", "60k", "12k", "–", "–", "3–5", "✗", "✗", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✗", "100k"],
+  ["MOVi-A", "10k", "10k", "1", "12", "3–10", "✓", "✓", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✗", "✗"],
+  ["MOVi-B", "10k", "10k", "1", "12", "3–10", "✓", "✓", "✗", "✓", "✗", "✗", "✗", "✗", "✗", "✗", "✗"],
+  ["DynSuperCLEVR", "1.2k", "1.2k", "–", "60", "–", "✗", "✗", "✗", "–", "✗", "✗", "✗", "✗", "✓", "✗", "12k"],
+  ["NewtPhys", "11k", "53", "–", "25", "≤10", "✓", "✗", "✓", "✓", "✗", "✗", "✓", "✓", "✓", "✗", "141k"],
+  ["PhysInOne", "154k", "154k", "71", "30", "4–8", "✓", "✓†", "✗", "✓", "✗", "✓", "✓", "✓", "✗", "✗", "✗"],
+  ["Ours", "506k", "13k", "56", "120", "24 (113)", "✓†", "✓†", "✓†", "✓", "✓", "✓", "✗", "✓", "✓", "✓", "490k"]
+ ],
+ "ours_row": "Ours",
+ "best": {"CoPhy": ["Simulations"], "PhysInOne": ["Scenes", "Families"], "Ours": ["Stored rate (Hz)", "Objects", "Q&A pairs"]},
+ "second": {"CoPhy": ["Scenes"], "CLEVRER": ["Q&A pairs"], "Physion": ["Objects"], "DynSuperCLEVR": ["Stored rate (Hz)"], "Ours": ["Simulations", "Families"]},
+ "symbols": {"✓": "present", "✗": "absent", "✓†": "derivable from the stored states on demand", "–": "not reported"},
+ "compact": {
+  "columns": ["Dataset", "Simulations", "Scenes", "Stored rate (Hz)", "Objects", "Timed actions", "Deformable, fluid", "Counterfactual runs", "Interventions", "Q&A pairs"],
+  "dropped": ["Families", "Depth", "Optical flow", "Scene flow", "Properties", "Joints", "Realistic scenes"],
+  "note": "A narrower view for the page: the columns in which the datasets differ most. The full table has all 17 columns; nothing in rows or cells is changed."
+ },
+ "points": [
+  "Ours is the only dataset in the table that stores the timed action behind each motion (a program with an onset and a duration) and interventions during the motion.",
+  "States are stored at 120 Hz, against 12 to 60 Hz in the datasets that report a rate, and a scene holds a median of 24 and up to 113 objects, against at most 15 in the others.",
+  "With 506k simulations it is second in size to CoPhy (572k), whose sequences hold 2 to 6 objects. Its 13k scenes are each simulated under up to six actions and their counterfactual edits; PhysInOne has more scenes (154k) and more families (71).",
+  "Counterfactual runs are also in CoPhy, DynSuperCLEVR and NewtPhys. The 490k question-answer pairs are the most in the table.",
+  "What ours does not have: deformable bodies and fluids (Physion, NewtPhys and PhysInOne do), and stored image channels. Depth, optical flow and scene flow are rendered from the stored states on demand."
+ ],
+ "caption": "Table 6 of the appendix. Objects: median (maximum) where measured, otherwise as published. ✓ present, ✗ absent, ✓† derivable from the stored states on demand, – not reported. A timed action is a program with an onset and a duration, given as an input. An intervention is a change during the motion, not only at the start. Our scenes are sampled worlds, each simulated under up to six actions and their counterfactual edits. NewtPhys and DynSuperCLEVR also re-simulate counterfactuals, on 53 scenes and 1.2k videos. Bold: best; underlined: second. References for each dataset are in the appendix.",
+ "appendix_sentence": "Against the datasets of Table 6, our scenes are larger and our states are stored at a higher rate than in any that reports these numbers."
+}

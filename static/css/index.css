@@ -1,6 +1,6 @@
 /*
  * Supplementary results page. The look follows the Nerfies academic template (Bulma, centred titles, dark rounded
- * buttons), widened so result panels use most of a laptop screen. Everything is local: no remote fonts, scripts or styles.
+ * buttons), widened so result panels use most of a laptop screen. Fonts, scripts and styles are local files.
  */
 
 @font-face { font-family: "Noto Sans"; font-weight: 400; font-style: normal; font-display: swap; src: url("../fonts/noto-sans-latin-400.woff2") format("woff2"); }
@@ -82,6 +82,19 @@ a { color: #3273dc; }
 .vid .ov-label.al.up { transform: translate(-0.5rem, calc(-100% - 0.8rem)); }
 .vid .ov-label.ar.up { transform: translate(calc(-100% + 0.5rem), calc(-100% - 0.8rem)); }
 .sync-group { cursor: pointer; }
+/* a clip that is not playing carries a small play mark; it goes away while its group plays */
+.vid.is-clip::after { content: ""; position: absolute; right: 0.5rem; bottom: 0.5rem; width: 26px; height: 26px; border-radius: 50%; background: rgba(17, 17, 17, 0.62); transition: opacity 0.15s; pointer-events: none; }
+.vid.is-clip::before { content: ""; position: absolute; right: calc(0.5rem + 7px); bottom: calc(0.5rem + 7px); width: 10px; height: 12px; background: #fff; clip-path: polygon(0 0, 100% 50%, 0 100%); z-index: 1; transition: opacity 0.15s; pointer-events: none; }
+.pg.playing .vid.is-clip::after, .pg.playing .vid.is-clip::before { opacity: 0; }
+.info-btn { position: absolute; right: 0.45rem; top: 0.45rem; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #fff; background: rgba(17, 17, 17, 0.68); color: #fff; font: italic 700 0.86rem/1 Georgia, "Times New Roman", serif; cursor: pointer; padding: 0; z-index: 2; }
+.info-btn:hover, .info-btn.on { background: #fff; color: #111; border-color: #111; }
+.info-panel { margin-top: 0.7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); padding: 0.7rem 0.9rem; font-size: 0.88rem; line-height: 1.5; cursor: auto; display: grid; grid-template-columns: minmax(120px, 200px) 1fr; gap: 0.9rem; align-items: start; }
+@media screen and (max-width: 600px) { .info-panel { grid-template-columns: 1fr; } }
+.info-panel blockquote { margin: 0.3rem 0 0; color: var(--ink); }
+.sp-how { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 0.9rem; margin: 0 auto 0.9rem; padding: 0.55rem 1rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.92rem; color: var(--ink); width: fit-content; max-width: 100%; }
+.sp-how .mark { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: rgba(17, 17, 17, 0.72); position: relative; flex: 0 0 auto; }
+.sp-how .mark::after { content: ""; position: absolute; left: 8px; top: 6px; width: 8px; height: 10px; background: #fff; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+@media screen and (max-width: 600px) { .sp-how { border-radius: 12px; } }
 
 /* ---------- Mode viewer ---------- */
 .mv { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 1.1rem 1.1rem 1.2rem; }
@@ -255,3 +268,27 @@ details.sp-more > summary { cursor: pointer; font-weight: 600; font-size: 0.92re
 blockquote.sp-prompt { border-left: 3px solid var(--line); margin: 0.4rem 0; padding: 0.2rem 0.8rem; color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
 
 .sp-footer { padding: 2rem 0 2.6rem; color: var(--muted); font-size: 0.86rem; text-align: center; }
+.sp-footer a { color: var(--muted); text-decoration: underline; }
+
+/* ---------- The grid of all methods on one scene ---------- */
+.tz-matrix { max-width: 1320px; margin-inline: auto; }
+.tz-matrix .vid { background: #fff; border: 1px solid var(--line); }
+.tz-matrix .vid video { object-fit: contain; }
+ul.sp-points { max-width: 880px; margin: 0 auto 1rem; padding-left: 1.2rem; list-style: disc; font-size: 0.98rem; line-height: 1.55; }
+ul.sp-points li { margin: 0.25rem 0; }
+
+/* ---------- Contents ---------- */
+.sp-toc { border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem 1.2rem 1rem; margin: 1.1rem 0 1.3rem; background: #fff; }
+.sp-toc h2 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.sp-toc ol { margin: 0; padding-left: 1.3rem; columns: 2; column-gap: 2.2rem; font-size: 0.95rem; }
+@media screen and (max-width: 700px) { .sp-toc ol { columns: 1; } }
+.sp-toc li { break-inside: avoid; margin: 0 0 0.55rem; line-height: 1.35; }
+.sp-toc li a { font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: #b6bdc1; text-underline-offset: 2px; }
+.sp-toc li a:hover { color: #3273dc; text-decoration-color: #3273dc; }
+.sp-toc li span { display: block; font-size: 0.84rem; color: var(--muted); }
+/* ---------- Dataset comparison ---------- */
+table.sp-table.dc { font-size: 0.86rem; }
+table.sp-table.dc td.yes { color: #1e7a34; }
+table.sp-table.dc td.no { color: #a9b0b4; }
+table.sp-table.dc tr.ours td { background: #f3f6fb; font-weight: 600; }
+table.sp-table.dc u { text-decoration-color: #9aa3a8; text-underline-offset: 2px; }

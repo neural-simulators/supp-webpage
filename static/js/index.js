@@ -1,4 +1,4 @@
-/* Supplementary results page: clips that play together, the inference-mode viewer and gallery switches.
+/* Supplementary results page: clips that play together under the pointer, the inference-mode viewer and gallery switches.
    Plain script (no modules, no network requests), so the page works when opened from a folder. */
 (function () {
   'use strict';
@@ -8,19 +8,23 @@
   function make(tag, cls, html) { var e = document.createElement(tag); if (cls) { e.className = cls; } if (html != null) { e.innerHTML = html; } return e; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  /* ---- Clips of one group start, loop and pause together; they load when the group first comes into view. ---- */
+  /* ---- Clips of one group play together. Nothing plays on its own: a group plays while the pointer is over it, or after a click or tap
+     (a second click stops it). Only one group plays at a time, and a clip is loaded when its group first plays. ---- */
   var groups = [];
   function Group(root) {
-    this.root = root; this.visible = false; this.held = false; this.onTime = null;
+    this.root = root; this.hover = false; this.pinned = false; this.onTime = null;
     var self = this;
-    root.addEventListener('click', function (ev) { if (ev.target.closest('button, a, summary')) { return; } self.held = !self.held; self.update(); });
+    root.classList.add('pg');
+    root.addEventListener('pointerenter', function (ev) { if (ev.pointerType === 'mouse') { self.hover = true; self.update(); } });
+    root.addEventListener('pointerleave', function (ev) { if (ev.pointerType === 'mouse') { self.hover = false; self.update(); } });
+    root.addEventListener('click', function (ev) { if (ev.target.closest('button, a, summary, .info-panel')) { return; } self.pinned = !self.pinned; if (!self.pinned) { self.hover = false; } self.update(); });
     this.refresh();
   }
   Group.prototype.refresh = function () {
     var self = this;
     this.videos = all('video', this.root);
     this.master = this.videos[0] || null;
-    this.videos.forEach(function (v) { v.muted = true; v.playsInline = true; v.loop = false; v.preload = 'none'; });
+    this.videos.forEach(function (v) { v.muted = true; v.playsInline = true; v.loop = false; v.preload = 'none'; v.parentNode.classList.add('is-clip'); });
     if (this.master) {
       this.master.addEventListener('ended', function () { self.restart(); });
       this.master.addEventListener('timeupdate', function () { self.tick(); });
@@ -39,17 +43,17 @@
     this.videos.forEach(function (v) { if (v !== m && v.readyState >= 2 && Math.abs(v.currentTime - t) > 0.12) { v.currentTime = t; } });
     if (this.onTime) { this.onTime(t, m.duration || 0); }
   };
+  Group.prototype.stop = function () { this.hover = false; this.pinned = false; this.update(); };
   Group.prototype.update = function () {
-    var play = this.visible && !this.held;
-    if (play) { this.load(); }
+    var play = (this.hover || this.pinned) && document.body.contains(this.root), self = this;
+    if (play) { groups.forEach(function (g) { if (g !== self && (g.hover || g.pinned)) { g.stop(); } }); this.load(); }
+    this.root.classList.toggle('playing', play);
     this.videos.forEach(function (v) {
       if (play) { var p = v.play(); if (p && p.catch) { p.catch(function () {}); } } else { v.pause(); }
     });
   };
-  function watch(root) { var g = new Group(root); groups.push(g); if (observer) { observer.observe(root); } else { g.visible = true; g.update(); } root._group = g; return g; }
-  var observer = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) { var g = en.target._group; if (g) { g.visible = en.isIntersecting; g.update(); } });
-  }, { rootMargin: '150px 0px', threshold: 0.2 }) : null;
+  function watch(root) { var g = new Group(root); groups.push(g); root._group = g; return g; }
+  function unwatch(host) { all('.pg', host).forEach(function (el) { var g = el._group; if (g) { g.stop(); var i = groups.indexOf(g); if (i >= 0) { groups.splice(i, 1); } } }); }
 
   /* ---- Galleries: a switch that swaps the NeuWorld variant of every card, and a filter by kind of motion. ---- */
   function initGalleries() {
@@ -162,8 +166,7 @@
       html += '<p class="mv-caption"><b>' + esc(scene.title) + '.</b> ' + esc(scene.caption || '') + '</p>';
       var list = scenesOf(state.mode);
       html += '<div class="mv-scenes">' + list.map(function (s) { return '<button type="button" data-scene="' + esc(s.id) + '" class="' + (s.id === state.scene ? 'on' : '') + '"><img src="' + esc(s.modes[state.mode].first) + '" alt="" loading="lazy"><span>' + esc(s.short || s.title) + '</span></button>'; }).join('') + '</div>';
-      /* swap the content, keep the observer on the new group */
-      all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });
+      unwatch(host);
       host.innerHTML = html;
       var groupEl = host.querySelector('.sync-group'), g = watch(groupEl);
       var head = host.querySelector('.tl-head'), cover = host.querySelector('.mv-col.given .vid-cover'), genVid = host.querySelector('.mv-col.gen .vid');
@@ -175,7 +178,6 @@
         if (cover && info.given_view === 'clip') { cover.classList.toggle('on', !inside); }
         if (genVid && info.output !== 'values' && given.length) { genVid.classList.toggle('is-given', inside); genVid.classList.toggle('is-gen', !inside); var tag = genVid.querySelector('.vid-tag'); if (tag) { tag.textContent = VARIANT_LABEL[state.variant] + (inside ? ' · frames copied from the input' : ' · generated'); } }
       };
-      var rect = host.getBoundingClientRect(); g.visible = rect.top < window.innerHeight && rect.bottom > 0; g.update();
     }
     host.addEventListener('click', function (ev) {
       var b = ev.target.closest('button'); if (!b) { return; }
@@ -186,56 +188,63 @@
     render();
   }
 
-  /* ---- Pickers: one row of clips that play together, with a strip of scenes to choose from ---- */
+  /* ---- Pickers: clips of one scene side by side, with a strip of scenes to choose from. A tile with a prompt has an "i" button that shows it. ---- */
   function initPickers() {
     all('.picker[data-picker]').forEach(function (host) {
       var data = (SUPP.pickers || {})[host.dataset.picker]; if (!data || !data.items.length) { return; }
       var current = data.items[0].id, variant = 'reg';
-      function tileHtml(it, t) {
+      function tileHtml(it, t, i, named) {
         var ar = it.aspect ? ' style="aspect-ratio:' + esc(it.aspect) + '"' : '';
-        var src = t.variants ? (t.variants[variant] || t.variants.reg) : t.src, label = t.variants ? VARIANT_LABEL[t.variants[variant] ? variant : 'reg'] : t.label;
-        var note = t.notes ? (t.notes[t.variants && t.variants[variant] ? variant : 'reg'] || '') : (t.note || '');
-        return '<div class="pk-tile ' + (t.cls || '') + '"><h4>' + esc(label) + (t.sub ? '<span>' + esc(t.sub) + '</span>' : '') + '</h4><div class="vid"' + ar + '><video data-src="' + esc(src) + '" poster="' + esc(t.poster || it.poster || '') + '" muted playsinline preload="none"></video>' + (t.overlay || '') + '</div>' + (note ? '<p class="pk-note">' + note + '</p>' : '') + '</div>';
+        var k = t.variants ? (t.variants[variant] ? variant : 'reg') : null;
+        var label = t.variants ? (named ? VARIANT_LABEL[k] : 'NeuWorld') : t.label, note = t.notes ? (t.notes[k] || '') : (t.note || '');
+        var media = t.image ? '<img src="' + esc(t.image) + '" alt="" loading="lazy">'
+          : '<video data-src="' + esc(t.variants ? t.variants[k] : t.src) + '" poster="' + esc(t.poster || it.poster || '') + '" muted playsinline preload="none"></video>';
+        var ibtn = t.info ? '<button type="button" class="info-btn" data-info="' + i + '" aria-label="Show the prompt of this clip" title="Show the prompt of this clip">i</button>' : '';
+        return '<div class="pk-tile ' + (t.cls || '') + '"><h4>' + esc(label) + (t.sub ? '<span>' + esc(t.sub) + '</span>' : '') + '</h4><div class="vid"' + ar + '>' + media + (t.overlay || '') + ibtn + '</div>' + (note ? '<p class="pk-note">' + note + '</p>' : '') + '</div>';
       }
       function render() {
-        var it = data.items.filter(function (x) { return x.id === current; })[0], n = (it.tiles || []).length;
+        var it = data.items.filter(function (x) { return x.id === current; })[0], html = '';
         if (it.rows) {
           var avail = (data.variants || []).filter(function (k) { return it.rows.every(function (r) { return r.tiles.some(function (t) { return t.variants && t.variants[k]; }); }); });
           if (avail.indexOf(variant) < 0) { variant = 'reg'; }
-          var bar = avail.length > 1 ? '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + avail.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>' : '';
-          var rowsHtml = bar + '<div class="wf sync-group">' + it.rows.map(function (r) {
-            return '<div class="wf-row"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + (r.texts ? (r.texts[variant] || r.texts.reg || '') : (r.text || '')) + '</div>' + r.tiles.map(function (t) { return tileHtml(it, t); }).join('') + '</div>';
-          }).join('') + '</div><div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
-          if (data.items.length > 1) { rowsHtml += '<div class="mv-scenes">' + data.items.map(function (x) { return '<button type="button" data-item="' + esc(x.id) + '" class="' + (x.id === current ? 'on' : '') + '"><img src="' + esc(x.thumb) + '" alt="" loading="lazy"><span>' + esc(x.short || x.title) + '</span></button>'; }).join('') + '</div>'; }
-          all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });
-          host.innerHTML = rowsHtml;
-          var gg = watch(host.querySelector('.sync-group')), rr = host.getBoundingClientRect(); gg.visible = rr.top < window.innerHeight && rr.bottom > 0; gg.update();
-          var ovs = all('.ov, .ov-label', host); gg.onTime = function (t) { ovs.forEach(function (o) { var a = parseFloat(o.dataset.from || '0'), b = parseFloat(o.dataset.to || '1.4'); o.style.opacity = (t >= a && t < b) ? 1 : 0; }); };
-          return;
+          var named = avail.length > 1;
+          if (named) { html += '<div class="gal-bar" style="justify-content:flex-end;margin-bottom:0.6rem"><div><span class="seg-label">NeuWorld variant</span><span class="seg">' + avail.map(function (k) { return '<button type="button" data-pkvar="' + k + '" class="' + (k === variant ? 'on' : '') + '">' + VARIANT_LABEL[k].replace('NeuWorld', '') + '</button>'; }).join('') + '</span></div></div>'; }
+          html += '<div class="wf">' + it.rows.map(function (r) {
+            var text = r.texts ? (r.texts[variant] || r.texts.reg || '') : (r.text || '');
+            if (!named) { text = text.replace(/NeuWorld\+(Reg|FM|DDPM)/g, 'NeuWorld'); }
+            return '<div class="wf-row sync-group"><div class="wf-text ' + (r.cls || '') + '"><small>' + esc(r.kind || '') + '</small><b>' + esc(r.label) + '</b>' + text + '</div>' + r.tiles.map(function (t, i) { return tileHtml(it, t, i, named); }).join('') + '</div>';
+          }).join('') + '</div>';
+        } else {
+          html += '<div class="pk-tiles sync-group" style="--n:' + it.tiles.length + '">' + it.tiles.map(function (t, i) { return tileHtml(it, t, i, false); }).join('') + '</div><div class="info-panel" hidden></div>';
         }
-        var html = '<div class="pk-tiles sync-group" style="--n:' + n + '">' + it.tiles.map(function (t) {
-          var ar = it.aspect ? ' style="aspect-ratio:' + esc(it.aspect) + '"' : '';
-          var media = t.image ? '<div class="vid"' + ar + '><img src="' + esc(t.image) + '" alt="" loading="lazy"></div>'
-            : '<div class="vid"' + ar + '><video data-src="' + esc(t.src) + '" poster="' + esc(t.poster || it.poster || '') + '" muted playsinline preload="none"></video></div>';
-          return '<div class="pk-tile ' + (t.cls || '') + '"><h4>' + esc(t.label) + (t.sub ? '<span>' + esc(t.sub) + '</span>' : '') + '</h4>' + media + (t.note ? '<p class="pk-note">' + t.note + '</p>' : '') + '</div>';
-        }).join('') + '</div>';
         html += '<div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
         if (data.items.length > 1) {
           html += '<div class="mv-scenes">' + data.items.map(function (x) { return '<button type="button" data-item="' + esc(x.id) + '" class="' + (x.id === current ? 'on' : '') + '"><img src="' + esc(x.thumb) + '" alt="" loading="lazy"><span>' + esc(x.short || x.title) + '</span></button>'; }).join('') + '</div>';
         }
-        all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });
+        unwatch(host);
         host.innerHTML = html;
-        var g = watch(host.querySelector('.sync-group')), rect = host.getBoundingClientRect(); g.visible = rect.top < window.innerHeight && rect.bottom > 0; g.update();
+        all('.sync-group', host).forEach(function (el) {
+          var g = watch(el), ovs = all('.ov, .ov-label', el); if (!ovs.length) { return; }
+          /* an action is drawn on the clip from the moment it happens: the planned action on the start frame, a change during the motion when it occurs */
+          g.onTime = function (t) { ovs.forEach(function (o) { var a = parseFloat(o.dataset.from || '0'), b = parseFloat(o.dataset.to || '1.4'); o.style.opacity = (t >= a && t < b) ? 1 : 0; }); };
+          g.onTime(0);
+        });
       }
       host.addEventListener('click', function (ev) {
         var b = ev.target.closest('button[data-item]'); if (b) { current = b.dataset.item; render(); return; }
-        var v = ev.target.closest('button[data-pkvar]'); if (v) { variant = v.dataset.pkvar; render(); }
+        var v = ev.target.closest('button[data-pkvar]'); if (v) { variant = v.dataset.pkvar; render(); return; }
+        var ib = ev.target.closest('button[data-info]');
+        if (ib) {
+          var it = data.items.filter(function (x) { return x.id === current; })[0], panel = host.querySelector('.info-panel'), was = ib.classList.contains('on');
+          all('button[data-info]', host).forEach(function (x) { x.classList.remove('on'); });
+          if (was) { panel.hidden = true; } else { ib.classList.add('on'); panel.innerHTML = it.tiles[+ib.dataset.info].info; panel.hidden = false; }
+        }
       });
       render();
     });
   }
 
-  /* ---- Small helpers: tab switches, clips that play under the pointer, the read-out of a line chart ---- */
+  /* ---- Small helpers: tab switches, class toggles, the read-out of a line chart ---- */
   function initTabs() {
     all('[data-tabs]').forEach(function (bar) {
       bar.addEventListener('click', function (ev) {
@@ -248,15 +257,6 @@
     all('[data-toggle-class]').forEach(function (bar) {
       var parts = bar.dataset.toggleClass.split(':'), target = document.getElementById(parts[0]), b = bar.querySelector('button');
       bar.addEventListener('click', function () { var on = target.classList.toggle(parts[1]); b.textContent = on ? b.dataset.on : b.dataset.off; b.classList.toggle('on', on); });
-    });
-  }
-  function initHoverPlay() {
-    all('.hover-play').forEach(function (card) {
-      var v = card.querySelector('video'); if (!v) { return; }
-      function start() { if (!v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; } var p = v.play(); if (p && p.catch) { p.catch(function () {}); } }
-      card.addEventListener('mouseenter', start);
-      card.addEventListener('mouseleave', function () { v.pause(); });
-      card.addEventListener('click', function () { if (v.paused) { start(); } else { v.pause(); } });
     });
   }
   function initCharts() {
@@ -282,7 +282,6 @@
     initPickers();
     initTabs();
     initToggles();
-    initHoverPlay();
     initCharts();
   });
 }());

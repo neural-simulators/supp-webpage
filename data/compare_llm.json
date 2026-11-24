@@ -166,6 +166,60 @@
    ],
    "caption": "Share of 206 tasks whose goal check passes in PhysX (Table 9 of the supplementary)."
   },
+  "controls": {
+   "text": "Three tries differ from one action in two ways: the planner sees an outcome, and it may answer again. A third run on the same 206 tasks separates the two. Every setting starts from the same first answer, and PhysX judges the final action. Asked twice to check its own answer, without any outcome, the planner meets 79 goals, two more than its 77 with one action. With outcomes predicted by NeuWorld+Reg it meets 96 goals, and with outcomes predicted by the GNS 92. A search over 128 actions scored by NeuWorld+Reg, without a language model, meets 93 goals when the objects to act on are given.",
+   "table": {
+    "columns": [
+     "Setting",
+     "Goals met (of 206)",
+     "Difference"
+    ],
+    "rows": [
+     [
+      "Claude Opus 5.5: one action",
+      "77",
+      "\u221219 [\u221230, \u22128]"
+     ],
+     [
+      "Claude Opus 5.5: three answers, checking itself, no simulator",
+      "79",
+      "\u221217 [\u221229, \u22124]"
+     ],
+     [
+      "Three random valid actions, PhysX keeps the best",
+      "82",
+      "\u221214 [\u221227, \u22121]"
+     ],
+     [
+      "Claude Opus 5.5: up to three tries, outcomes predicted by the GNS",
+      "92",
+      "\u22124 [\u221216, +8]"
+     ],
+     [
+      "Claude Opus 5.5: up to three tries, outcomes predicted by NeuWorld+Reg",
+      "96",
+      "-"
+     ],
+     [
+      "Search over 128 actions scored by NeuWorld+Reg, no language model: objects given",
+      "93",
+      "\u22123 [\u221216, +10]"
+     ],
+     [
+      "Search over 128 actions scored by NeuWorld+Reg, no language model: objects named by a rule",
+      "82",
+      "\u221214 [\u221228, 0]"
+     ],
+     [
+      "Search over 128 actions scored by NeuWorld+Reg, no language model: objects of the planner's first answer",
+      "76",
+      "\u221220 [\u221232, \u22128]"
+     ]
+    ],
+    "caption": "Goals met in PhysX on 206 tasks in a third run, where every setting starts from the same first answer. Difference: the number of goals minus that with outcomes predicted by NeuWorld+Reg, with a 95% interval from resampling the 41 test scenes (Sec. E.4 of the supplementary). The random actions use the objects of the planner's first answer."
+   },
+   "source": "sec/E_full_results.tex (Sec. E.4) and tables/planner_controls.tex of the paper, added there on 23 November"
+  },
   "run_1_counts_of_206": {
    "one_action": 77,
    "three_tries_neuworld": 105,

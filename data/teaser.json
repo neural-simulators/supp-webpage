@@ -1,0 +1,322 @@
+{
+ "schema": "supp-teaser-1",
+ "paper_figure": "Fig. 1 of the paper; inputs and prompts in Sec. D.4 of the appendix",
+ "text": {
+  "scene": "One test scene, drawn outdoors: a bridge of two brick piers and a concrete deck stands on a wooden skid next to a house, with a person beside it. A gripper pulls the skid from 0.25 s until it lets go at 1.10 s. A pull is safe when the bridge does not fall on the person.",
+  "columns": "The first three columns vary the mass of the skid (2.54 kg or 0.74 kg) and the pull (9.9 N or 19.7 N). In the fourth, the pull on the light skid reverses at 0.55 s. The fifth is a backward task: given the start and end states of the light-skid run, which pull produced them?",
+  "rows": "Rows: PhysX (ground truth); NeuWorld (the regression variant), from the scene graph and the action; Wan2.2 14B and Cosmos-Predict2.5 14B, from the first frame and a prompt; π0.5-DROID, a zero-shot robot policy that chooses its own motion; Claude Opus 5.5 and Claude Fable 5.2, text answers from the scene graph, two calls each.",
+  "timing": "The simulation lasts 4 s; the grid then holds the last frame. The verdict tags and the language models' answers appear at 4 s. The robot policy's 30-s episodes play at 4x speed, and their tags appear at the end. The video models' clips play at their own 16 frames per second.",
+  "verdicts": "The tags on the video-model and robot-policy cells are judgements by eye against PhysX, as in the figure of the paper."
+ },
+ "matrix": {
+  "src": "static/media/teaser/matrix.mp4",
+  "poster": "static/media/teaser/matrix_start.jpg",
+  "poster_end": "static/media/teaser/matrix_end.jpg",
+  "size": [
+   1920,
+   1234
+  ],
+  "seconds": 8.0,
+  "fps": 30,
+  "title": "Pulling the skid out from under the bridge: what each method predicts",
+  "columns": [
+   "Heavy skid (2.54 kg), pull 9.9 N",
+   "Heavy skid (2.54 kg), pull 19.7 N",
+   "Light skid (0.74 kg), pull 9.9 N",
+   "Light skid, 9.9 N pull reverses at 0.55 s",
+   "Backward: which pull moved the light skid?"
+  ],
+  "rows": [
+   {
+    "key": "physx",
+    "label": "PhysX",
+    "sub": "(ground truth)"
+   },
+   {
+    "key": "neuworld",
+    "label": "NeuWorld+Reg",
+    "sub": "(ours)"
+   },
+   {
+    "key": "wan14b",
+    "label": "Wan2.2 14B",
+    "sub": "video model"
+   },
+   {
+    "key": "cosmos14b",
+    "label": "Cosmos2.5 14B",
+    "sub": "video model"
+   },
+   {
+    "key": "pi05",
+    "label": "π0.5-DROID",
+    "sub": "VLA, 4x speed"
+   },
+   {
+    "key": "claude",
+    "label": "Claude",
+    "sub": "LLM, text answer"
+   }
+  ],
+  "verdicts": {
+   "physx": [
+    "falls, hits person",
+    "stands, safe",
+    "stands, safe",
+    "falls, hits person",
+    "true pull 9.87 N"
+   ],
+   "neuworld": [
+    "falls, hits person ✓",
+    "stands, safe ✓",
+    "stands, safe ✓",
+    "falls, hits person ✓",
+    "infers 9.9 N ✓"
+   ],
+   "wan14b": [
+    "stands ✗ / skid stretches",
+    "stands, safe ✓ / skid stretches",
+    "stands, safe ✓ / skid stretches",
+    "piers float ✗",
+    "no backward mode"
+   ],
+   "cosmos14b": [
+    "no motion ✗",
+    "no motion ✗",
+    "no motion ✗",
+    "no motion ✗",
+    "no backward mode"
+   ],
+   "pi05": [
+    "shoves a pier: bridge falls on person ✗",
+    "never pulls the skid ✗",
+    "never pulls the skid ✗",
+    "no intervention mode",
+    "no backward mode"
+   ],
+   "claude": [
+    [
+     "Opus 5.5 #1: stands, safe ✗",
+     "Opus 5.5 #2: falls, hits person ✓",
+     "Fable 5.2 #1: falls, hits person ✓",
+     "Fable 5.2 #2: falls, hits person ✓"
+    ],
+    [
+     "Opus 5.5 #1: falls, hits person ✗",
+     "Opus 5.5 #2: falls, hits person ✗",
+     "Fable 5.2 #1: stands, safe ✓",
+     "Fable 5.2 #2: falls, hits person ✗"
+    ],
+    [
+     "Opus 5.5 #1: falls, hits person ✗",
+     "Opus 5.5 #2: falls, hits person ✗",
+     "Fable 5.2 #1: falls, hits person ✗",
+     "Fable 5.2 #2: stands, safe ✓"
+    ],
+    [
+     "Opus 5.5 #1: falls, hits person ✓",
+     "Opus 5.5 #2: falls, hits person ✓",
+     "Fable 5.2 #1: falls, hits person ✓",
+     "Fable 5.2 #2: falls, hits person ✓"
+    ],
+    [
+     "Opus 5.5: 4.6 N ✗, 3.9 N ✗",
+     "Fable 5.2: 10.0 N ✓, 4.8 N ✗"
+    ]
+   ]
+  },
+  "footnote": "PhysX and NeuWorld+Reg: same renderer and camera. Video models: one clip each from the start frame and an action prompt. VLA: picks its own motion (mass given, no force), episode time = 4 x t.",
+  "header_patch": "The header of the fourth column was rendered as \"Heavy skid, 9.9 N pull reverses at 0.55 s\". The run is the light skid (appendix D.4; its frames before the reversal equal the light-skid run), so the header is redrawn as \"Light skid, 9.9 N pull reverses at 0.55 s\"."
+ },
+ "columns": [
+  {
+   "id": "heavy_9p9N",
+   "mode": "Forward",
+   "condition": "Heavy skid (2.54 kg), 9.9 N pull",
+   "seconds": 4.03,
+   "poster": "static/media/teaser/heavy_9p9N/first.jpg",
+   "physx": {
+    "src": "static/media/teaser/heavy_9p9N/physx.mp4",
+    "poster": "static/media/teaser/heavy_9p9N/first.jpg",
+    "last": "static/media/teaser/heavy_9p9N/physx_last.jpg"
+   },
+   "neuworld": {
+    "src": "static/media/teaser/heavy_9p9N/neuworld.mp4",
+    "poster": "static/media/teaser/heavy_9p9N/first.jpg",
+    "last": "static/media/teaser/heavy_9p9N/neuworld_last.jpg"
+   },
+   "outcome_physx": "the bridge falls and hits the person",
+   "outcome_neuworld": "the bridge falls and hits the person",
+   "same_outcome": true,
+   "tag_physx": "falls, hits person",
+   "tag_neuworld": "falls, hits person ✓",
+   "given": "scene graph, every mass, friction and restitution, and the action",
+   "note": "The outcome is the same as in PhysX; where the fallen parts come to rest differs.",
+   "show_pair": true
+  },
+  {
+   "id": "heavy_19p7N",
+   "mode": "Counterfactual: a stronger pull",
+   "condition": "Heavy skid (2.54 kg), 19.7 N pull",
+   "seconds": 4.03,
+   "poster": "static/media/teaser/heavy_19p7N/first.jpg",
+   "physx": {
+    "src": "static/media/teaser/heavy_19p7N/physx.mp4",
+    "poster": "static/media/teaser/heavy_19p7N/first.jpg",
+    "last": "static/media/teaser/heavy_19p7N/physx_last.jpg"
+   },
+   "neuworld": {
+    "src": "static/media/teaser/heavy_19p7N/neuworld.mp4",
+    "poster": "static/media/teaser/heavy_19p7N/first.jpg",
+    "last": "static/media/teaser/heavy_19p7N/neuworld_last.jpg"
+   },
+   "outcome_physx": "the skid comes out and the bridge stays standing",
+   "outcome_neuworld": "the skid comes out and the bridge stays standing",
+   "same_outcome": true,
+   "tag_physx": "stands, safe",
+   "tag_neuworld": "stands, safe ✓",
+   "given": "scene graph, every mass, friction and restitution, and the action",
+   "note": "",
+   "show_pair": true
+  },
+  {
+   "id": "light_9p9N",
+   "mode": "Counterfactual: a lighter skid",
+   "condition": "Light skid (0.74 kg), 9.9 N pull",
+   "seconds": 4.03,
+   "poster": "static/media/teaser/light_9p9N/first.jpg",
+   "physx": {
+    "src": "static/media/teaser/light_9p9N/physx.mp4",
+    "poster": "static/media/teaser/light_9p9N/first.jpg",
+    "last": "static/media/teaser/light_9p9N/physx_last.jpg"
+   },
+   "neuworld": {
+    "src": "static/media/teaser/light_9p9N/neuworld.mp4",
+    "poster": "static/media/teaser/light_9p9N/first.jpg",
+    "last": "static/media/teaser/light_9p9N/neuworld_last.jpg"
+   },
+   "outcome_physx": "the skid comes out and the bridge stays standing",
+   "outcome_neuworld": "the skid comes out and the bridge stays standing",
+   "same_outcome": true,
+   "tag_physx": "stands, safe",
+   "tag_neuworld": "stands, safe ✓",
+   "given": "scene graph, every mass, friction and restitution, and the action",
+   "note": "",
+   "show_pair": true
+  },
+  {
+   "id": "reverse",
+   "mode": "Intervention during the motion",
+   "condition": "Light skid (0.74 kg), 9.9 N pull that reverses at 0.55 s",
+   "seconds": 4.03,
+   "poster": "static/media/teaser/reverse/first.jpg",
+   "physx": {
+    "src": "static/media/teaser/reverse/physx.mp4",
+    "poster": "static/media/teaser/reverse/first.jpg",
+    "last": "static/media/teaser/reverse/physx_last.jpg"
+   },
+   "neuworld": {
+    "src": "static/media/teaser/reverse/neuworld.mp4",
+    "poster": "static/media/teaser/reverse/first.jpg",
+    "last": "static/media/teaser/reverse/neuworld_last.jpg"
+   },
+   "outcome_physx": "the bridge falls and hits the person",
+   "outcome_neuworld": "the bridge falls and hits the person",
+   "same_outcome": true,
+   "tag_physx": "falls, hits person",
+   "tag_neuworld": "falls, hits person ✓",
+   "given": "scene graph, every mass, friction and restitution, and the action with its reversal at 0.55 s",
+   "note": "The outcome is the same as in PhysX; where the fallen parts come to rest differs.",
+   "show_pair": true
+  },
+  {
+   "id": "backward",
+   "mode": "Backward: which pull moved the light skid?",
+   "condition": "Light skid (0.74 kg); the start state and the end state at 4.0 s are given, the pull is hidden",
+   "seconds": 4.03,
+   "poster": "static/media/teaser/light_9p9N/first.jpg",
+   "physx": {
+    "src": "static/media/teaser/light_9p9N/physx.mp4",
+    "poster": "static/media/teaser/light_9p9N/first.jpg",
+    "last": "static/media/teaser/light_9p9N/physx_last.jpg",
+    "shared_with": "light_9p9N"
+   },
+   "neuworld": {
+    "src": "static/media/teaser/backward/neuworld.mp4",
+    "poster": "static/media/teaser/light_9p9N/first.jpg",
+    "last": "static/media/teaser/backward/neuworld_last.jpg"
+   },
+   "outcome_physx": "true pull 9.87 N",
+   "outcome_neuworld": "inferred pull 9.9 N",
+   "same_outcome": true,
+   "tag_physx": "true pull 9.87 N",
+   "tag_neuworld": "infers 9.9 N ✓",
+   "given": "scene graph, properties, the start state and the end state",
+   "note": "The PhysX clip is the run whose start and end states were given (light skid, 9.87 N pull). The NeuWorld clip is the motion it generates together with the pull it infers.",
+   "values_source": "Fig. 1 of the paper and the tags of the grid; the inference record itself is not in this checkout",
+   "show_pair": false,
+   "caveat": "In the generated motion the bridge stays standing, as in PhysX, but the lowest block of each pier ends shifted on the pad and the blocks above it end with a visible gap to it. The answer of this task is the inferred pull; the pair is optional on the page."
+  }
+ ],
+ "vla": {
+  "src": "static/media/teaser/vla_episodes.mp4",
+  "poster": "static/media/teaser/vla_start.jpg",
+  "poster_end": "static/media/teaser/vla_end.jpg",
+  "size": [
+   1758,
+   654
+  ],
+  "seconds": 8.0,
+  "instruction": "pull the wooden board out from under the brick bridge without letting the bridge fall onto the person. The board weighs 2.5 kg. (0.74 kg for the light skid)",
+  "outcomes": {
+   "heavy": [
+    "never pulls the board",
+    "never pulls the board",
+    "never pulls the board",
+    "shoves a pier at 15.4 s: bridge falls on person"
+   ],
+   "light": [
+    "never pulls the board",
+    "never pulls the board",
+    "never pulls the board",
+    "never pulls the board"
+   ]
+  },
+  "caption": "All eight episodes of π0.5-DROID on this scene, zero-shot: four with the heavy skid and four with the light one, 30 s each, shown at 4x speed. A Franka arm takes the place of the gripper, and every object, mass and material is unchanged. The policy sees its camera images and the instruction, which states the mass of the board but no force, and chooses its own motion. In seven episodes the arm does not pull the board out; in the fourth episode with the heavy board it pushes a pier at 15.4 s and the bridge falls. The arm is drawn at its real size from a replay of the recorded joints; the scene is small (the person is 19 cm tall)."
+ },
+ "prompts": {
+  "source": "Sec. D.4 of the appendix prints the Wan2.2 prompt for the heavy skid and the 9.9 N pull and states how the other prompts differ; the prompts below apply those stated replacements. The person is visible in the first frame and is not named in the prompt.",
+  "assembled": true,
+  "wan14b": {
+   "heavy_9p9N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two brick piers carry a concrete deck; they stand on a long wooden skid that lies on a concrete pad. Next to it stands a grey house. A dark robot gripper holds the front face of the wooden skid. The wooden skid is heavy, about 2.5 kg, about three times heavier than it looks. The gripper pulls the skid to the right with a steady force of about 10 N for 0.85 seconds, then lets go. Everything then moves naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "heavy_19p7N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two brick piers carry a concrete deck; they stand on a long wooden skid that lies on a concrete pad. Next to it stands a grey house. A dark robot gripper holds the front face of the wooden skid. The wooden skid is heavy, about 2.5 kg, about three times heavier than it looks. The gripper pulls the skid to the right with a steady force of about 20 N for 0.85 seconds, then lets go. Everything then moves naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "light_9p9N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two brick piers carry a concrete deck; they stand on a long wooden skid that lies on a concrete pad. Next to it stands a grey house. A dark robot gripper holds the front face of the wooden skid. The wooden skid weighs about 0.7 kg. The gripper pulls the skid to the right with a steady force of about 10 N for 0.85 seconds, then lets go. Everything then moves naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "reverse": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two brick piers carry a concrete deck; they stand on a long wooden skid that lies on a concrete pad. Next to it stands a grey house. A dark robot gripper holds the front face of the wooden skid. The wooden skid weighs about 0.7 kg. The gripper pulls the skid to the right with a steady force of about 10 N; after 0.3 seconds it reverses and pushes the skid back to the left with the same force for another 0.55 seconds, then lets go. Everything then moves naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid."
+  },
+  "cosmos14b": {
+   "heavy_9p9N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two masonry piers carry a concrete deck; they stand on a long wooden plank that lies on a concrete pad. Next to it stands a gray house. A dark robot gripper holds the front face of the wooden plank. The wooden plank is heavy, about 2.5 kg, about three times heavier than it looks. The gripper pulls the plank to the right with a steady force of about 10 N for 0.85 seconds, then lets go. All objects then move naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "heavy_19p7N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two masonry piers carry a concrete deck; they stand on a long wooden plank that lies on a concrete pad. Next to it stands a gray house. A dark robot gripper holds the front face of the wooden plank. The wooden plank is heavy, about 2.5 kg, about three times heavier than it looks. The gripper pulls the plank to the right with a steady force of about 20 N for 0.85 seconds, then lets go. All objects then move naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "light_9p9N": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two masonry piers carry a concrete deck; they stand on a long wooden plank that lies on a concrete pad. Next to it stands a gray house. A dark robot gripper holds the front face of the wooden plank. The wooden plank weighs about 0.7 kg. The gripper pulls the plank to the right with a steady force of about 10 N for 0.85 seconds, then lets go. All objects then move naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "reverse": "A video from a fixed camera of a 3D-rendered outdoor scene under an overcast sky. Two masonry piers carry a concrete deck; they stand on a long wooden plank that lies on a concrete pad. Next to it stands a gray house. A dark robot gripper holds the front face of the wooden plank. The wooden plank weighs about 0.7 kg. The gripper pulls the plank to the right with a steady force of about 10 N; after 0.3 seconds it reverses and pushes the plank back to the left with the same force for another 0.55 seconds, then lets go. All objects then move naturally under gravity and friction, and objects that touch push each other. The camera is fixed and captures the complete motion. The objects stay rigid."
+  },
+  "cosmos_note": "Cosmos-Predict2.5 receives the same prompts with four wordings replaced so that they pass its input filter: \"masonry\" for \"brick\", \"plank\" for \"skid\", \"gray\" for \"grey\" and \"All objects then move\" for \"Everything then moves\".",
+  "first_frame": "static/media/teaser/heavy_9p9N/first.jpg",
+  "first_frame_note": "the start frame of the PhysX clip; the video models received the rendered first frame of their own column",
+  "backward": null
+ },
+ "score": {
+  "neuworld": "same outcome as PhysX in 5 of 5 columns",
+  "claude_opus_5_5": "3 of 10 answers correct",
+  "claude_fable_5_2": "7 of 10 answers correct",
+  "wan14b": "outcome as PhysX in 2 of 4 columns, with the skid changing shape in both",
+  "cosmos14b": "no motion in 4 of 4 columns",
+  "pi05": "the skid is not pulled out in any of the 8 episodes",
+  "source": "counted from the tags of the grid"
+ },
+ "sources": {
+  "grid": "teaser_matrix.mp4",
+  "clips": "clips/physx_*.mp4, clips/neuworld_reg_*.mp4",
+  "episodes": "teaser_vla_episodes.mp4"
+ },
+ "bytes": 8798668
+}
