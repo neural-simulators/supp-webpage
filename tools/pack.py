@@ -3,7 +3,7 @@
 
 Copies index.html and only the files under static/ that the page references into DIR (default: ../supp_webpage_package/webpage), so
 the archive holds no build tools, manifests or unused media. Checks, and fails on: a reference to a missing file, any URL that leaves the
-folder (http, https, protocol-relative; the footer's link to the page template is the one exception), identifying strings in text files (user, cluster, organisation and repository names, absolute
+folder (http, https, protocol-relative), identifying strings in text files (user, cluster, organisation and repository names, absolute
 paths), and metadata in the mp4 files (encoder tags are allowed). Prints the total size against the page budget (135 MB of the 200 MB supplementary archive).
 """
 import argparse
@@ -19,7 +19,6 @@ FORBIDDEN = [r'spaul', r'mvp18', r'soumava', r'schaud', r'shravan', r'chaudhari'
 URL = re.compile(r'''(?:https?:)?//[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s"'<>)]*''')
 REF = re.compile(r'''static/[A-Za-z0-9_./+-]+\.(?:mp4|jpg|jpeg|png|webp|svg|css|js|woff2|json|gif)''')
 ALLOWED_URLS = ('//www.w3.org/2000/svg', '//www.w3.org/1999/xhtml', '//www.w3.org/1999/xlink')
-CREDIT = 'https://github.com/nerfies/nerfies.github.io'              # the footer's link to the page template, asked for by the owner: the only link that leaves the folder
 
 
 def main():
@@ -55,10 +54,6 @@ def main():
         dst = a.out/r; dst.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(src, dst); total += src.stat().st_size
     for p in [a.out/'index.html', *[a.out/r for r in files if (a.out/r).suffix in ('.css', '.js', '.json', '.svg')]]:
         text = p.read_text(errors='replace'); name = p.relative_to(a.out)
-        if name.name == 'index.html':
-            if text.count(CREDIT) > 1:
-                problems.append('index.html: the template link appears more than once')
-            text = text.replace(CREDIT, '')
         for u in set(URL.findall(text)):
             if not any(u.endswith(x) or x in u for x in ALLOWED_URLS) and not (name.name == 'bulma.min.css' and 'bulma.io' in u):
                 problems.append(f'{name}: external URL {u[:80]}')
@@ -99,7 +94,7 @@ def main():
     if problems:
         print(f'{len(problems)} PROBLEMS:'); [print('  '+x) for x in sorted(set(problems))[:60]]
         sys.exit(1)
-    print('checks passed: no missing files, no external URLs besides the template link, no identifying strings')
+    print('checks passed: no missing files, no external URLs, no identifying strings')
 
 
 if __name__ == '__main__':

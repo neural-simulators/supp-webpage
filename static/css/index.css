@@ -268,7 +268,6 @@ details.sp-more > summary { cursor: pointer; font-weight: 600; font-size: 0.92re
 blockquote.sp-prompt { border-left: 3px solid var(--line); margin: 0.4rem 0; padding: 0.2rem 0.8rem; color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
 
 .sp-footer { padding: 2rem 0 2.6rem; color: var(--muted); font-size: 0.86rem; text-align: center; }
-.sp-footer a { color: var(--muted); text-decoration: underline; }
 
 /* ---------- The grid of all methods on one scene ---------- */
 .tz-matrix { max-width: 1320px; margin-inline: auto; }

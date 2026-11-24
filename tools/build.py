@@ -754,7 +754,7 @@ in the five modes that generate motion. Lower is better in every column. The val
 
 def footer():
     return '''<footer class="sp-footer"><div class="sp-container sp-text">
-<p>Supplementary material of an anonymous submission. Page template adapted from <a href="https://github.com/nerfies/nerfies.github.io" rel="noopener">Nerfies</a>.</p>
+<p>Supplementary material of an anonymous submission. Page layout adapted from the Nerfies project page template.</p>
 </div></footer>'''
 
 
@@ -767,7 +767,7 @@ def main():
         how = explainer_section()
     llm = load('compare_llm.json'); vdm = load('compare_vdm.json'); whatif = load('whatif.json')
     n_fwd = sum(1 for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg') and r['id'] != 'catapult__r2009__a2__factual')
-    sections = [('how-it-works', 'How masking selects the inference mode', 'An animated diagram of what is given and what is generated in each mode.', how),
+    sections = [('how-it-works', 'How masking selects the inference mode', 'One test scene in each mode: what the network is given, what is hidden from it, and what it generates.', how),
                 ('modes', 'Inference modes', f"{len(md['scenes'])} test scenes in {len(md['order'])} modes, for the three variants of NeuWorld." if md else '', modes_section(md, showcase, samples_block(load('samples_fig4.json'), pickers))),
                 ('families', 'Test scenes across motion families', f'PhysX next to NeuWorld on {n_fwd} test scenes, grouped by kind of motion.', forward_section(v1, showcase)),
                 ('what-if', 'Counterfactuals and interventions', 'One scene simulated again under a stated change, with measured outcomes.', whatif_section(whatif, pickers, load('whatif_fig4.json'))),
