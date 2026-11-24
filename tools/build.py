@@ -72,7 +72,7 @@ MODE_INFO = {
                  'what': 'NeuWorld is given only <b class="g">the start state and the end state</b>. It <b class="o">generates the action and the motion</b> that connect them.',
                  'given_short': 'start state and end state', 'gen_short': 'the action and the motion'},
 }
-MODE_INFO['property'] = {'label': 'Property inference', 'props': 'gen', 'action': 'given', 'motion': 'given', 'given_view': 'clip', 'output': 'values',
+MODE_INFO['property'] = {'label': 'Property inference', 'props': 'gen', 'action': 'given', 'motion': 'given', 'given_view': 'clip', 'output': 'values', 'default_variant': 'fm',
                          'what': 'NeuWorld observes <b class="g">the whole motion</b> and <b class="g">the action</b>. It <b class="o">infers the mass, friction and restitution</b> of every movable object.',
                          'given_short': 'the action and the whole motion', 'gen_short': 'the physical properties'}
 MODE_ORDER = ['forward', 'unknown', 'completion', 'infilling', 'backward', 'property']

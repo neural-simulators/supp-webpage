@@ -179,7 +179,7 @@
     }
     host.addEventListener('click', function (ev) {
       var b = ev.target.closest('button'); if (!b) { return; }
-      if (b.dataset.mode) { state.mode = b.dataset.mode; pick(state.mode); render(); }
+      if (b.dataset.mode) { state.mode = b.dataset.mode; state.variant = data.info[state.mode].default_variant || data.default_variant || 'reg'; pick(state.mode); render(); }
       else if (b.dataset['var']) { state.variant = b.dataset['var']; render(); }
       else if (b.dataset.scene) { state.scene = b.dataset.scene; render(); }
     });
