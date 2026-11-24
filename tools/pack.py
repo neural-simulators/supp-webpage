@@ -78,12 +78,18 @@ def main():
         k = '/'.join(r.split('/')[:3]); by[k] = by.get(k, 0)+((WEB/r).stat().st_size if (WEB/r).exists() else 0)
     for k, v in sorted(by.items(), key=lambda x: -x[1]):
         print(f'  {v/1e6:6.1f} MB  {k}')
+    (a.out.parent/'README.txt').write_text(
+        'Supplementary web page\n\nOpen webpage/index.html in a web browser (Chrome, Edge, Firefox or Safari).\n'
+        'No internet connection is needed: the page loads only the files in this folder.\n'
+        'Clips play while they are on screen; click a clip to pause it. In the dataset gallery, move the pointer over a clip to play it.\n'
+        'Keep index.html and the static folder together.\n')
     if a.zip:
         z = a.out.parent/'webpage.zip'
         with zipfile.ZipFile(z, 'w', zipfile.ZIP_STORED) as f:
             for p in sorted(a.out.rglob('*')):
                 if p.is_file():
                     f.write(p, Path('webpage')/p.relative_to(a.out))
+            f.write(a.out.parent/'README.txt', 'README.txt')
         print(f'zip: {z} {z.stat().st_size/1e6:.1f} MB')
     if problems:
         print(f'{len(problems)} PROBLEMS:'); [print('  '+x) for x in sorted(set(problems))[:60]]
