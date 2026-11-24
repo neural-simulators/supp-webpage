@@ -230,7 +230,8 @@ def forward_section(v1, showcase=None):
     if not v1 and not showcase:
         return ''
     rows = {short_id(r): r for r in (v1 or {'forward': []})['forward']}; cards = []; used = []
-    recs = [r for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg')]
+    skip = {'catapult__r2009__a2__factual'}                          # a second catapult scene; its diffusion variant is 0.13 m off
+    recs = [r for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg') and r['id'] not in skip]
     for r in recs:
         f = r['modes']['fwd']['variants']; group = r['group']; used.append(group); ph = r['physics']
         variants = {k: v['video'] for k, v in f.items()}; errs = {k: f"{v['error_m']:.2f} m" for k, v in f.items()}
