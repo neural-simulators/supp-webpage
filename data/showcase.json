@@ -108,6 +108,32 @@
       "scale_note": null,
       "release_s": 0.6982421875
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.8108897112867888,
+       0.4425955979219477
+      ],
+      "tip": null,
+      "label": "release at 0.79 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.7861328125
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.8108897112867888,
+       0.4425955979219477
+      ],
+      "tip": null,
+      "label": "release at 0.66 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.6591796875
+     }
     ]
    },
    "render": {
@@ -146,6 +172,16 @@
        "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/fwd__reg.mp4",
        "error_m": 0.0215,
        "final_error_m": 0.0368
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/fwd__fm.mp4",
+       "error_m": 0.0334,
+       "final_error_m": 0.0648
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/fwd__ddpm.mp4",
+       "error_m": 0.0349,
+       "final_error_m": 0.0532
       }
      },
      "given_s": [
@@ -298,6 +334,278 @@
         }
        ],
        "properties_total": 8
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/unk100__fm.mp4",
+       "error_m": 0.0365,
+       "final_error_m": 0.0639,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.2382
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.544
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6808
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.3995
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.2991
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3552
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0706
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4969
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0704
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2481
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0701
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5017
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2496
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0687
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.2998
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3533
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0689
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5034
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0704
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2503
+         }
+        }
+       ],
+       "properties_total": 8
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/unk100__ddpm.mp4",
+       "error_m": 0.0351,
+       "final_error_m": 0.0498,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 4.3385,
+          "estimate": 4.2382
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6497
+         }
+        },
+        {
+         "object": "spring-mounted block",
+         "id": "bumper",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.386
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3021
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3536
+         }
+        },
+        {
+         "object": "tile 1",
+         "id": "tile0",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0704
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4789
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2485
+         }
+        },
+        {
+         "object": "tile 2",
+         "id": "tile1",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0704
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "tile 3",
+         "id": "tile2",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0704
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5028
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2481
+         }
+        },
+        {
+         "object": "tile 4",
+         "id": "tile3",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0709
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.315
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3572
+         }
+        },
+        {
+         "object": "tile 5",
+         "id": "tile4",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0709
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.483
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2829
+         }
+        },
+        {
+         "object": "tile 6",
+         "id": "tile5",
+         "mass_kg": {
+          "true": 0.07,
+          "estimate": 0.0689
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.4985
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2514
+         }
+        }
+       ],
+       "properties_total": 8
       }
      },
      "given_s": [
@@ -319,6 +627,16 @@
        "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/prefix__reg.mp4",
        "error_m": 0.0289,
        "final_error_m": 0.0359
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/prefix__fm.mp4",
+       "error_m": 0.0515,
+       "final_error_m": 0.0715
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/prefix__ddpm.mp4",
+       "error_m": 0.048,
+       "final_error_m": 0.0561
       }
      },
      "given_s": [
@@ -344,6 +662,11 @@
       "fm": {
        "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/bridge__fm.mp4",
        "error_m": 0.0288,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/bridge__ddpm.mp4",
+       "error_m": 0.025,
        "final_error_m": null
       }
      },
@@ -375,6 +698,28 @@
        "action_text": "The gripper pulls with 44.7 N from 0.30 s to 0.70 s, then lets go.",
        "loop_closes": false,
        "release_s": 0.698,
+       "release_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/cause__fm.mp4",
+       "error_m": 0.0242,
+       "final_error_m": 0.0311,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 45.4 N from 0.37 s to 0.79 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.786,
+       "release_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/cause__ddpm.mp4",
+       "error_m": 0.0239,
+       "final_error_m": 0.0157,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 47.7 N from 0.36 s to 0.66 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.659,
        "release_true_s": 0.75
       }
      },
@@ -808,7 +1153,7 @@
    "family": "gravity_change",
    "family_title": "Changing gravity",
    "group": "Falls, throws and flight",
-   "description": "A gripper throws a ball, and gravity changes while it is in flight.",
+   "description": "A gripper swings a ball and lets go, while gravity changes during the motion.",
    "role": "modes",
    "novelty": "new arrangement",
    "furniture_pieces": 12,
@@ -862,6 +1207,42 @@
       "onset_s": 0.185546875,
       "end_s": 0.4248046875
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.3679755257872578,
+       0.24914938781015844
+      ],
+      "tip": [
+       0.44237324568520436,
+       -0.1059980778757274
+      ],
+      "label": "throw, 2.3 N, 0.06 to 0.09 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.3337911581987756,
+      "onset_s": 0.057373046875,
+      "end_s": 0.0927734375
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.3679755257872578,
+       0.24914938781015844
+      ],
+      "tip": [
+       0.4912123656114107,
+       0.023842202905719118
+      ],
+      "label": "throw, 1.9 N, 0.38 to 0.53 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 1.9352915790867218,
+      "onset_s": 0.38330078125,
+      "end_s": 0.53466796875
+     }
     ]
    },
    "render": {
@@ -900,6 +1281,16 @@
        "video": "static/media/showcase/gravity_change__r3049__a4__factual/fwd__reg.mp4",
        "error_m": 0.0237,
        "final_error_m": 0.0327
+      },
+      "fm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/fwd__fm.mp4",
+       "error_m": 0.0373,
+       "final_error_m": 0.0452
+      },
+      "ddpm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/fwd__ddpm.mp4",
+       "error_m": 0.0562,
+       "final_error_m": 0.0937
       }
      },
      "given_s": [
@@ -940,6 +1331,54 @@
         }
        ],
        "properties_total": 1
+      },
+      "fm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/unk100__fm.mp4",
+       "error_m": 0.0285,
+       "final_error_m": 0.0358,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 4.4789
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3621
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4507
+         }
+        }
+       ],
+       "properties_total": 1
+      },
+      "ddpm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/unk100__ddpm.mp4",
+       "error_m": 0.0255,
+       "final_error_m": 0.047,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 3.1002,
+          "estimate": 5.1422
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3576
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4618
+         }
+        }
+       ],
+       "properties_total": 1
       }
      },
      "given_s": [
@@ -961,6 +1400,16 @@
        "video": "static/media/showcase/gravity_change__r3049__a4__factual/prefix__reg.mp4",
        "error_m": 0.0344,
        "final_error_m": 0.0417
+      },
+      "fm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/prefix__fm.mp4",
+       "error_m": 0.036,
+       "final_error_m": 0.0334
+      },
+      "ddpm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/prefix__ddpm.mp4",
+       "error_m": 0.0258,
+       "final_error_m": 0.0291
       }
      },
      "given_s": [
@@ -986,6 +1435,11 @@
       "fm": {
        "video": "static/media/showcase/gravity_change__r3049__a4__factual/bridge__fm.mp4",
        "error_m": 0.0309,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/bridge__ddpm.mp4",
+       "error_m": 0.023,
        "final_error_m": null
       }
      },
@@ -1020,6 +1474,36 @@
        "force_true_N": 1.97,
        "onset_s": 0.186,
        "end_s": 0.425,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.692
+      },
+      "fm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/cause__fm.mp4",
+       "error_m": 0.0226,
+       "final_error_m": 0.0268,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 2.3 N from 0.06 s to 0.09 s, then lets go.",
+       "loop_closes": false,
+       "force_N": 2.33,
+       "force_true_N": 1.97,
+       "onset_s": 0.057,
+       "end_s": 0.093,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.692
+      },
+      "ddpm": {
+       "video": "static/media/showcase/gravity_change__r3049__a4__factual/cause__ddpm.mp4",
+       "error_m": 0.0209,
+       "final_error_m": 0.0107,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 1.9 N from 0.38 s to 0.53 s, then lets go.",
+       "loop_closes": false,
+       "force_N": 1.94,
+       "force_true_N": 1.97,
+       "onset_s": 0.383,
+       "end_s": 0.535,
        "onset_true_s": 0.35,
        "end_true_s": 0.692
       }
@@ -1172,6 +1656,42 @@
       "onset_s": 0.498046875,
       "end_s": 0.908203125
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.23991912011377609,
+       0.3270682950734378
+      ],
+      "tip": [
+       0.3872039251516687,
+       0.35370639423326555
+      ],
+      "label": "push, 2.2 N, 0.39 to 0.77 s",
+      "object": "first book",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.186341083706567,
+      "onset_s": 0.3857421875,
+      "end_s": 0.771484375
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.23991912011377609,
+       0.3270682950734378
+      ],
+      "tip": [
+       0.36320294467332637,
+       0.34019068001223673
+      ],
+      "label": "push, 1.8 N, 0.43 to 0.70 s",
+      "object": "first book",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 1.823925929369136,
+      "onset_s": 0.4296875,
+      "end_s": 0.6982421875
+     }
     ]
    },
    "render": {
@@ -1215,6 +1735,11 @@
        "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/fwd__fm.mp4",
        "error_m": 0.0213,
        "final_error_m": 0.026
+      },
+      "ddpm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.022,
+       "final_error_m": 0.0268
       }
      },
      "given_s": [
@@ -1335,6 +1860,214 @@
         }
        ],
        "properties_total": 6
+      },
+      "fm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/unk100__fm.mp4",
+       "error_m": 0.0248,
+       "final_error_m": 0.03,
+       "properties": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2324
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5478
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.149
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2658
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.1198
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.1919
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2507
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5482
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1534
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2481
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5486
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1505
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.249
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.549
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.149
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.249
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5486
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.152
+         }
+        }
+       ],
+       "properties_total": 6
+      },
+      "ddpm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/unk100__ddpm.mp4",
+       "error_m": 0.0296,
+       "final_error_m": 0.0363,
+       "properties": [
+        {
+         "object": "first book",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.1948
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5516
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1497
+         }
+        },
+        {
+         "object": "ball",
+         "id": "ball",
+         "mass_kg": {
+          "true": 0.2865,
+          "estimate": 0.2542
+         },
+         "friction": {
+          "true": 0.12,
+          "estimate": 0.1244
+         },
+         "restitution": {
+          "true": 0.2,
+          "estimate": 0.1978
+         }
+        },
+        {
+         "object": "book 2",
+         "id": "book_2",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2481
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5467
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1483
+         }
+        },
+        {
+         "object": "book 3",
+         "id": "book_3",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2481
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5505
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.152
+         }
+        },
+        {
+         "object": "book 4",
+         "id": "book_4",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2542
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5524
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1497
+         }
+        },
+        {
+         "object": "book 5",
+         "id": "book_5",
+         "mass_kg": {
+          "true": 0.25,
+          "estimate": 0.2551
+         },
+         "friction": {
+          "true": 0.55,
+          "estimate": 0.5539
+         },
+         "restitution": {
+          "true": 0.15,
+          "estimate": 0.1512
+         }
+        }
+       ],
+       "properties_total": 6
       }
      },
      "given_s": [
@@ -1356,6 +2089,16 @@
        "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/prefix__reg.mp4",
        "error_m": 0.0158,
        "final_error_m": 0.0128
+      },
+      "fm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/prefix__fm.mp4",
+       "error_m": 0.0219,
+       "final_error_m": 0.0252
+      },
+      "ddpm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/prefix__ddpm.mp4",
+       "error_m": 0.0172,
+       "final_error_m": 0.0158
       }
      },
      "given_s": [
@@ -1381,6 +2124,11 @@
       "fm": {
        "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/bridge__fm.mp4",
        "error_m": 0.0145,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/bridge__ddpm.mp4",
+       "error_m": 0.0143,
        "final_error_m": null
       }
      },
@@ -1415,6 +2163,36 @@
        "force_true_N": 2.66,
        "onset_s": 0.498,
        "end_s": 0.908,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/cause__fm.mp4",
+       "error_m": 0.0143,
+       "final_error_m": 0.0138,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 2.2 N from 0.39 s to 0.77 s.",
+       "loop_closes": false,
+       "force_N": 2.19,
+       "force_true_N": 2.66,
+       "onset_s": 0.386,
+       "end_s": 0.771,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/books_ball_catch__r1203__a1__factual/cause__ddpm.mp4",
+       "error_m": 0.0168,
+       "final_error_m": 0.0136,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 1.8 N from 0.43 s to 0.70 s.",
+       "loop_closes": false,
+       "force_N": 1.82,
+       "force_true_N": 2.66,
+       "onset_s": 0.43,
+       "end_s": 0.698,
        "onset_true_s": 0.35,
        "end_true_s": 0.75
       }
@@ -1797,6 +2575,32 @@
       "scale_note": null,
       "release_s": 0.7568359375
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.5818724955440606,
+       0.1798621590239023
+      ],
+      "tip": null,
+      "label": "release at 0.90 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.8984375
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.5818724955440606,
+       0.1798621590239023
+      ],
+      "tip": null,
+      "label": "release at 0.74 s",
+      "object": "ball",
+      "scale_note": null,
+      "release_s": 0.7373046875
+     }
     ]
    },
    "render": {
@@ -1840,6 +2644,11 @@
        "video": "static/media/showcase/diving_board__r1__a1__factual/fwd__fm.mp4",
        "error_m": 0.019,
        "final_error_m": 0.022
+      },
+      "ddpm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.0211,
+       "final_error_m": 0.0289
       }
      },
      "given_s": [
@@ -1960,6 +2769,214 @@
         }
        ],
        "properties_total": 6
+      },
+      "fm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/unk100__fm.mp4",
+       "error_m": 0.0369,
+       "final_error_m": 0.0601,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.9406
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.6438
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1501
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5049
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2485
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1476
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.503
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2451
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1514
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1525
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5017
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1533
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3295
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.332
+         }
+        }
+       ],
+       "properties_total": 6
+      },
+      "ddpm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/unk100__ddpm.mp4",
+       "error_m": 0.0304,
+       "final_error_m": 0.0427,
+       "properties": [
+        {
+         "object": "ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.9182,
+          "estimate": 0.9406
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.8444
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.6186
+         }
+        },
+        {
+         "object": "board segment 1",
+         "id": "board_seg1",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1473
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.503
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2492
+         }
+        },
+        {
+         "object": "board segment 2",
+         "id": "board_seg2",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1527
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3051
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3447
+         }
+        },
+        {
+         "object": "board segment 3",
+         "id": "board_seg3",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1494
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "board segment 4",
+         "id": "board_seg4",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1491
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5009
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "board segment 5",
+         "id": "board_seg5",
+         "mass_kg": {
+          "true": 0.15,
+          "estimate": 0.1463
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4569
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2684
+         }
+        }
+       ],
+       "properties_total": 6
       }
      },
      "given_s": [
@@ -1981,6 +2998,16 @@
        "video": "static/media/showcase/diving_board__r1__a1__factual/prefix__reg.mp4",
        "error_m": 0.0179,
        "final_error_m": 0.0312
+      },
+      "fm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/prefix__fm.mp4",
+       "error_m": 0.0237,
+       "final_error_m": 0.0315
+      },
+      "ddpm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/prefix__ddpm.mp4",
+       "error_m": 0.027,
+       "final_error_m": 0.0354
       }
      },
      "given_s": [
@@ -2006,6 +3033,11 @@
       "fm": {
        "video": "static/media/showcase/diving_board__r1__a1__factual/bridge__fm.mp4",
        "error_m": 0.0189,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/bridge__ddpm.mp4",
+       "error_m": 0.0218,
        "final_error_m": null
       }
      },
@@ -2037,6 +3069,28 @@
        "action_text": "The gripper pulls with 9.9 N from 0.34 s to 0.76 s, then lets go.",
        "loop_closes": false,
        "release_s": 0.757,
+       "release_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/cause__fm.mp4",
+       "error_m": 0.017,
+       "final_error_m": 0.0083,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 11.2 N from 0.36 s to 0.90 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.898,
+       "release_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/diving_board__r1__a1__factual/cause__ddpm.mp4",
+       "error_m": 0.019,
+       "final_error_m": 0.0072,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 11.6 N from 0.41 s to 0.74 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.737,
        "release_true_s": 0.75
       }
      },
@@ -2428,6 +3482,42 @@
       "onset_s": 0.517578125,
       "end_s": 0.791015625
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.363809271565967,
+       0.5282950819082501
+      ],
+      "tip": [
+       0.5131826562960675,
+       0.4705738157513063
+      ],
+      "label": "push, 4.4 N, 0.32 to 0.70 s",
+      "object": "cart",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 4.3564409079255,
+      "onset_s": 0.31982421875,
+      "end_s": 0.703125
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.363809271565967,
+       0.5282950819082501
+      ],
+      "tip": [
+       0.4712295721745512,
+       0.44419028515627845
+      ],
+      "label": "push, 3.3 N, 0.09 to 0.43 s",
+      "object": "cart",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 3.3451494118640346,
+      "onset_s": 0.093994140625,
+      "end_s": 0.42724609375
+     }
     ]
    },
    "render": {
@@ -2471,6 +3561,11 @@
        "video": "static/media/showcase/carrying_cart__r2035__a0__factual/fwd__fm.mp4",
        "error_m": 0.0265,
        "final_error_m": 0.029
+      },
+      "ddpm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0413,
+       "final_error_m": 0.0777
       }
      },
      "given_s": [
@@ -2510,7 +3605,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "cargo block",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4913,
@@ -2607,6 +3702,246 @@
         }
        ],
        "properties_total": 7
+      },
+      "fm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/unk100__fm.mp4",
+       "error_m": 0.0466,
+       "final_error_m": 0.0607,
+       "properties": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 0.967
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3454
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4537
+         }
+        },
+        {
+         "object": "cargo block",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.5159
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5007
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2533
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0818
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.849
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6453
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0816
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3105
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3661
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0804
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.846
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6482
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0791
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3014
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.354
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.8081
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3029
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.3544
+         }
+        }
+       ],
+       "properties_total": 7
+      },
+      "ddpm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/unk100__ddpm.mp4",
+       "error_m": 0.0644,
+       "final_error_m": 0.0615,
+       "properties": [
+        {
+         "object": "cart",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0,
+          "estimate": 1.3847
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3454
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4515
+         }
+        },
+        {
+         "object": "cargo block",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4913,
+          "estimate": 0.534
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5004
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2514
+         }
+        },
+        {
+         "object": "wheel 1",
+         "id": "wheel0",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0795
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.849
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6453
+         }
+        },
+        {
+         "object": "wheel 2",
+         "id": "wheel1",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0812
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3127
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.3805
+         }
+        },
+        {
+         "object": "wheel 3",
+         "id": "wheel2",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0782
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4559
+         }
+        },
+        {
+         "object": "wheel 4",
+         "id": "wheel3",
+         "mass_kg": {
+          "true": 0.08,
+          "estimate": 0.0813
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.2991
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.3542
+         }
+        },
+        {
+         "object": "buffer block",
+         "id": "buffer",
+         "mass_kg": {
+          "true": 0.8,
+          "estimate": 0.7861
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3014
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.355
+         }
+        }
+       ],
+       "properties_total": 7
       }
      },
      "given_s": [
@@ -2628,6 +3963,16 @@
        "video": "static/media/showcase/carrying_cart__r2035__a0__factual/prefix__reg.mp4",
        "error_m": 0.0274,
        "final_error_m": 0.0219
+      },
+      "fm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/prefix__fm.mp4",
+       "error_m": 0.0338,
+       "final_error_m": 0.0522
+      },
+      "ddpm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/prefix__ddpm.mp4",
+       "error_m": 0.0615,
+       "final_error_m": 0.1028
       }
      },
      "given_s": [
@@ -2653,6 +3998,11 @@
       "fm": {
        "video": "static/media/showcase/carrying_cart__r2035__a0__factual/bridge__fm.mp4",
        "error_m": 0.0298,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/bridge__ddpm.mp4",
+       "error_m": 0.0228,
        "final_error_m": null
       }
      },
@@ -2687,6 +4037,36 @@
        "force_true_N": 5.13,
        "onset_s": 0.518,
        "end_s": 0.791,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/cause__fm.mp4",
+       "error_m": 0.0299,
+       "final_error_m": 0.0141,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 4.4 N from 0.32 s to 0.70 s.",
+       "loop_closes": false,
+       "force_N": 4.36,
+       "force_true_N": 5.13,
+       "onset_s": 0.32,
+       "end_s": 0.703,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/carrying_cart__r2035__a0__factual/cause__ddpm.mp4",
+       "error_m": 0.0347,
+       "final_error_m": 0.0105,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 3.3 N from 0.09 s to 0.43 s.",
+       "loop_closes": false,
+       "force_N": 3.35,
+       "force_true_N": 5.13,
+       "onset_s": 0.094,
+       "end_s": 0.427,
        "onset_true_s": 0.35,
        "end_true_s": 0.75
       }
@@ -2731,7 +4111,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "cargo block",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4913,
@@ -2848,7 +4228,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "cargo block",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4913,
@@ -2965,7 +4345,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "cargo block",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4913,
@@ -3117,6 +4497,32 @@
       "scale_note": null,
       "release_s": 0.83984375
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.8130888716951961,
+       0.37860755840465726
+      ],
+      "tip": null,
+      "label": "release at 0.93 s",
+      "object": "heavy ball",
+      "scale_note": null,
+      "release_s": 0.927734375
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.8130888716951961,
+       0.37860755840465726
+      ],
+      "tip": null,
+      "label": "release at 0.68 s",
+      "object": "heavy ball",
+      "scale_note": null,
+      "release_s": 0.68359375
+     }
     ]
    },
    "render": {
@@ -3220,7 +4626,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "small ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.05,
@@ -3233,6 +4639,118 @@
          "restitution": {
           "true": 0.35,
           "estimate": 0.4737
+         }
+        }
+       ],
+       "properties_total": 3
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/unk100__fm.mp4",
+       "error_m": 0.0382,
+       "final_error_m": 0.0381,
+       "properties": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 1.9289
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6497
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.4136
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5017
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2462
+         }
+        },
+        {
+         "object": "small ball",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.049
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3462
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4478
+         }
+        }
+       ],
+       "properties_total": 3
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/unk100__ddpm.mp4",
+       "error_m": 0.0375,
+       "final_error_m": 0.0642,
+       "properties": [
+        {
+         "object": "heavy ball",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.9167,
+          "estimate": 2.0385
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3264
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4038
+         }
+        },
+        {
+         "object": "lever",
+         "id": "lever",
+         "mass_kg": {
+          "true": 0.4,
+          "estimate": 0.4222
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2544
+         }
+        },
+        {
+         "object": "small ball",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.05,
+          "estimate": 0.049
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3492
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4485
          }
         }
        ],
@@ -3258,6 +4776,16 @@
        "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/prefix__reg.mp4",
        "error_m": 0.0265,
        "final_error_m": 0.0152
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/prefix__fm.mp4",
+       "error_m": 0.0533,
+       "final_error_m": 0.0683
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/prefix__ddpm.mp4",
+       "error_m": 0.0421,
+       "final_error_m": 0.0335
       }
      },
      "given_s": [
@@ -3283,6 +4811,11 @@
       "fm": {
        "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/bridge__fm.mp4",
        "error_m": 0.0412,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/bridge__ddpm.mp4",
+       "error_m": 0.0404,
        "final_error_m": null
       }
      },
@@ -3314,6 +4847,28 @@
        "action_text": "The gripper pulls with 17.7 N from 0.31 s to 0.84 s, then lets go.",
        "loop_closes": false,
        "release_s": 0.84,
+       "release_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/cause__fm.mp4",
+       "error_m": 0.0338,
+       "final_error_m": 0.0224,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 15.6 N from 0.18 s to 0.93 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.928,
+       "release_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/ramp_lever_projectile__r9__a0__factual/cause__ddpm.mp4",
+       "error_m": 0.0209,
+       "final_error_m": 0.0137,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 22.8 N from 0.42 s to 0.68 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.684,
        "release_true_s": 0.75
       }
      },
@@ -3373,7 +4928,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "small ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.05,
@@ -3426,7 +4981,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "small ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.05,
@@ -3479,7 +5034,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "small ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.05,
@@ -3551,6 +5106,32 @@
       "scale_note": null,
       "release_s": 1.0009765625
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.5002975945944157,
+       0.27387823019759927
+      ],
+      "tip": null,
+      "label": "release at 0.70 s",
+      "object": "block",
+      "scale_note": null,
+      "release_s": 0.703125
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.5002975945944157,
+       0.27387823019759927
+      ],
+      "tip": null,
+      "label": "release at 0.86 s",
+      "object": "block",
+      "scale_note": null,
+      "release_s": 0.859375
+     }
     ]
    },
    "render": {
@@ -3594,6 +5175,11 @@
        "video": "static/media/showcase/trampoline__r4__a0__factual/fwd__fm.mp4",
        "error_m": 0.0336,
        "final_error_m": 0.0361
+      },
+      "ddpm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0294,
+       "final_error_m": 0.032
       }
      },
      "given_s": [
@@ -3778,6 +5364,342 @@
         }
        ],
        "properties_total": 17
+      },
+      "fm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/unk100__fm.mp4",
+       "error_m": 0.0348,
+       "final_error_m": 0.0386,
+       "properties": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 1.9557
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6497
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3507
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.4463
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0197
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3165
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3853
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3522
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4493
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0201
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.849
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6453
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.296
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3389
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0197
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4507
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4515
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0197
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3515
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4478
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3477
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4463
+         }
+        }
+       ],
+       "properties_total": 17
+      },
+      "ddpm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/unk100__ddpm.mp4",
+       "error_m": 0.0323,
+       "final_error_m": 0.0312,
+       "properties": [
+        {
+         "object": "block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 2.0,
+          "estimate": 1.9289
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.8444
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "net tile 1.1",
+         "id": "net_1_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.02
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.4515
+         }
+        },
+        {
+         "object": "net tile 1.2",
+         "id": "net_1_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0207
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3135
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3879
+         }
+        },
+        {
+         "object": "net tile 1.3",
+         "id": "net_1_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3477
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4493
+         }
+        },
+        {
+         "object": "net tile 1.4",
+         "id": "net_1_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0194
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.8475
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6482
+         }
+        },
+        {
+         "object": "net tile 2.1",
+         "id": "net_2_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0208
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.2945
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.3463
+         }
+        },
+        {
+         "object": "net tile 2.2",
+         "id": "net_2_2",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0202
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.453
+         }
+        },
+        {
+         "object": "net tile 2.3",
+         "id": "net_2_3",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0205
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4507
+         }
+        },
+        {
+         "object": "net tile 2.4",
+         "id": "net_2_4",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3492
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4515
+         }
+        },
+        {
+         "object": "net tile 3.1",
+         "id": "net_3_1",
+         "mass_kg": {
+          "true": 0.02,
+          "estimate": 0.0204
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.3462
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.4493
+         }
+        }
+       ],
+       "properties_total": 17
       }
      },
      "given_s": [
@@ -3799,6 +5721,16 @@
        "video": "static/media/showcase/trampoline__r4__a0__factual/prefix__reg.mp4",
        "error_m": 0.0321,
        "final_error_m": 0.0307
+      },
+      "fm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/prefix__fm.mp4",
+       "error_m": 0.0379,
+       "final_error_m": 0.0346
+      },
+      "ddpm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/prefix__ddpm.mp4",
+       "error_m": 0.0332,
+       "final_error_m": 0.0305
       }
      },
      "given_s": [
@@ -3824,6 +5756,11 @@
       "fm": {
        "video": "static/media/showcase/trampoline__r4__a0__factual/bridge__fm.mp4",
        "error_m": 0.0413,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/bridge__ddpm.mp4",
+       "error_m": 0.0362,
        "final_error_m": null
       }
      },
@@ -3855,6 +5792,28 @@
        "action_text": "The gripper pulls with 19.7 N from 0.45 s to 1.00 s, then lets go.",
        "loop_closes": false,
        "release_s": 1.001,
+       "release_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/cause__fm.mp4",
+       "error_m": 0.0321,
+       "final_error_m": 0.0252,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 19.2 N from 0.32 s to 0.70 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.703,
+       "release_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/trampoline__r4__a0__factual/cause__ddpm.mp4",
+       "error_m": 0.028,
+       "final_error_m": 0.0158,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The gripper pulls with 19.5 N from 0.45 s to 0.86 s, then lets go.",
+       "loop_closes": false,
+       "release_s": 0.859,
        "release_true_s": 0.75
       }
      },
@@ -4426,6 +6385,30 @@
       "object": "pendulum bob",
       "scale_note": null
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.7398856838697356,
+       0.5120408591617961
+      ],
+      "tip": null,
+      "label": "no applied action",
+      "object": "pendulum bob",
+      "scale_note": null
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.7398856838697356,
+       0.5120408591617961
+      ],
+      "tip": null,
+      "label": "no applied action",
+      "object": "pendulum bob",
+      "scale_note": null
+     }
     ]
    },
    "render": {
@@ -4464,6 +6447,16 @@
        "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/fwd__reg.mp4",
        "error_m": 0.0218,
        "final_error_m": 0.0371
+      },
+      "fm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/fwd__fm.mp4",
+       "error_m": 0.0365,
+       "final_error_m": 0.0441
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/fwd__ddpm.mp4",
+       "error_m": 0.0338,
+       "final_error_m": 0.0435
       }
      },
      "given_s": [
@@ -4648,6 +6641,342 @@
         }
        ],
        "properties_total": 16
+      },
+      "fm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/unk100__fm.mp4",
+       "error_m": 0.0431,
+       "final_error_m": 0.045,
+       "properties": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.967
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5042
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2514
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.059
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4937
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2507
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.058
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4463
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0596
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.5011
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.2488
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.06
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.2488
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0607
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4992
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.244
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0578
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3538
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4537
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4983
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.06
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4992
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2518
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0584
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5005
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.247
+         }
+        }
+       ],
+       "properties_total": 16
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/unk100__ddpm.mp4",
+       "error_m": 0.0424,
+       "final_error_m": 0.0549,
+       "properties": [
+        {
+         "object": "pendulum bob",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6561,
+          "estimate": 0.9025
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2511
+         }
+        },
+        {
+         "object": "block 2.1",
+         "id": "jenga_1_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5009
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2466
+         }
+        },
+        {
+         "object": "block 2.2",
+         "id": "jenga_1_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0586
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.3492
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4567
+         }
+        },
+        {
+         "object": "block 2.3",
+         "id": "jenga_1_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.35,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.45,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "block 3.1",
+         "id": "jenga_2_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0588
+         },
+         "friction": {
+          "true": 0.85,
+          "estimate": 0.499
+         },
+         "restitution": {
+          "true": 0.65,
+          "estimate": 0.2499
+         }
+        },
+        {
+         "object": "block 3.2",
+         "id": "jenga_2_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0588
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5007
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2481
+         }
+        },
+        {
+         "object": "block 3.3",
+         "id": "jenga_2_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0596
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.35
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.4537
+         }
+        },
+        {
+         "object": "block 4.1",
+         "id": "jenga_3_0",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0598
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5019
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2477
+         }
+        },
+        {
+         "object": "block 4.2",
+         "id": "jenga_3_1",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0582
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.4998
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2477
+         }
+        },
+        {
+         "object": "block 4.3",
+         "id": "jenga_3_2",
+         "mass_kg": {
+          "true": 0.06,
+          "estimate": 0.0592
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5013
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2433
+         }
+        }
+       ],
+       "properties_total": 16
       }
      },
      "given_s": [
@@ -4669,6 +6998,16 @@
        "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/prefix__reg.mp4",
        "error_m": 0.0187,
        "final_error_m": 0.0313
+      },
+      "fm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/prefix__fm.mp4",
+       "error_m": 0.0206,
+       "final_error_m": 0.0278
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/prefix__ddpm.mp4",
+       "error_m": 0.0188,
+       "final_error_m": 0.0233
       }
      },
      "given_s": [
@@ -4695,6 +7034,11 @@
        "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/bridge__fm.mp4",
        "error_m": 0.0189,
        "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/bridge__ddpm.mp4",
+       "error_m": 0.0183,
+       "final_error_m": null
       }
      },
      "given_s": [
@@ -4720,6 +7064,24 @@
        "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/cause__reg.mp4",
        "error_m": 0.0178,
        "final_error_m": 0.0142,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "no action",
+       "loop_closes": false
+      },
+      "fm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/cause__fm.mp4",
+       "error_m": 0.0161,
+       "final_error_m": 0.0128,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "no action",
+       "loop_closes": false
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pendulum_jenga__r3079__a5__factual/cause__ddpm.mp4",
+       "error_m": 0.0146,
+       "final_error_m": 0.0082,
        "type_right": true,
        "object_right": true,
        "action_text": "no action",
@@ -5306,6 +7668,42 @@
       "onset_s": 0.458984375,
       "end_s": 0.9130859375
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.3181820141833904,
+       0.5231379013154949
+      ],
+      "tip": [
+       0.3715654875517939,
+       0.44279388348708687
+      ],
+      "label": "pull, 8.3 N, 0.38 to 1.09 s",
+      "object": "catapult arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 8.32669855630563,
+      "onset_s": 0.3759765625,
+      "end_s": 1.0888671875
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.3181820141833904,
+       0.5231379013154949
+      ],
+      "tip": [
+       0.36684036963571703,
+       0.4210119073974806
+      ],
+      "label": "pull, 7.6 N, 0.51 to 1.10 s",
+      "object": "catapult arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 7.551602243772113,
+      "onset_s": 0.5126953125,
+      "end_s": 1.0986328125
+     }
     ]
    },
    "render": {
@@ -5344,6 +7742,16 @@
        "video": "static/media/showcase/catapult__r109__a2__factual/fwd__reg.mp4",
        "error_m": 0.0416,
        "final_error_m": 0.0234
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/fwd__fm.mp4",
+       "error_m": 0.0447,
+       "final_error_m": 0.0353
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/fwd__ddpm.mp4",
+       "error_m": 0.0425,
+       "final_error_m": 0.0271
       }
      },
      "given_s": [
@@ -5383,7 +7791,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4317,
@@ -5396,6 +7804,86 @@
          "restitution": {
           "true": 0.25,
           "estimate": 0.5994
+         }
+        }
+       ],
+       "properties_total": 2
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/unk100__fm.mp4",
+       "error_m": 0.0788,
+       "final_error_m": 0.0456,
+       "properties": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.5963
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.8535
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.6512
+         }
+        },
+        {
+         "object": "ball",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.4462
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5945
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2418
+         }
+        }
+       ],
+       "properties_total": 2
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/unk100__ddpm.mp4",
+       "error_m": 0.0655,
+       "final_error_m": 0.0453,
+       "properties": [
+        {
+         "object": "catapult arm",
+         "id": "actor",
+         "mass_kg": {
+          "true": 0.6,
+          "estimate": 0.6046
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.3484
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.4456
+         }
+        },
+        {
+         "object": "ball",
+         "id": "cargo",
+         "mass_kg": {
+          "true": 0.4317,
+          "estimate": 0.4136
+         },
+         "friction": {
+          "true": 0.5,
+          "estimate": 0.5081
+         },
+         "restitution": {
+          "true": 0.25,
+          "estimate": 0.2544
          }
         }
        ],
@@ -5421,6 +7909,16 @@
        "video": "static/media/showcase/catapult__r109__a2__factual/prefix__reg.mp4",
        "error_m": 0.0246,
        "final_error_m": 0.0126
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/prefix__fm.mp4",
+       "error_m": 0.016,
+       "final_error_m": 0.0145
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/prefix__ddpm.mp4",
+       "error_m": 0.0258,
+       "final_error_m": 0.0136
       }
      },
      "given_s": [
@@ -5446,6 +7944,11 @@
       "fm": {
        "video": "static/media/showcase/catapult__r109__a2__factual/bridge__fm.mp4",
        "error_m": 0.0397,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/bridge__ddpm.mp4",
+       "error_m": 0.0323,
        "final_error_m": null
       }
      },
@@ -5480,6 +7983,36 @@
        "force_true_N": 9.64,
        "onset_s": 0.459,
        "end_s": 0.913,
+       "onset_true_s": 0.45,
+       "end_true_s": 0.85
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/cause__fm.mp4",
+       "error_m": 0.0723,
+       "final_error_m": 0.0276,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 8.3 N from 0.38 s to 1.09 s.",
+       "loop_closes": false,
+       "force_N": 8.33,
+       "force_true_N": 9.64,
+       "onset_s": 0.376,
+       "end_s": 1.089,
+       "onset_true_s": 0.45,
+       "end_true_s": 0.85
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r109__a2__factual/cause__ddpm.mp4",
+       "error_m": 0.0497,
+       "final_error_m": 0.0189,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 7.6 N from 0.51 s to 1.10 s.",
+       "loop_closes": false,
+       "force_N": 7.55,
+       "force_true_N": 9.64,
+       "onset_s": 0.513,
+       "end_s": 1.099,
        "onset_true_s": 0.45,
        "end_true_s": 0.85
       }
@@ -5524,7 +8057,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4317,
@@ -5561,7 +8094,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4317,
@@ -5598,7 +8131,7 @@
          }
         },
         {
-         "object": "cargo",
+         "object": "ball",
          "id": "cargo",
          "mass_kg": {
           "true": 0.4317,
@@ -5680,6 +8213,42 @@
       "onset_s": 0.32470703125,
       "end_s": 0.8642578125
      }
+    ],
+    "fm": [
+     {
+      "point": [
+       0.3944197285103953,
+       0.5207607581695517
+      ],
+      "tip": [
+       0.5707961778973645,
+       0.49232418336857153
+      ],
+      "label": "push, 2.5 N, 0.32 to 0.66 s",
+      "object": "sliding block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.4884973513413127,
+      "onset_s": 0.3173828125,
+      "end_s": 0.6640625
+     }
+    ],
+    "ddpm": [
+     {
+      "point": [
+       0.3944197285103953,
+       0.5207607581695517
+      ],
+      "tip": [
+       0.5364417435776911,
+       0.5027781576575718
+      ],
+      "label": "push, 2.0 N, 0.33 to 0.71 s",
+      "object": "sliding block",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 2.000655604140085,
+      "onset_s": 0.33203125,
+      "end_s": 0.7080078125
+     }
     ]
    },
    "render": {
@@ -5718,6 +8287,16 @@
        "video": "static/media/showcase/hinge_slider__r15__a0__factual/fwd__reg.mp4",
        "error_m": 0.0082,
        "final_error_m": 0.0138
+      },
+      "fm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0253,
+       "final_error_m": 0.0495
+      },
+      "ddpm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0288,
+       "final_error_m": 0.05
       }
      },
      "given_s": [
@@ -5758,6 +8337,54 @@
         }
        ],
        "properties_total": 1
+      },
+      "fm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/unk100__fm.mp4",
+       "error_m": 0.0318,
+       "final_error_m": 0.0572,
+       "properties": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 0.8901
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.522
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2662
+         }
+        }
+       ],
+       "properties_total": 1
+      },
+      "ddpm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/unk100__ddpm.mp4",
+       "error_m": 0.0369,
+       "final_error_m": 0.0619,
+       "properties": [
+        {
+         "object": "sliding block",
+         "id": "actor",
+         "mass_kg": {
+          "true": 1.0692,
+          "estimate": 0.854
+         },
+         "friction": {
+          "true": 0.3,
+          "estimate": 0.5171
+         },
+         "restitution": {
+          "true": 0.35,
+          "estimate": 0.2566
+         }
+        }
+       ],
+       "properties_total": 1
       }
      },
      "given_s": [
@@ -5779,6 +8406,16 @@
        "video": "static/media/showcase/hinge_slider__r15__a0__factual/prefix__reg.mp4",
        "error_m": 0.0117,
        "final_error_m": 0.0252
+      },
+      "fm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/prefix__fm.mp4",
+       "error_m": 0.0179,
+       "final_error_m": 0.0341
+      },
+      "ddpm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/prefix__ddpm.mp4",
+       "error_m": 0.0349,
+       "final_error_m": 0.0536
       }
      },
      "given_s": [
@@ -5804,6 +8441,11 @@
       "fm": {
        "video": "static/media/showcase/hinge_slider__r15__a0__factual/bridge__fm.mp4",
        "error_m": 0.0168,
+       "final_error_m": null
+      },
+      "ddpm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/bridge__ddpm.mp4",
+       "error_m": 0.0205,
        "final_error_m": null
       }
      },
@@ -5838,6 +8480,36 @@
        "force_true_N": 2.53,
        "onset_s": 0.325,
        "end_s": 0.864,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "fm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/cause__fm.mp4",
+       "error_m": 0.0119,
+       "final_error_m": 0.0167,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 2.5 N from 0.32 s to 0.66 s.",
+       "loop_closes": false,
+       "force_N": 2.49,
+       "force_true_N": 2.53,
+       "onset_s": 0.317,
+       "end_s": 0.664,
+       "onset_true_s": 0.35,
+       "end_true_s": 0.75
+      },
+      "ddpm": {
+       "video": "static/media/showcase/hinge_slider__r15__a0__factual/cause__ddpm.mp4",
+       "error_m": 0.0123,
+       "final_error_m": 0.0083,
+       "type_right": true,
+       "object_right": true,
+       "action_text": "The tool pushes with 2.0 N from 0.33 s to 0.71 s.",
+       "loop_closes": false,
+       "force_N": 2.0,
+       "force_true_N": 2.53,
+       "onset_s": 0.332,
+       "end_s": 0.708,
        "onset_true_s": 0.35,
        "end_true_s": 0.75
       }
@@ -5936,7 +8608,7 @@
    "family": "rubble",
    "family_title": "Rubble pile",
    "group": "Toppling, towers and dominoes",
-   "description": "A gripper pulls the support block out from under two columns of blocks that carry a beam. The pile comes down.",
+   "description": "A gripper pulls the board out from under a small bridge of blocks. The bridge drops onto the plate below and stays standing.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6010,6 +8682,16 @@
        "video": "static/media/showcase/rubble__r2117__a5__factual/fwd__reg.mp4",
        "error_m": 0.0255,
        "final_error_m": 0.0244
+      },
+      "fm": {
+       "video": "static/media/showcase/rubble__r2117__a5__factual/fwd__fm.mp4",
+       "error_m": 0.0388,
+       "final_error_m": 0.0441
+      },
+      "ddpm": {
+       "video": "static/media/showcase/rubble__r2117__a5__factual/fwd__ddpm.mp4",
+       "error_m": 0.0568,
+       "final_error_m": 0.0587
       }
      },
      "given_s": [
@@ -6033,7 +8715,7 @@
    "family": "chair_spill",
    "family_title": "Loaded chair",
    "group": "Furniture and catching",
-   "description": "A chair with a ball on its seat is tipped over. The chair falls and the ball rolls away.",
+   "description": "A chair with a ball on its seat is jolted. The chair rocks and the ball rolls off across the floor.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6105,6 +8787,16 @@
        "video": "static/media/showcase/chair_spill__r11__a2__factual/fwd__reg.mp4",
        "error_m": 0.0335,
        "final_error_m": 0.0681
+      },
+      "fm": {
+       "video": "static/media/showcase/chair_spill__r11__a2__factual/fwd__fm.mp4",
+       "error_m": 0.0454,
+       "final_error_m": 0.0798
+      },
+      "ddpm": {
+       "video": "static/media/showcase/chair_spill__r11__a2__factual/fwd__ddpm.mp4",
+       "error_m": 0.0668,
+       "final_error_m": 0.1145
       }
      },
      "given_s": [
@@ -6128,7 +8820,7 @@
    "family": "pulley",
    "family_title": "Pulleys",
    "group": "Mechanisms",
-   "description": "Loads hanging from ropes over guided pulleys are released, and the heavier side pulls the rope links over.",
+   "description": "Two loads hang from a rope over a pulley. Released, the heavier load sinks and pulls the lighter one up.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6196,6 +8888,16 @@
        "video": "static/media/showcase/pulley__r3009__a0__factual/fwd__reg.mp4",
        "error_m": 0.0256,
        "final_error_m": 0.0244
+      },
+      "fm": {
+       "video": "static/media/showcase/pulley__r3009__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0421,
+       "final_error_m": 0.0333
+      },
+      "ddpm": {
+       "video": "static/media/showcase/pulley__r3009__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0563,
+       "final_error_m": 0.0427
       }
      },
      "given_s": [
@@ -6293,6 +8995,16 @@
        "video": "static/media/showcase/sliding__r2036__a5__factual/fwd__reg.mp4",
        "error_m": 0.0401,
        "final_error_m": 0.0497
+      },
+      "fm": {
+       "video": "static/media/showcase/sliding__r2036__a5__factual/fwd__fm.mp4",
+       "error_m": 0.0134,
+       "final_error_m": 0.0121
+      },
+      "ddpm": {
+       "video": "static/media/showcase/sliding__r2036__a5__factual/fwd__ddpm.mp4",
+       "error_m": 0.0156,
+       "final_error_m": 0.0291
       }
      },
      "given_s": [
@@ -6316,7 +9028,7 @@
    "family": "chair_push_table",
    "family_title": "Armchair and table",
    "group": "Furniture and catching",
-   "description": "A pusher shoves an armchair into a table.",
+   "description": "A pusher shoves an armchair into a table, which slides along with it.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6390,6 +9102,16 @@
        "video": "static/media/showcase/chair_push_table__r2077__a1__factual/fwd__reg.mp4",
        "error_m": 0.0182,
        "final_error_m": 0.0204
+      },
+      "fm": {
+       "video": "static/media/showcase/chair_push_table__r2077__a1__factual/fwd__fm.mp4",
+       "error_m": 0.0198,
+       "final_error_m": 0.0213
+      },
+      "ddpm": {
+       "video": "static/media/showcase/chair_push_table__r2077__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.0279,
+       "final_error_m": 0.0334
       }
      },
      "given_s": [
@@ -6413,7 +9135,7 @@
    "family": "lever",
    "family_title": "Lever",
    "group": "Mechanisms",
-   "description": "A gripper presses one arm of a lever down, which throws the object resting on the other arm.",
+   "description": "A gripper presses one arm of a lever down, which throws the ball resting on the other arm.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6487,6 +9209,16 @@
        "video": "static/media/showcase/lever__r57__a5__factual/fwd__reg.mp4",
        "error_m": 0.0271,
        "final_error_m": 0.0262
+      },
+      "fm": {
+       "video": "static/media/showcase/lever__r57__a5__factual/fwd__fm.mp4",
+       "error_m": 0.066,
+       "final_error_m": 0.0329
+      },
+      "ddpm": {
+       "video": "static/media/showcase/lever__r57__a5__factual/fwd__ddpm.mp4",
+       "error_m": 0.064,
+       "final_error_m": 0.0413
       }
      },
      "given_s": [
@@ -6510,7 +9242,7 @@
    "family": "rolling_race",
    "family_title": "Rolling race",
    "group": "Slides, rolls and collisions",
-   "description": "Three round bodies are released together at the top of a ramp and race down.",
+   "description": "Round bodies are released together at the top of a three-lane ramp and roll down to a stop bar.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 16,
@@ -6578,6 +9310,16 @@
        "video": "static/media/showcase/rolling_race__r3076__a0__factual/fwd__reg.mp4",
        "error_m": 0.0362,
        "final_error_m": 0.0603
+      },
+      "fm": {
+       "video": "static/media/showcase/rolling_race__r3076__a0__factual/fwd__fm.mp4",
+       "error_m": 0.047,
+       "final_error_m": 0.0411
+      },
+      "ddpm": {
+       "video": "static/media/showcase/rolling_race__r3076__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0595,
+       "final_error_m": 0.0708
       }
      },
      "given_s": [
@@ -6669,6 +9411,16 @@
        "video": "static/media/showcase/crate_drop_table__r3071__a3__factual/fwd__reg.mp4",
        "error_m": 0.0154,
        "final_error_m": 0.0199
+      },
+      "fm": {
+       "video": "static/media/showcase/crate_drop_table__r3071__a3__factual/fwd__fm.mp4",
+       "error_m": 0.0276,
+       "final_error_m": 0.0317
+      },
+      "ddpm": {
+       "video": "static/media/showcase/crate_drop_table__r3071__a3__factual/fwd__ddpm.mp4",
+       "error_m": 0.0262,
+       "final_error_m": 0.0295
       }
      },
      "given_s": [
@@ -6687,199 +9439,12 @@
    }
   },
   {
-   "id": "double_pendulum__r3003__a3__factual",
-   "record_id": "double_pendulum__r3003/a3/factual",
-   "family": "double_pendulum",
-   "family_title": "Double pendulum",
-   "group": "Pendulums, springs and elastic parts",
-   "description": "A double pendulum is set swinging.",
-   "role": "forward",
-   "novelty": "new room",
-   "furniture_pieces": 16,
-   "duration_s": 6.0,
-   "moving_bodies": 2,
-   "physics": {
-    "video": "static/media/showcase/double_pendulum__r3003__a3__factual/physics.mp4",
-    "first": "static/media/showcase/double_pendulum__r3003__a3__factual/first.jpg",
-    "last": "static/media/showcase/double_pendulum__r3003__a3__factual/last.jpg",
-    "first_annotated": "static/media/showcase/double_pendulum__r3003__a3__factual/first_annotated.jpg"
-   },
-   "action": {
-    "kind": "launch",
-    "label": "swing, 1.7 m/s",
-    "object": "pendulum",
-    "instruction": "swing"
-   },
-   "action_overlay": {
-    "true": [
-     {
-      "point": [
-       0.4992790829785476,
-       0.6801690255741727
-      ],
-      "tip": [
-       0.6792764341181419,
-       0.6819050533189188
-      ],
-      "label": "swing, 1.7 m/s",
-      "object": "pendulum",
-      "scale_note": "The arrow shows the direction only; its length is not to scale.",
-      "speed_m_s": 1.7418929735771067
-     }
-    ]
-   },
-   "render": {
-    "floor": "pale stone",
-    "walls": "unchanged (the room's beige paint)",
-    "renderer": {
-     "renderer": "RTX path tracing",
-     "samples_per_pixel": 72,
-     "denoiser": "OptiX",
-     "max_bounces": 6
-    },
-    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
-    "camera": {
-     "eye": [
-      -0.7978896796703343,
-      -2.966748206398459,
-      1.6012522894652428
-     ],
-     "target": [
-      -0.797889679670334,
-      -0.900035560131073,
-      1.0086319744586945
-     ],
-     "focal_mm": 16.0,
-     "aperture_mm": 20.955,
-     "resolution": [
-      1280,
-      720
-     ]
-    }
-   },
-   "modes": {
-    "fwd": {
-     "variants": {
-      "reg": {
-       "video": "static/media/showcase/double_pendulum__r3003__a3__factual/fwd__reg.mp4",
-       "error_m": 0.0374,
-       "final_error_m": 0.0267
-      }
-     },
-     "given_s": [
-      [
-       0.0,
-       0.0
-      ]
-     ],
-     "generated_s": [
-      [
-       0.02,
-       8.0
-      ]
-     ]
-    }
-   }
-  },
-  {
-   "id": "drag_wind__r3017__a3__factual",
-   "record_id": "drag_wind__r3017/a3/factual",
-   "family": "drag_wind",
-   "family_title": "Air drag",
-   "group": "Falls, throws and flight",
-   "description": "A light sheet is released above a ball, and air drag slows its fall.",
-   "role": "forward",
-   "novelty": "new structure",
-   "furniture_pieces": 12,
-   "duration_s": 6.0,
-   "moving_bodies": 2,
-   "physics": {
-    "video": "static/media/showcase/drag_wind__r3017__a3__factual/physics.mp4",
-    "first": "static/media/showcase/drag_wind__r3017__a3__factual/first.jpg",
-    "last": "static/media/showcase/drag_wind__r3017__a3__factual/last.jpg",
-    "first_annotated": "static/media/showcase/drag_wind__r3017__a3__factual/first_annotated.jpg"
-   },
-   "action": {
-    "kind": "release",
-    "label": "release at 0.75 s",
-    "object": "sheet",
-    "instruction": "release the sheet above the ball"
-   },
-   "action_overlay": {
-    "true": [
-     {
-      "point": [
-       0.4992411412675471,
-       0.18118288694292528
-      ],
-      "tip": null,
-      "label": "release at 0.75 s",
-      "object": "sheet",
-      "scale_note": null,
-      "release_s": 0.75
-     }
-    ]
-   },
-   "render": {
-    "floor": "pale stone",
-    "walls": "unchanged (the room's beige paint)",
-    "renderer": {
-     "renderer": "RTX path tracing",
-     "samples_per_pixel": 72,
-     "denoiser": "OptiX",
-     "max_bounces": 6
-    },
-    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
-    "camera": {
-     "eye": [
-      2.4480444473757315,
-      -2.771066572637447,
-      2.1033508162164267
-     ],
-     "target": [
-      -0.7986160412575012,
-      -0.8966062655577263,
-      1.0283651285301316
-     ],
-     "focal_mm": 16.0,
-     "aperture_mm": 20.955,
-     "resolution": [
-      1280,
-      720
-     ]
-    }
-   },
-   "modes": {
-    "fwd": {
-     "variants": {
-      "reg": {
-       "video": "static/media/showcase/drag_wind__r3017__a3__factual/fwd__reg.mp4",
-       "error_m": 0.0171,
-       "final_error_m": 0.0199
-      }
-     },
-     "given_s": [
-      [
-       0.0,
-       0.0
-      ]
-     ],
-     "generated_s": [
-      [
-       0.02,
-       6.0
-      ]
-     ]
-    }
-   }
-  },
-  {
    "id": "slip_roll__r2007__a1__factual",
    "record_id": "slip_roll__r2007/a1/factual",
    "family": "slip_roll",
    "family_title": "Slipping to rolling",
    "group": "Slides, rolls and collisions",
-   "description": "A ball is set down spinning. It slips on the floor at first and then rolls.",
+   "description": "A gripper sets a ball spinning on the floor. It slips at first and then rolls away.",
    "role": "forward",
    "novelty": "new room",
    "furniture_pieces": 0,
@@ -6953,6 +9518,16 @@
        "video": "static/media/showcase/slip_roll__r2007__a1__factual/fwd__reg.mp4",
        "error_m": 0.0177,
        "final_error_m": 0.0508
+      },
+      "fm": {
+       "video": "static/media/showcase/slip_roll__r2007__a1__factual/fwd__fm.mp4",
+       "error_m": 0.0436,
+       "final_error_m": 0.1024
+      },
+      "ddpm": {
+       "video": "static/media/showcase/slip_roll__r2007__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.0562,
+       "final_error_m": 0.0975
       }
      },
      "given_s": [
@@ -6965,6 +9540,531 @@
       [
        0.02,
        5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "catapult__r2009__a2__factual",
+   "record_id": "catapult__r2009/a2/factual",
+   "family": "catapult",
+   "family_title": "Catapult",
+   "group": "Mechanisms",
+   "description": "A pusher knocks the trigger of a loaded catapult, whose arm throws a ball across the room.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 5.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/catapult__r2009__a2__factual/physics.mp4",
+    "first": "static/media/showcase/catapult__r2009__a2__factual/first.jpg",
+    "last": "static/media/showcase/catapult__r2009__a2__factual/last.jpg",
+    "first_annotated": "static/media/showcase/catapult__r2009__a2__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "pull, 8.0 N, 0.45 to 0.85 s",
+    "object": "catapult arm",
+    "instruction": "pull the trigger pin"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.28322792440013816,
+       0.5489314954561602
+      ],
+      "tip": [
+       0.33915052738342244,
+       0.43589513040788713
+      ],
+      "label": "pull, 8.0 N, 0.45 to 0.85 s",
+      "object": "catapult arm",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 7.969115257263184,
+      "onset_s": 0.45000001788139343,
+      "end_s": 0.8500000238418579
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -1.9218672240913888,
+      2.8592361899839336,
+      1.7761297467340986
+     ],
+     "target": [
+      -1.921867224091389,
+      -1.1299998481600833,
+      0.6322347200935539
+     ],
+     "focal_mm": 16.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__reg.mp4",
+       "error_m": 0.0506,
+       "final_error_m": 0.0536
+      },
+      "fm": {
+       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__fm.mp4",
+       "error_m": 0.0757,
+       "final_error_m": 0.0291
+      },
+      "ddpm": {
+       "video": "static/media/showcase/catapult__r2009__a2__factual/fwd__ddpm.mp4",
+       "error_m": 0.1262,
+       "final_error_m": 0.0285
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       5.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "crank__r149__a1__factual",
+   "record_id": "crank__r149/a1/factual",
+   "family": "crank",
+   "family_title": "Crank and slider",
+   "group": "Mechanisms",
+   "description": "A gripper turns a crank, whose connecting rod drives a block back and forth.",
+   "role": "forward",
+   "novelty": "new arrangement",
+   "furniture_pieces": 0,
+   "duration_s": 6.0,
+   "moving_bodies": 4,
+   "physics": {
+    "video": "static/media/showcase/crank__r149__a1__factual/physics.mp4",
+    "first": "static/media/showcase/crank__r149__a1__factual/first.jpg",
+    "last": "static/media/showcase/crank__r149__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/crank__r149__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "spin, 5.2 N, 0.35 to 0.75 s, then let go",
+    "object": "crank",
+    "instruction": "spin"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.40918929346687555,
+       0.39042629803674145
+      ],
+      "tip": [
+       0.40516005424137425,
+       0.0705064797796921
+      ],
+      "label": "spin, 5.2 N, 0.35 to 0.75 s, then let go",
+      "object": "crank",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 5.177037239074707,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.7639840530229384,
+      -3.1899649660235823,
+      1.0752959060711185
+     ],
+     "target": [
+      -0.7639840530229379,
+      -0.9309999805685333,
+      0.4275481199011706
+     ],
+     "focal_mm": 24.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/crank__r149__a1__factual/fwd__reg.mp4",
+       "error_m": 0.0121,
+       "final_error_m": 0.0238
+      },
+      "fm": {
+       "video": "static/media/showcase/crank__r149__a1__factual/fwd__fm.mp4",
+       "error_m": 0.0208,
+       "final_error_m": 0.0377
+      },
+      "ddpm": {
+       "video": "static/media/showcase/crank__r149__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.0192,
+       "final_error_m": 0.0496
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "drop__r3053__a0__factual",
+   "record_id": "drop__r3053/a0/factual",
+   "family": "drop",
+   "family_title": "Falling and bouncing",
+   "group": "Falls, throws and flight",
+   "description": "A gripper lets go of a block, which falls, bounces and tumbles to rest.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 13,
+   "duration_s": 4.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/drop__r3053__a0__factual/physics.mp4",
+    "first": "static/media/showcase/drop__r3053__a0__factual/first.jpg",
+    "last": "static/media/showcase/drop__r3053__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/drop__r3053__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "block",
+    "instruction": "release"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.4480750645972472,
+       0.24640494471013952
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "block",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -1.6359655111675857,
+      3.183770377954791,
+      1.989533249560988
+     ],
+     "target": [
+      -1.635965511167586,
+      -0.9977179993768895,
+      0.7905107517570437
+     ],
+     "focal_mm": 24.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/drop__r3053__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0855,
+       "final_error_m": 0.1703
+      },
+      "fm": {
+       "video": "static/media/showcase/drop__r3053__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0747,
+       "final_error_m": 0.1323
+      },
+      "ddpm": {
+       "video": "static/media/showcase/drop__r3053__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0891,
+       "final_error_m": 0.1651
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       4.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "coupled_springs__r125__a0__factual",
+   "record_id": "coupled_springs__r125/a0/factual",
+   "family": "coupled_springs",
+   "family_title": "Coupled springs",
+   "group": "Pendulums, springs and elastic parts",
+   "description": "Two balls hang from springs, one below the other. A gripper compresses the springs and lets go, and the balls oscillate.",
+   "role": "forward",
+   "novelty": "new arrangement",
+   "furniture_pieces": 0,
+   "duration_s": 6.0,
+   "moving_bodies": 3,
+   "physics": {
+    "video": "static/media/showcase/coupled_springs__r125__a0__factual/physics.mp4",
+    "first": "static/media/showcase/coupled_springs__r125__a0__factual/first.jpg",
+    "last": "static/media/showcase/coupled_springs__r125__a0__factual/last.jpg",
+    "first_annotated": "static/media/showcase/coupled_springs__r125__a0__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "force",
+    "label": "compress, 5.0 N, 0.35 to 0.75 s, then let go",
+    "object": "ball",
+    "instruction": "compress"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.5225251121800055,
+       0.38965730224589823
+      ],
+      "tip": [
+       0.511074163681036,
+       0.07030548573740297
+      ],
+      "label": "compress, 5.0 N, 0.35 to 0.75 s, then let go",
+      "object": "ball",
+      "scale_note": "The arrow shows the direction only; its length is not to scale.",
+      "force_N": 4.989909128213812,
+      "onset_s": 0.3499999940395355,
+      "end_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "pale stone",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      -0.7134586721658706,
+      2.690579431958943,
+      1.8815081642180949
+     ],
+     "target": [
+      -0.7134586721658708,
+      -0.962215012606664,
+      0.8340862121134996
+     ],
+     "focal_mm": 20.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/coupled_springs__r125__a0__factual/fwd__reg.mp4",
+       "error_m": 0.0321,
+       "final_error_m": 0.069
+      },
+      "fm": {
+       "video": "static/media/showcase/coupled_springs__r125__a0__factual/fwd__fm.mp4",
+       "error_m": 0.0722,
+       "final_error_m": 0.0599
+      },
+      "ddpm": {
+       "video": "static/media/showcase/coupled_springs__r125__a0__factual/fwd__ddpm.mp4",
+       "error_m": 0.0769,
+       "final_error_m": 0.0969
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       8.0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "drag_wind__r3056__a1__factual",
+   "record_id": "drag_wind__r3056/a1/factual",
+   "family": "drag_wind",
+   "family_title": "Air drag",
+   "group": "Falls, throws and flight",
+   "description": "A gripper releases a light sheet above a ball. Air drag slows the sheet as it sinks onto the ball.",
+   "role": "forward",
+   "novelty": "new room",
+   "furniture_pieces": 16,
+   "duration_s": 6.0,
+   "moving_bodies": 2,
+   "physics": {
+    "video": "static/media/showcase/drag_wind__r3056__a1__factual/physics.mp4",
+    "first": "static/media/showcase/drag_wind__r3056__a1__factual/first.jpg",
+    "last": "static/media/showcase/drag_wind__r3056__a1__factual/last.jpg",
+    "first_annotated": "static/media/showcase/drag_wind__r3056__a1__factual/first_annotated.jpg"
+   },
+   "action": {
+    "kind": "release",
+    "label": "release at 0.75 s",
+    "object": "sheet",
+    "instruction": "release the sheet above the ball"
+   },
+   "action_overlay": {
+    "true": [
+     {
+      "point": [
+       0.49985676538919316,
+       0.19118768251171575
+      ],
+      "tip": null,
+      "label": "release at 0.75 s",
+      "object": "sheet",
+      "scale_note": null,
+      "release_s": 0.75
+     }
+    ]
+   },
+   "render": {
+    "floor": "sage green",
+    "walls": "unchanged (the room's beige paint)",
+    "renderer": {
+     "renderer": "RTX path tracing",
+     "samples_per_pixel": 72,
+     "denoiser": "OptiX",
+     "max_bounces": 6
+    },
+    "note": "The floor's colour and texture are changed at render time only; the motion is the simulation's.",
+    "camera": {
+     "eye": [
+      2.86289900089605,
+      -3.014051109257671,
+      2.124943866415129
+     ],
+     "target": [
+      -0.800000011920929,
+      -0.8992753781933711,
+      0.912139500820335
+     ],
+     "focal_mm": 20.0,
+     "aperture_mm": 20.955,
+     "resolution": [
+      1280,
+      720
+     ]
+    }
+   },
+   "modes": {
+    "fwd": {
+     "variants": {
+      "reg": {
+       "video": "static/media/showcase/drag_wind__r3056__a1__factual/fwd__reg.mp4",
+       "error_m": 0.0152,
+       "final_error_m": 0.0133
+      },
+      "fm": {
+       "video": "static/media/showcase/drag_wind__r3056__a1__factual/fwd__fm.mp4",
+       "error_m": 0.0263,
+       "final_error_m": 0.0434
+      },
+      "ddpm": {
+       "video": "static/media/showcase/drag_wind__r3056__a1__factual/fwd__ddpm.mp4",
+       "error_m": 0.0185,
+       "final_error_m": 0.0289
+      }
+     },
+     "given_s": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "generated_s": [
+      [
+       0.02,
+       6.0
       ]
      ]
     }

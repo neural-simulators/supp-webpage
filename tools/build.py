@@ -502,7 +502,7 @@ def dataset_section(d, pickers):
         return ''
     groups = [g for g in GROUPS if any(c['group'] == g for c in d['gallery'])]
     filt = '<button type="button" data-filter="all" class="on">All</button>' + ''.join(f'<button type="button" data-filter="{e(g)}">{e(g)}</button>' for g in groups)
-    cards = ''.join(f'''<div class="dcard hover-play" data-group="{e(c['group'])}"><div class="vid"><video data-src="{e(c['file'])}" poster="{e(c['poster'])}" muted playsinline loop preload="none"></video></div>
+    cards = ''.join(f'''<div class="dcard hover-play" data-group="{e(c['group'])}" data-featured="{1 if c.get('featured', True) else 0}"><div class="vid"><video data-src="{e(c['file'])}" poster="{e(c['poster'])}" muted playsinline loop preload="none"></video></div>
 <p><b>{e(c['family'].replace('_', ' '))}</b> {e(c['description'])}</p></div>''' for c in d['gallery'])
     tabs = ''.join('<button type="button" data-tab="rec-%s" class="%s">%s</button>' % (r['key'], 'on' if i == 0 else '', e(r['title'])) for i, r in enumerate(d['records']))
     panels = ''.join('<div class="tab-panel" id="rec-%s"%s>%s</div>' % (r['key'], '' if i == 0 else ' hidden', record_block(r)) for i, r in enumerate(d['records']))
@@ -510,7 +510,8 @@ def dataset_section(d, pickers):
     for c in d['counterfactual_sets']:
         tiles = [{'label': x['stated_change'][0].upper() + x['stated_change'][1:], 'sub': 'the recorded run' if x['branch'] == 'factual' else 'a counterfactual branch of the same action', 'src': x['file'], 'poster': x['poster'],
                   'cls': 'ref' if x['branch'] == 'factual' else 'given', 'note': '; '.join(f'{e(k.replace("_", " "))}: <b>{e(v)}</b>' for k, v in x['measured'].items())} for x in c['clips']]
-        cf.append({'id': c['key'], 'title': c['title'], 'short': c['title'].split(':')[0], 'thumb': c['clips'][0]['poster'], 'tiles': tiles, 'caption': f"<b>{e(c['title'])}.</b> {e(c['summary'])}"})
+        short = c['title'].split(':')[-1].strip(); short = short[0].upper() + short[1:]
+        cf.append({'id': c['key'], 'title': c['title'], 'short': short, 'thumb': c['clips'][0]['poster'], 'tiles': tiles, 'caption': f"<b>{e(short)}.</b> {e(c['summary'])}"})
     pickers['cf'] = {'items': cf}
     ch = []
     for c in d['channels']['records']:
@@ -520,6 +521,9 @@ def dataset_section(d, pickers):
                f"scene flow at {sf.get('saturates_at_m_per_s', 0):.1f} m/s.</span>")
         ch.append({'id': c['key'], 'title': c['title'], 'short': c['family'].replace('_', ' '), 'thumb': c['tiles']['rgb']['poster'], 'tiles': tiles, 'caption': cap})
     pickers['channels'] = {'items': ch}
+    names = {'depth_bar': 'Depth', 'optical_flow_wheel': 'Optical flow', 'scene_flow_axes': 'Scene flow'}
+    legends = '<div class="legends">' + ''.join(f'<div><img src="{e(v["file"])}" alt="" loading="lazy"><p><b>{e(names.get(k, k.replace("_", " ")))}.</b> {e(v["reads"][0].upper() + v["reads"][1:])}.</p></div>'
+                                                for k, v in (d['channels'].get('legends') or {}).items()) + '</div>' if d['channels'].get('legends') else ''
     return f'''<section class="section sp-section" id="dataset"><div class="sp-container sp-wide">
 <h2 class="title is-3 has-text-centered">The dataset</h2>
 <p class="sp-lead">We train on 505,827 PhysX simulations from 56 motion families, split by scene. Each record stores the scene graph, the action, the state of every object at 120 Hz
@@ -527,8 +531,9 @@ and timed contact events. Images, depth, masks and flow are rendered from the sa
 <details class="sp-more"><summary>The dataset in numbers</summary>{kv(d['numbers']['rows'])}</details>
 <details class="sp-more"><summary>Every attribute of the scene graph, the start state and the actions</summary>{kv(d['attributes']['rows'])}</details>
 <h3 class="title is-4 has-text-centered sp-sub">Motion families</h3>
-<p class="sp-lead">{e(d['gallery_note'])} Move the pointer over a clip to play it.</p>
-<div class="gal-bar"><div><span class="seg-label">Motion</span><span class="seg" data-filter-switch="ds-gal">{filt}</span></div></div>
+<p class="sp-lead">PhysX recordings of the motion families, one record each, cropped to the action. The orange arm is a drawing that follows the recorded end effector. Move the pointer over a clip to play it.</p>
+<div class="gal-bar"><div><span class="seg-label">Motion</span><span class="seg" data-filter-switch="ds-gal">{filt}</span></div>
+<div><span class="seg" data-toggle-class="ds-gal:show-all"><button type="button" data-on="Show the selection of {sum(1 for c in d['gallery'] if c.get('featured', True))}" data-off="Show all {len(d['gallery'])} families">Show all {len(d['gallery'])} families</button></span></div></div>
 <div class="dgal" id="ds-gal">{cards}</div>
 <h3 class="title is-4 has-text-centered sp-sub">One record, everything it stores</h3>
 <p class="sp-lead">Three records, opened up. The arrow or dot on the start frame marks the action. Every value below is read from the files of the record.</p>
@@ -537,10 +542,11 @@ and timed contact events. Images, depth, masks and flow are rendered from the sa
 <h3 class="title is-4 has-text-centered sp-sub">Counterfactual branches</h3>
 <p class="sp-lead">Each action of a scene is simulated again under stated changes: a property, a material, a shape, the floor, gravity, a removed object, or a change during the motion.
 The answers under each clip are measured from that run.</p>
-<div class="picker" data-picker="cf" style="max-width:1100px;margin-inline:auto"></div>
+<div class="picker" data-picker="cf" style="--head:4.9rem"></div>
 <h3 class="title is-4 has-text-centered sp-sub">Rendered channels</h3>
 <p class="sp-lead">RGB, depth, instance masks, optical flow and scene flow of the same saved states, from one camera. They are rendered on demand, without running the physics again.</p>
-<div class="picker" data-picker="channels"></div>
+<div class="picker" data-picker="channels" style="--head:3.4rem"></div>
+{legends}
 <p class="sp-note" style="margin-top:0.7rem">{e(d['channels']['note'])}</p>
 </div></section>'''
 

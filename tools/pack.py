@@ -75,7 +75,7 @@ def main():
         problems.append(f'page is {total/1e6:.1f} MB, over the 135 MB budget')
     by = {}
     for r in files:
-        k = '/'.join(r.split('/')[:3]); by[k] = by.get(k, 0)+(WEB/r).stat().st_size
+        k = '/'.join(r.split('/')[:3]); by[k] = by.get(k, 0)+((WEB/r).stat().st_size if (WEB/r).exists() else 0)
     for k, v in sorted(by.items(), key=lambda x: -x[1]):
         print(f'  {v/1e6:6.1f} MB  {k}')
     if a.zip:

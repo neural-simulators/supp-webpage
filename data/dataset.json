@@ -782,7 +782,7 @@
     "poster": "static/media/dataset/records/pj.jpg",
     "start_frame": "static/media/dataset/records/pj_start.jpg",
     "action_frame": "static/media/dataset/records/pj_action.jpg",
-    "bytes": 195905,
+    "bytes": 185475,
     "look": "PhysX recording replayed with path tracing; the floor colour and the lights are set at render time only"
    },
    "action_overlay": [
@@ -793,8 +793,8 @@
      "label": "release the pendulum",
      "time_s": 0.0,
      "point": [
-      0.6948,
-      0.5616
+      0.2831,
+      0.5716
      ],
      "tip": null
     }
@@ -4247,7 +4247,7 @@
     "poster": "static/media/dataset/records/rsd.jpg",
     "start_frame": "static/media/dataset/records/rsd_start.jpg",
     "action_frame": "static/media/dataset/records/rsd_action.jpg",
-    "bytes": 243337,
+    "bytes": 186570,
     "look": "PhysX recording replayed with path tracing; the floor colour and the lights are set at render time only"
    },
    "action_overlay": [
@@ -4258,8 +4258,8 @@
      "label": "release the ball at the top of the ramp, let go at 0.75 s",
      "time_s": 0.75,
      "point": [
-      0.8047,
-      0.4467
+      0.8651,
+      0.405
      ],
      "tip": null
     }
@@ -8355,7 +8355,7 @@
     "poster": "static/media/dataset/records/lt.jpg",
     "start_frame": "static/media/dataset/records/lt_start.jpg",
     "action_frame": "static/media/dataset/records/lt_action.jpg",
-    "bytes": 234145,
+    "bytes": 193895,
     "look": "PhysX recording replayed with path tracing; the floor colour and the lights are set at render time only"
    },
    "action_overlay": [
@@ -8366,8 +8366,8 @@
      "label": "hold the drawn plunger, then let go at 0.75 s",
      "time_s": 0.75,
      "point": [
-      0.6764,
-      0.4567
+      0.79,
+      0.365
      ],
      "tip": null
     }
@@ -13060,8 +13060,8 @@
        "label": "release the pendulum",
        "time_s": 0.0,
        "point": [
-        0.6948,
-        0.5616
+        0.2831,
+        0.5716
        ],
        "tip": null
       }
@@ -13070,7 +13070,7 @@
       960,
       540
      ],
-     "bytes": 195905
+     "bytes": 185475
     },
     {
      "record": "pendulum_jenga__r14/a0/intervention",
@@ -13093,8 +13093,8 @@
        "label": "release the pendulum",
        "time_s": 0.0,
        "point": [
-        0.6948,
-        0.5616
+        0.2831,
+        0.5716
        ],
        "tip": null
       },
@@ -13105,12 +13105,12 @@
        "label": "intervention at 0.45 s: impulse 0.25 N s",
        "time_s": 0.45,
        "point": [
-        0.5955,
-        0.6265
+        0.4002,
+        0.6367
        ],
        "tip": [
-        0.7755,
-        0.6265
+        0.2202,
+        0.6367
        ]
       }
      ],
@@ -13118,7 +13118,7 @@
       960,
       540
      ],
-     "bytes": 188256
+     "bytes": 167588
     },
     {
      "record": "pendulum_jenga__r14/a0/removal",
@@ -13141,8 +13141,8 @@
        "label": "release the pendulum",
        "time_s": 0.0,
        "point": [
-        0.6948,
-        0.5616
+        0.2831,
+        0.5716
        ],
        "tip": null
       }
@@ -13151,7 +13151,7 @@
       960,
       540
      ],
-     "bytes": 193651
+     "bytes": 176871
     },
     {
      "record": "pendulum_jenga__r14/a0/counterfactual_gravity",
@@ -13174,8 +13174,8 @@
        "label": "release the pendulum",
        "time_s": 0.0,
        "point": [
-        0.6948,
-        0.5616
+        0.2831,
+        0.5716
        ],
        "tip": null
       }
@@ -13184,7 +13184,7 @@
       960,
       540
      ],
-     "bytes": 196542
+     "bytes": 177328
     }
    ]
   },
@@ -13216,8 +13216,8 @@
        "label": "release the ball at the top of the ramp, let go at 0.75 s",
        "time_s": 0.75,
        "point": [
-        0.8047,
-        0.4467
+        0.8651,
+        0.405
        ],
        "tip": null
       }
@@ -13226,7 +13226,7 @@
       960,
       540
      ],
-     "bytes": 243337
+     "bytes": 186570
     },
     {
      "record": "ramp_spring_domino__r10/a0/counterfactual_shape",
@@ -13250,8 +13250,8 @@
        "label": "release the ball at the top of the ramp, let go at 0.75 s",
        "time_s": 0.75,
        "point": [
-        0.8051,
-        0.4538
+        0.8656,
+        0.4138
        ],
        "tip": null
       }
@@ -13260,7 +13260,7 @@
       960,
       540
      ],
-     "bytes": 196647
+     "bytes": 145670
     },
     {
      "record": "ramp_spring_domino__r10/a0/removal",
@@ -13284,8 +13284,8 @@
        "label": "release the ball at the top of the ramp, let go at 0.75 s",
        "time_s": 0.75,
        "point": [
-        0.8047,
-        0.4467
+        0.8651,
+        0.405
        ],
        "tip": null
       }
@@ -13294,7 +13294,7 @@
       960,
       540
      ],
-     "bytes": 233519
+     "bytes": 183096
     },
     {
      "record": "ramp_spring_domino__r10/a0/counterfactual_gravity",
@@ -13318,8 +13318,8 @@
        "label": "release the ball at the top of the ramp, let go at 0.75 s",
        "time_s": 0.75,
        "point": [
-        0.8047,
-        0.4467
+        0.8651,
+        0.405
        ],
        "tip": null
       }
@@ -13328,7 +13328,155 @@
       960,
       540
      ],
-     "bytes": 252625
+     "bytes": 192699
+    }
+   ]
+  },
+  {
+   "key": "lt",
+   "title": "One scene, one action, four runs: a spring launcher and a tower",
+   "summary": "The recorded run of a training scene and three of its stated changes, from one camera.",
+   "same_camera": true,
+   "clips": [
+    {
+     "record": "launcher_tower__r1014/a0/factual",
+     "branch": "factual",
+     "stated_change": "the action as planned",
+     "measured": {
+      "count_toppled": "14",
+      "chain_completes": "Yes",
+      "stages_happen": "2",
+      "speed": "9.030 m/s",
+      "travel_distance": "1.702 m",
+      "time_to_rest": "Not measurable in this clip"
+     },
+     "file": "static/media/dataset/counterfactuals/lt_factual.mp4",
+     "poster": "static/media/dataset/counterfactuals/lt_factual.jpg",
+     "action_frame": "static/media/dataset/counterfactuals/lt_factual_action.jpg",
+     "action_overlay": [
+      {
+       "object": "the spring plunger",
+       "object_id": "actor",
+       "kind": "release",
+       "label": "hold the drawn plunger, then let go at 0.75 s",
+       "time_s": 0.75,
+       "point": [
+        0.79,
+        0.365
+       ],
+       "tip": null
+      }
+     ],
+     "size": [
+      960,
+      540
+     ],
+     "bytes": 193895
+    },
+    {
+     "record": "launcher_tower__r1014/a0/counterfactual_material",
+     "branch": "counterfactual_material",
+     "stated_change": "material of the red ball: plastic to rubber",
+     "measured": {
+      "count_toppled": "1",
+      "chain_completes": "Yes",
+      "stages_happen": "2",
+      "speed": "9.030 m/s",
+      "travel_distance": "1.680 m",
+      "time_to_rest": "Not measurable in this clip"
+     },
+     "file": "static/media/dataset/counterfactuals/lt_counterfactual_material.mp4",
+     "poster": "static/media/dataset/counterfactuals/lt_counterfactual_material.jpg",
+     "action_frame": "static/media/dataset/counterfactuals/lt_counterfactual_material_action.jpg",
+     "action_overlay": [
+      {
+       "object": "the spring plunger",
+       "object_id": "actor",
+       "kind": "release",
+       "label": "hold the drawn plunger, then let go at 0.75 s",
+       "time_s": 0.75,
+       "point": [
+        0.79,
+        0.365
+       ],
+       "tip": null
+      }
+     ],
+     "size": [
+      960,
+      540
+     ],
+     "bytes": 152328
+    },
+    {
+     "record": "launcher_tower__r1014/a0/counterfactual_shape",
+     "branch": "counterfactual_shape",
+     "stated_change": "shape of the red ball changed to a cube",
+     "measured": {
+      "count_toppled": "0",
+      "chain_completes": "Yes",
+      "stages_happen": "2",
+      "speed": "9.030 m/s",
+      "travel_distance": "1.462 m",
+      "time_to_rest": "1.667 s"
+     },
+     "file": "static/media/dataset/counterfactuals/lt_counterfactual_shape.mp4",
+     "poster": "static/media/dataset/counterfactuals/lt_counterfactual_shape.jpg",
+     "action_frame": "static/media/dataset/counterfactuals/lt_counterfactual_shape_action.jpg",
+     "action_overlay": [
+      {
+       "object": "the spring plunger",
+       "object_id": "actor",
+       "kind": "release",
+       "label": "hold the drawn plunger, then let go at 0.75 s",
+       "time_s": 0.75,
+       "point": [
+        0.79,
+        0.365
+       ],
+       "tip": null
+      }
+     ],
+     "size": [
+      960,
+      540
+     ],
+     "bytes": 129228
+    },
+    {
+     "record": "launcher_tower__r1014/a0/counterfactual_gravity",
+     "branch": "counterfactual_gravity",
+     "stated_change": "gravity x0.6",
+     "measured": {
+      "count_toppled": "12",
+      "chain_completes": "Yes",
+      "stages_happen": "2",
+      "speed": "9.030 m/s",
+      "travel_distance": "3.846 m",
+      "time_to_rest": "Not measurable in this clip"
+     },
+     "file": "static/media/dataset/counterfactuals/lt_counterfactual_gravity.mp4",
+     "poster": "static/media/dataset/counterfactuals/lt_counterfactual_gravity.jpg",
+     "action_frame": "static/media/dataset/counterfactuals/lt_counterfactual_gravity_action.jpg",
+     "action_overlay": [
+      {
+       "object": "the spring plunger",
+       "object_id": "actor",
+       "kind": "release",
+       "label": "hold the drawn plunger, then let go at 0.75 s",
+       "time_s": 0.75,
+       "point": [
+        0.79,
+        0.365
+       ],
+       "tip": null
+      }
+     ],
+     "size": [
+      960,
+      540
+     ],
+     "bytes": 212651
     }
    ]
   }
@@ -13362,37 +13510,42 @@
      540
     ],
     "rendered_resolution": [
-     960,
-     540
+     1920,
+     1080
     ],
-    "crop": null,
+    "crop": [
+     1708,
+     960,
+     92,
+     84
+    ],
     "frames": 106,
-    "peak_frame_time_s": 0.7333333333333333,
+    "peak_frame_time_s": 1.5333333333333334,
     "tiles": {
      "rgb": {
       "file": "static/media/dataset/channels/pj/rgb.mp4",
       "poster": "static/media/dataset/channels/pj/rgb.jpg",
-      "bytes": 195888
+      "bytes": 185458
      },
      "depth": {
       "file": "static/media/dataset/channels/pj/depth.mp4",
       "poster": "static/media/dataset/channels/pj/depth.jpg",
-      "bytes": 87891
+      "bytes": 116019
      },
      "instances": {
       "file": "static/media/dataset/channels/pj/instances.mp4",
       "poster": "static/media/dataset/channels/pj/instances.jpg",
-      "bytes": 73286
+      "bytes": 152311
      },
      "optical_flow": {
       "file": "static/media/dataset/channels/pj/optical_flow.mp4",
       "poster": "static/media/dataset/channels/pj/optical_flow.jpg",
-      "bytes": 112427
+      "bytes": 148436
      },
      "scene_flow": {
       "file": "static/media/dataset/channels/pj/scene_flow.mp4",
       "poster": "static/media/dataset/channels/pj/scene_flow.jpg",
-      "bytes": 43407
+      "bytes": 58442
      }
     },
     "channels": {
@@ -13403,8 +13556,8 @@
       "unit": "m",
       "definition": "distance along the optical axis (camera Z), not radial distance",
       "colour_map": "turbo, near is warm",
-      "near_m": 2.4,
-      "far_m": 7.0
+      "near_m": 2.3,
+      "far_m": 6.7
      },
      "instances": {
       "definition": "one colour per object: movable bodies vivid, fixed furniture muted, the room shell dark grey",
@@ -13640,34 +13793,34 @@
       "unit": "pixels per frame",
       "frame_interval_s": 0.03333333333333333,
       "resolution": [
-       960,
-       540
+       1920,
+       1080
       ],
       "colour_map": "Middlebury colour wheel: hue the direction, saturation the magnitude, white no motion",
-      "saturates_at_px_per_frame": 12.973,
-      "note": "measured at the rendered resolution 960 x 540"
+      "saturates_at_px_per_frame": 24.403,
+      "note": "measured at the rendered resolution 1920 x 1080; the tile shows a 1708 x 960 part of it"
      },
      "scene_flow": {
       "unit": "metres per frame in the world frame (Z up)",
       "frame_interval_s": 0.03333333333333333,
       "colour_map": "red x, green y, blue z; mid-grey no motion",
-      "saturates_at_m_per_frame": 0.05363,
-      "saturates_at_m_per_s": 1.609
+      "saturates_at_m_per_frame": 0.05355,
+      "saturates_at_m_per_s": 1.606
      },
      "undefined": "black: no depth, or the cosmetic arm housing (a drawing without a pose in the record)"
     },
     "camera": {
      "eye": [
-      -0.5739781443759093,
-      3.1835931382245004,
-      2.0831783527817187
+      -0.57397814437591,
+      -3.013011882066833,
+      2.112962233105901
      ],
      "target": [
       -0.5739781443759095,
       -0.8056428999195164,
       0.939283326141174
      ],
-     "focal_mm": 20.0
+     "focal_mm": 12.0
     },
     "look": {
      "floor": "pale stone",
@@ -13678,7 +13831,7 @@
       "denoiser": "OptiX",
       "max_bounces": 6
      },
-     "note": "Floor and wall colours and the lights are changed at render time only; the record, its physics and its states are untouched."
+     "note": "The floor colour and the lights are changed at render time only; the record, its physics and its states are untouched."
     },
     "cosmetic_arm_drawn": false,
     "title": "A pendulum strikes a tower of blocks",
@@ -13696,37 +13849,42 @@
      540
     ],
     "rendered_resolution": [
-     960,
-     540
+     1920,
+     1080
     ],
-    "crop": null,
+    "crop": [
+     1644,
+     924,
+     0,
+     156
+    ],
     "frames": 106,
     "peak_frame_time_s": 2.2,
     "tiles": {
      "rgb": {
       "file": "static/media/dataset/channels/lt/rgb.mp4",
       "poster": "static/media/dataset/channels/lt/rgb.jpg",
-      "bytes": 234128
+      "bytes": 193878
      },
      "depth": {
       "file": "static/media/dataset/channels/lt/depth.mp4",
       "poster": "static/media/dataset/channels/lt/depth.jpg",
-      "bytes": 71477
+      "bytes": 65969
      },
      "instances": {
       "file": "static/media/dataset/channels/lt/instances.mp4",
       "poster": "static/media/dataset/channels/lt/instances.jpg",
-      "bytes": 119795
+      "bytes": 159941
      },
      "optical_flow": {
       "file": "static/media/dataset/channels/lt/optical_flow.mp4",
       "poster": "static/media/dataset/channels/lt/optical_flow.jpg",
-      "bytes": 131605
+      "bytes": 158240
      },
      "scene_flow": {
       "file": "static/media/dataset/channels/lt/scene_flow.mp4",
       "poster": "static/media/dataset/channels/lt/scene_flow.jpg",
-      "bytes": 66615
+      "bytes": 84624
      }
     },
     "channels": {
@@ -14088,19 +14246,19 @@
       "unit": "pixels per frame",
       "frame_interval_s": 0.03333333333333333,
       "resolution": [
-       960,
-       540
+       1920,
+       1080
       ],
       "colour_map": "Middlebury colour wheel: hue the direction, saturation the magnitude, white no motion",
-      "saturates_at_px_per_frame": 9.806,
-      "note": "measured at the rendered resolution 960 x 540"
+      "saturates_at_px_per_frame": 19.332,
+      "note": "measured at the rendered resolution 1920 x 1080; the tile shows a 1644 x 924 part of it"
      },
      "scene_flow": {
       "unit": "metres per frame in the world frame (Z up)",
       "frame_interval_s": 0.03333333333333333,
       "colour_map": "red x, green y, blue z; mid-grey no motion",
-      "saturates_at_m_per_frame": 0.0356,
-      "saturates_at_m_per_s": 1.068
+      "saturates_at_m_per_frame": 0.03562,
+      "saturates_at_m_per_s": 1.069
      },
      "undefined": "black: no depth, or the cosmetic arm housing (a drawing without a pose in the record)"
     },
@@ -14126,7 +14284,7 @@
       "denoiser": "OptiX",
       "max_bounces": 6
      },
-     "note": "Floor and wall colours and the lights are changed at render time only; the record, its physics and its states are untouched."
+     "note": "The floor colour and the lights are changed at render time only; the record, its physics and its states are untouched."
     },
     "cosmetic_arm_drawn": false,
     "title": "A spring launcher fires a ball into a tower",
@@ -14144,37 +14302,42 @@
      540
     ],
     "rendered_resolution": [
-     960,
-     540
+     1920,
+     1080
     ],
-    "crop": null,
+    "crop": [
+     1484,
+     834,
+     252,
+     188
+    ],
     "frames": 91,
     "peak_frame_time_s": 0.0,
     "tiles": {
      "rgb": {
       "file": "static/media/dataset/channels/tt/rgb.mp4",
       "poster": "static/media/dataset/channels/tt/rgb.jpg",
-      "bytes": 184585
+      "bytes": 176367
      },
      "depth": {
       "file": "static/media/dataset/channels/tt/depth.mp4",
       "poster": "static/media/dataset/channels/tt/depth.jpg",
-      "bytes": 106167
+      "bytes": 131977
      },
      "instances": {
       "file": "static/media/dataset/channels/tt/instances.mp4",
       "poster": "static/media/dataset/channels/tt/instances.jpg",
-      "bytes": 79210
+      "bytes": 129727
      },
      "optical_flow": {
       "file": "static/media/dataset/channels/tt/optical_flow.mp4",
       "poster": "static/media/dataset/channels/tt/optical_flow.jpg",
-      "bytes": 125273
+      "bytes": 156724
      },
      "scene_flow": {
       "file": "static/media/dataset/channels/tt/scene_flow.mp4",
       "poster": "static/media/dataset/channels/tt/scene_flow.jpg",
-      "bytes": 71015
+      "bytes": 102130
      }
     },
     "channels": {
@@ -14314,19 +14477,19 @@
       "unit": "pixels per frame",
       "frame_interval_s": 0.03333333333333333,
       "resolution": [
-       960,
-       540
+       1920,
+       1080
       ],
       "colour_map": "Middlebury colour wheel: hue the direction, saturation the magnitude, white no motion",
-      "saturates_at_px_per_frame": 19.153,
-      "note": "measured at the rendered resolution 960 x 540"
+      "saturates_at_px_per_frame": 38.255,
+      "note": "measured at the rendered resolution 1920 x 1080; the tile shows a 1484 x 834 part of it"
      },
      "scene_flow": {
       "unit": "metres per frame in the world frame (Z up)",
       "frame_interval_s": 0.03333333333333333,
       "colour_map": "red x, green y, blue z; mid-grey no motion",
-      "saturates_at_m_per_frame": 0.07326,
-      "saturates_at_m_per_s": 2.198
+      "saturates_at_m_per_frame": 0.0732,
+      "saturates_at_m_per_s": 2.196
      },
      "undefined": "black: no depth, or the cosmetic arm housing (a drawing without a pose in the record)"
     },
@@ -14344,7 +14507,7 @@
      "focal_mm": 14.0
     },
     "look": {
-     "floor": "pale stone",
+     "floor": "light grey concrete",
      "walls": "unchanged (the room's beige paint)",
      "renderer": {
       "renderer": "RTX path tracing",
@@ -14352,7 +14515,7 @@
       "denoiser": "OptiX",
       "max_bounces": 6
      },
-     "note": "Floor and wall colours and the lights are changed at render time only; the record, its physics and its states are untouched."
+     "note": "The floor colour and the lights are changed at render time only; the record, its physics and its states are untouched."
     },
     "cosmetic_arm_drawn": false,
     "title": "A table is tipped over and its items slide off",

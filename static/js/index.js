@@ -221,6 +221,12 @@
       });
     });
   }
+  function initToggles() {
+    all('[data-toggle-class]').forEach(function (bar) {
+      var parts = bar.dataset.toggleClass.split(':'), target = document.getElementById(parts[0]), b = bar.querySelector('button');
+      bar.addEventListener('click', function () { var on = target.classList.toggle(parts[1]); b.textContent = on ? b.dataset.on : b.dataset.off; b.classList.toggle('on', on); });
+    });
+  }
   function initHoverPlay() {
     all('.hover-play').forEach(function (card) {
       var v = card.querySelector('video'); if (!v) { return; }
@@ -252,6 +258,7 @@
     initModes();
     initPickers();
     initTabs();
+    initToggles();
     initHoverPlay();
     initCharts();
   });
