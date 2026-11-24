@@ -126,6 +126,8 @@ def showcase_scenes(sc):
             scene['modes'][name] = out
         if scene['modes']:
             scenes.append(scene)
+    first = ['carrying_cart', 'ramp_spring_domino', 'books_ball_catch']                 # a scene with a force arrow opens the viewer
+    scenes.sort(key=lambda sc: next((i for i, k in enumerate(first) if sc['id'].startswith(k)), len(first)))
     return scenes
 
 
@@ -413,12 +415,12 @@ def overlay_svg(items, color='#2563c9'):
             continue
         x0, y0 = o['point'][0]*W, o['point'][1]*H
         if o.get('tip'):
-            x1, y1 = o['tip'][0]*W, o['tip'][1]*H; dx, dy = x1-x0, y1-y0; n = (dx*dx+dy*dy)**.5 or 1.; ux, uy = dx/n, dy/n; hl, hw = 46, 22
+            x1, y1 = o['tip'][0]*W, o['tip'][1]*H; dx, dy = x1-x0, y1-y0; n = (dx*dx+dy*dy)**.5 or 1.; ux, uy = dx/n, dy/n; hl, hw = 60, 30
             bx, by = x1-ux*hl, y1-uy*hl
-            out += (f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="#fff" stroke-width="20" stroke-linecap="round"/>'
+            out += (f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="#fff" stroke-width="27" stroke-linecap="round"/>'
                     f'<polygon points="{x1:.1f},{y1:.1f} {bx-uy*hw:.1f},{by+ux*hw:.1f} {bx+uy*hw:.1f},{by-ux*hw:.1f}" fill="{color}" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>'
-                    f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="{color}" stroke-width="11" stroke-linecap="round"/>')
-        out += f'<circle cx="{x0:.1f}" cy="{y0:.1f}" r="13" fill="{color}" stroke="#fff" stroke-width="6"/>'
+                    f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="{color}" stroke-width="16" stroke-linecap="round"/>')
+        out += f'<circle cx="{x0:.1f}" cy="{y0:.1f}" r="17" fill="{color}" stroke="#fff" stroke-width="7"/>'
         if o.get('label'):
             cls = ('al' if o['point'][0] < .5 else 'ar') + (' up' if o['point'][1] > .78 else '')
             labels += f'<span class="ov-label {cls}" style="left:{o["point"][0]*100:.1f}%;top:{o["point"][1]*100:.1f}%;color:{color}">{e(o["label"])}</span>'

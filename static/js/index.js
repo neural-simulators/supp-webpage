@@ -101,13 +101,13 @@
         if (!o || !o.point) { return; }
         var x0 = o.point[0] * W, y0 = o.point[1] * H;
         if (o.tip) {
-          var x1 = o.tip[0] * W, y1 = o.tip[1] * H, dx = x1 - x0, dy = y1 - y0, n = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / n, uy = dy / n, hl = 46, hw = 22;
+          var x1 = o.tip[0] * W, y1 = o.tip[1] * H, dx = x1 - x0, dy = y1 - y0, n = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / n, uy = dy / n, hl = 60, hw = 30;
           var bx = x1 - ux * hl, by = y1 - uy * hl, head = [x1, y1, bx - uy * hw, by + ux * hw, bx + uy * hw, by - ux * hw].map(function (v) { return v.toFixed(1); });
-          out += '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="#fff" stroke-width="20" stroke-linecap="round"/>' +
+          out += '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="#fff" stroke-width="27" stroke-linecap="round"/>' +
             '<polygon points="' + head[0] + ',' + head[1] + ' ' + head[2] + ',' + head[3] + ' ' + head[4] + ',' + head[5] + '" fill="' + color + '" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>' +
-            '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="' + color + '" stroke-width="11" stroke-linecap="round"/>';
+            '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="' + color + '" stroke-width="16" stroke-linecap="round"/>';
         }
-        out += '<circle cx="' + x0 + '" cy="' + y0 + '" r="13" fill="' + color + '" stroke="#fff" stroke-width="6"/>';
+        out += '<circle cx="' + x0 + '" cy="' + y0 + '" r="17" fill="' + color + '" stroke="#fff" stroke-width="7"/>';
         if (o.label) { labels += '<span class="ov-label ' + (o.point[0] < 0.5 ? 'al' : 'ar') + (o.point[1] > 0.78 ? ' up' : '') + (timed ? ' ov-timed' : '') + '" style="left:' + (100 * o.point[0]) + '%;top:' + (100 * o.point[1]) + '%;color:' + color + '">' + esc(o.label) + '</span>'; }
       });
       return out + '</svg>' + labels;
