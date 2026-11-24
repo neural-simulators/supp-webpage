@@ -23,7 +23,7 @@
    "Heavy skid (2.54 kg), pull 9.9 N",
    "Heavy skid (2.54 kg), pull 19.7 N",
    "Light skid (0.74 kg), pull 9.9 N",
-   "Light skid, 9.9 N pull reverses at 0.55 s",
+   "Light skid (0.74 kg), 9.9 N pull, reverses at 0.55 s",
    "Backward: which pull moved the light skid?"
   ],
   "rows": [
@@ -84,7 +84,7 @@
     "no motion ✗",
     "no motion ✗",
     "no motion ✗",
-    "no motion ✗",
+    "stands ✗, piers merge, person walks",
     "no backward mode"
    ],
    "pi05": [
@@ -126,7 +126,7 @@
    ]
   },
   "footnote": "PhysX and NeuWorld+Reg: same renderer and camera. Video models: one clip each from the start frame and an action prompt. VLA: picks its own motion (mass given, no force), episode time = 4 x t.",
-  "header_patch": "The header of the fourth column was rendered as \"Heavy skid, 9.9 N pull reverses at 0.55 s\". The run is the light skid (appendix D.4; its frames before the reversal equal the light-skid run), so the header is redrawn as \"Light skid, 9.9 N pull reverses at 0.55 s\"."
+  "header_patch": null
  },
  "columns": [
   {
@@ -309,7 +309,7 @@
   "claude_opus_5_5": "3 of 10 answers correct",
   "claude_fable_5_2": "7 of 10 answers correct",
   "wan14b": "outcome as PhysX in 2 of 4 columns, with the skid changing shape in both",
-  "cosmos14b": "no motion in 4 of 4 columns",
+  "cosmos14b": "no motion in 3 of 4 columns; in the fourth the piers merge and the bridge stays up",
   "pi05": "the skid is not pulled out in any of the 8 episodes",
   "source": "counted from the tags of the grid"
  },
@@ -318,5 +318,5 @@
   "clips": "clips/physx_*.mp4, clips/neuworld_reg_*.mp4",
   "episodes": "teaser_vla_episodes.mp4"
  },
- "bytes": 8798668
+ "bytes": 8796588
 }
