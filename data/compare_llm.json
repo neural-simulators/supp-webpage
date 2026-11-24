@@ -1,0 +1,176 @@
+{
+ "section": "Language models and a planner that tests its actions first",
+ "scene": "A test scene: a small bridge (two piers of three blocks and a beam) stands on a skid next to a house, and a person sits beside it. A gripper pulls the skid out. A pull is safe when the bridge does not fall on the person. The skid weighs 2.54 kg (heavy) or 0.74 kg (light); the gripper pulls with 9.9 N or 19.7 N from 0.25 s until it lets go at 1.10 s.",
+ "inputs": {
+  "neuworld": "NeuWorld+Reg reads the scene graph with every mass, friction and restitution, and the action; for the backward task it reads the start and end states and generates the action.",
+  "language_models": "Claude Opus 5.5 and Claude Fable 5.2 read the same scene graph as JSON text (shape, size, pose, mass, friction and restitution of every object, the joints and the gripper's action). No tools. Each prompt is sent twice per model, each time in a new session without files or memory, with the system prompt \"You are a helpful assistant.\""
+ },
+ "prompts": {
+  "forward (heavy skid, 9.9 N pull)": "Below is a rigid-body physics scene, given as a scene graph (JSON). Units: m, s, kg; Z is up; quaternions are w,x,y,z. Contact friction and restitution coefficients combine by multiplication. Gravity is 9.81 m/s^2 downward.\n\nThe scene: a board ('actor') lies on a plate ('platform', on a stiff vertical spring). On the board stand two columns of three blocks ('pier0_left' ... 'pier2_right') with a beam ('beam') across their tops. A gripper ('actuator') is rigidly attached to the board's front face. A person ('person', not movable) sits next to the pile on the -x side; the house walls ('house_wall', 'house_side') are fixed.\n\nAction: the gripper applies a constant force of 9.87 N along +x and 25.72 N upward (through the combined centre of mass of gripper and board) from t = 0.25 s until it lets go at t = 1.10 s.\n\nQuestion: after the motion, does the pile stand (the board comes out and the two columns and the beam drop onto the plate and stay stacked), and does any falling block or the beam hit the person?\n\nScene graph (masses are exact): [the scene graph as JSON]\n\nEnd your reply with exactly one line: ANSWER: STANDS_SAFE or ANSWER: COLLAPSES_HIT or ANSWER: COLLAPSES_SAFE",
+  "other forward prompts": "They differ only in the skid's mass and the forces.",
+  "intervention": "Adds one sentence to the action: \"At t = 0.55 s the gripper's force changes to -9.87 N along x (vertical 8.63 N) and stays so until it lets go.\"",
+  "backward": "Leaves out the horizontal force, lists the position and orientation of every moving body at the start and at 4.0 s, and ends with \"Question: what horizontal force did the gripper apply? End your reply with exactly one line: FORCE_N: <number>\"."
+ },
+ "figure": {
+  "src": "static/media/compare_llm/teaser.jpg",
+  "caption": "Fig. 1 of the paper: every method on the same scene with the same object properties. The last two rows are the language models' answers, two calls each."
+ },
+ "tasks": [
+  {
+   "id": "heavy_soft",
+   "mode": "Forward",
+   "condition": "heavy skid (2.54 kg), 9.9 N pull",
+   "physx": "the bridge collapses and hits the person",
+   "neuworld_reg": "hits the person (correct)",
+   "claude_opus_5_5": [
+    "safe (wrong)",
+    "hits (correct)"
+   ],
+   "claude_fable_5_2": [
+    "hits (correct)",
+    "hits (correct)"
+   ],
+   "frames": {
+    "physx": "static/media/compare_llm/heavy_soft_physx.jpg",
+    "neuworld": "static/media/compare_llm/heavy_soft_neuworld.jpg"
+   }
+  },
+  {
+   "id": "heavy_hard",
+   "mode": "Counterfactual: a stronger pull",
+   "condition": "heavy skid (2.54 kg), 19.7 N pull",
+   "physx": "safe: the skid comes out and the bridge stays standing",
+   "neuworld_reg": "safe (correct)",
+   "claude_opus_5_5": [
+    "hits (wrong)",
+    "hits (wrong)"
+   ],
+   "claude_fable_5_2": [
+    "safe (correct)",
+    "hits (wrong)"
+   ],
+   "frames": {
+    "physx": "static/media/compare_llm/heavy_hard_physx.jpg",
+    "neuworld": "static/media/compare_llm/heavy_hard_neuworld.jpg"
+   }
+  },
+  {
+   "id": "light_soft",
+   "mode": "Counterfactual: a lighter skid",
+   "condition": "light skid (0.74 kg), 9.9 N pull",
+   "physx": "safe: the skid comes out and the bridge stays standing",
+   "neuworld_reg": "safe (correct)",
+   "claude_opus_5_5": [
+    "hits (wrong)",
+    "hits (wrong)"
+   ],
+   "claude_fable_5_2": [
+    "hits (wrong)",
+    "safe (correct)"
+   ],
+   "frames": {
+    "physx": "static/media/compare_llm/light_soft_physx.jpg",
+    "neuworld": "static/media/compare_llm/light_soft_neuworld.jpg"
+   }
+  },
+  {
+   "id": "intervention",
+   "mode": "Intervention during the motion",
+   "condition": "light skid, 9.9 N pull that reverses at 0.55 s",
+   "physx": "the bridge collapses and hits the person",
+   "neuworld_reg": "hits the person (correct)",
+   "claude_opus_5_5": [
+    "hits (correct)",
+    "hits (correct)"
+   ],
+   "claude_fable_5_2": [
+    "hits (correct)",
+    "hits (correct)"
+   ],
+   "frames": {
+    "physx": "static/media/compare_llm/intervention_physx.jpg",
+    "neuworld": "static/media/compare_llm/intervention_neuworld.jpg"
+   }
+  },
+  {
+   "id": "backward",
+   "mode": "Backward: which pull produced this end state?",
+   "condition": "start and end state given, the horizontal force hidden",
+   "physx": "true force 9.87 N",
+   "neuworld_reg": "9.9 N (correct)",
+   "claude_opus_5_5": [
+    "4.6 N (wrong)",
+    "3.9 N (wrong)"
+   ],
+   "claude_fable_5_2": [
+    "10.0 N (correct)",
+    "4.8 N (wrong)"
+   ],
+   "frames": {
+    "physx": "static/media/compare_llm/backward_physx.jpg",
+    "neuworld": "static/media/compare_llm/backward_neuworld.jpg"
+   }
+  }
+ ],
+ "score": {
+  "neuworld_reg": "5 of 5 tasks",
+  "claude_opus_5_5": "3 of 10 answers",
+  "claude_fable_5_2": "6 of 10 answers",
+  "source": "counted from Fig. 1 of the paper (two answers per task and model)"
+ },
+ "answers_source": "Fig. 1 of the paper (figures/assets/teaser_v3.pdf) and its appendix on the teaser prompts; the frames are cells of that figure (the end of each motion)",
+ "planner": {
+  "text": "A language model can also act as the planner and test its actions before acting. Claude Opus 5.5, used off the shelf, plans on 206 tasks in 41 test scenes; the chosen action is always run in PhysX to check the goal. In one shot it meets the goal in 37% of the tasks. With up to three attempts, seeing the simulated outcome of each failed attempt, it meets the goal in 59% when the outcomes come from PhysX and in 51% when they are predicted by NeuWorld+Reg. On the planner's first actions NeuWorld+Reg's pass or fail verdict agrees with PhysX in 82% of cases, and judging one action takes it 0.16 s on one GPU against 53 s for PhysX on one CPU core.",
+  "table": {
+   "columns": [
+    "Planner",
+    "1 action",
+    "Up to 3 tries"
+   ],
+   "rows": [
+    [
+     "Do nothing",
+     "34.0%",
+     "-"
+    ],
+    [
+     "Random action",
+     "35.0%",
+     "-"
+    ],
+    [
+     "Recorded actions (upper bound)",
+     "68.9%",
+     "-"
+    ],
+    [
+     "Claude Opus 5.5, tries predicted by NeuWorld+Reg, run 1",
+     "37.4%",
+     "51.0%"
+    ],
+    [
+     "Claude Opus 5.5, tries predicted by NeuWorld+Reg, run 2",
+     "42.2%",
+     "48.5%"
+    ],
+    [
+     "Claude Opus 5.5, tries simulated in PhysX, run 1",
+     "37.4%",
+     "58.7%"
+    ],
+    [
+     "Claude Opus 5.5, tries simulated in PhysX, run 2",
+     "42.2%",
+     "61.7%"
+    ]
+   ],
+   "caption": "Share of 206 tasks whose goal check passes in PhysX (Table 9 of the supplementary)."
+  },
+  "run_1_counts_of_206": {
+   "one_action": 77,
+   "three_tries_neuworld": 105,
+   "three_tries_physx": 121
+  },
+  "source": "Sec. 4.2 (RQ4) and tables/planner.tex of the paper; the run-1 counts from the planner-loop summary of the same experiment"
+ }
+}

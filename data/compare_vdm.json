@@ -1,0 +1,817 @@
+{
+ "section": "Video diffusion models against NeuWorld on test scenes",
+ "inputs": {
+  "neuworld": "the scene graph (objects, properties, joints, start state) and the action; no image and no text",
+  "video_models": "the rendered first frame and a text prompt that describes the scene, the action and, in order, the outcome"
+ },
+ "tile_note": "Every tile of a record shows the same crop of the same camera for the same number of seconds. The video models generate 16 frames a second (5.1 s for Wan2.2, 5.8 s for Cosmos-Predict2.5); they are shown at their own clock, cut to the length of the PhysX clip. Cosmos-Predict2.5 writes 1280 x 704, stretched back to 16:9.",
+ "selection_note": "Records picked by hand from the 41 test records of the video-model study (one per motion family): NeuWorld+Reg is close to PhysX and the motion is easy to see. They illustrate; they are not a sample. The table gives the numbers over all scorable records.",
+ "table": {
+  "caption": "Video models (outcome prompt) and the three NeuWorld variants on 36 test scenes, each from a different motion family (the video-model table of the supplementary, Sec. G.1). Error: position error in metres of the tracked objects over the first 5 s. Pace and direction are 1 when the objects move at the true speed and in the true direction. Time: one clip on one GPU.",
+  "columns": [
+   "Model",
+   "Error (m)",
+   "Pace",
+   "Direction",
+   "Time per clip"
+  ],
+  "rows": [
+   [
+    "Wan2.2 5B",
+    0.65,
+    0.37,
+    0.21,
+    "14 min"
+   ],
+   [
+    "Wan2.2 14B",
+    0.55,
+    0.68,
+    0.36,
+    "125 min"
+   ],
+   [
+    "Cosmos-Predict2.5 2B",
+    0.61,
+    0.32,
+    0.27,
+    "34 min"
+   ],
+   [
+    "Cosmos-Predict2.5 14B",
+    0.58,
+    0.35,
+    0.38,
+    "141 min"
+   ],
+   [
+    "NeuWorld+FM",
+    0.19,
+    0.94,
+    0.79,
+    "0.33 s"
+   ],
+   [
+    "NeuWorld+DDPM",
+    0.19,
+    0.88,
+    0.7,
+    "0.21 s"
+   ],
+   [
+    "NeuWorld+Reg",
+    0.11,
+    0.93,
+    0.83,
+    "0.06 s"
+   ]
+  ],
+  "source": "tables/video_models.tex of the paper; measured on the clips generated from the darker first frames"
+ },
+ "items": [
+  {
+   "id": "launcher_tower",
+   "family": "launcher_tower",
+   "record": "launcher_tower__r112/a0/factual",
+   "split": "test (scene never seen in training)",
+   "description": "A spring plunger shoots a metal ball into a tower of blocks; the tower collapses and the blocks scatter.",
+   "neuworld_note": "Collapses the tower and scatters the blocks as PhysX does.",
+   "video_model_note": "Wan2.2 grows a coiled rod out of the launcher, then covers the floor with dozens of new blocks; Cosmos-Predict2.5 bursts the tower into a heap of dozens of new blocks.",
+   "notes_by_eye": true,
+   "in_paper": "Fig. 2(a) of the paper",
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.75,
+    "left": 0.25,
+    "top": 0.25
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/launcher_tower/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/launcher_tower/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/launcher_tower/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/launcher_tower/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/launcher_tower/poster.jpg",
+   "first_frame": "static/media/compare_vdm/launcher_tower/first_frame.jpg",
+   "first_frame_note": "the path-traced render of the PhysX start state, the same look as the PhysX and NeuWorld tiles",
+   "prompt": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm holds back a spring plunger behind a metal ball on the floor. A tower of stacked blocks stands to the right of the ball. The arm lets go of the plunger. The plunger shoots the ball into the tower. The tower collapses, blocks scatter to the right and toward the camera, and the ball rolls on among them. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm holds back a spring plunger behind a metal ball on the floor. A tower of stacked blocks stands to the right of the ball. The arm lets go of the plunger. The plunger shoots the ball into the tower. The tower collapses, blocks scatter to the right and toward the camera, and the ball rolls on among them. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.105,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "catapult",
+   "family": "catapult",
+   "record": "catapult__r2009/a2/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm pulls the pin of a catapult; the beam swings up to nearly vertical and flings a ball into the air.",
+   "neuworld_note": "Swings the beam up and throws the ball as PhysX does.",
+   "video_model_note": "In Wan2.2 the arm lifts the whole beam off its post; in Cosmos-Predict2.5 the beam stays down for three seconds and is then carried away by the arm.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.85,
+    "left": 0.1,
+    "top": 0.0
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/catapult/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/catapult/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/catapult/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/catapult/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/catapult/poster.jpg",
+   "first_frame": "static/media/compare_vdm/catapult/first_frame.jpg",
+   "first_frame_note": "the path-traced render of the PhysX start state, the same look as the PhysX and NeuWorld tiles",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. A long blue catapult beam is tilted on a dark post, with a black ball in its low end near the floor. An orange robot arm stands behind the beam. The arm pulls out the pin holding the beam. The beam swings up to nearly vertical and flings the ball into the air. The ball lands behind the beam and rolls away toward the back wall. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. A long blue catapult beam is tilted on a dark post, with a black ball in its low end near the floor. An orange robot arm stands behind the beam. The arm pulls out the pin holding the beam. The beam swings up to nearly vertical and flings the ball into the air. The ball lands behind the beam and rolls away toward the back wall. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.052,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "ball_block_catch",
+   "family": "ball_block_catch",
+   "record": "ball_block_catch__r2106/a1/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm pushes a ball across a table; the ball knocks a block off the edge into a box and follows it in.",
+   "neuworld_note": "Block and ball both land in the box within the first second and a half, as in PhysX.",
+   "video_model_note": "Both video models keep the ball and the block on the table for two to three seconds before anything falls; in Wan2.2 only the ball ends in the box.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.75,
+    "left": 0.2,
+    "top": 0.2
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/ball_block_catch/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/ball_block_catch/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/ball_block_catch/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/ball_block_catch/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/ball_block_catch/poster.jpg",
+   "first_frame": "static/media/compare_vdm/ball_block_catch/first_frame.jpg",
+   "first_frame_note": "the path-traced render of the PhysX start state, the same look as the PhysX and NeuWorld tiles",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. On a dark table, an orange robot arm stands behind a red ball, with a blue block near the edge. An open wooden box sits on the floor below. The arm pushes the ball across the table. The ball knocks the block off the edge into the box, then rolls off after it and also lands in the box. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. On a dark table, an orange robot arm stands behind a red ball, with a blue block near the edge. An open wooden box sits on the floor below. The arm pushes the ball across the table. The ball knocks the block off the edge into the box, then rolls off after it and also lands in the box. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.06,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "billiards",
+   "family": "billiards",
+   "record": "billiards__r149/a3/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm pushes a ball into a tight cluster of six balls, which breaks apart.",
+   "neuworld_note": "Breaks the cluster apart and rolls the balls out in the same directions as PhysX.",
+   "video_model_note": "Both video models multiply the balls: seven become dozens.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.7,
+    "left": 0.3,
+    "top": 0.3
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/billiards/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/billiards/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/billiards/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/billiards/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/billiards/poster.jpg",
+   "first_frame": "static/media/compare_vdm/billiards/first_frame.jpg",
+   "first_frame_note": "the path-traced render of the PhysX start state, the same look as the PhysX and NeuWorld tiles",
+   "prompt": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm stands next to a dark ball on the floor. A tight cluster of six more balls, mostly blue, lies just in front of it. The arm pushes the dark ball into the cluster. The cluster breaks apart. The balls roll away in different directions across the floor, several toward the camera, and they keep rolling steadily. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm stands next to a dark ball on the floor. A tight cluster of six more balls, mostly blue, lies just in front of it. The arm pushes the dark ball into the cluster. The cluster breaks apart. The balls roll away in different directions across the floor, several toward the camera, and they keep rolling steadily. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.126,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "rubble",
+   "family": "rubble",
+   "record": "rubble__r2023/a0/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm pulls a support block out from under two piles of blocks that carry a beam; the piles collapse.",
+   "neuworld_note": "The piles collapse and the beam drops, as in PhysX.",
+   "video_model_note": "In Wan2.2 the arm swings up and lifts the top of the pile; Cosmos-Predict2.5 turns the pile into a heap of new blocks.",
+   "notes_by_eye": true,
+   "in_paper": "Fig. 8 of the supplementary (shown there with NeuWorld+FM)",
+   "seconds": 4.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 1,
+    "left": 0,
+    "top": 0
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/rubble/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/rubble/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/rubble/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/rubble/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/rubble/poster.jpg",
+   "first_frame": "static/media/compare_vdm/rubble/first_frame.jpg",
+   "first_frame_note": "the path-traced render of the PhysX start state, the same look as the PhysX and NeuWorld tiles",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. Two tall piles of stacked dark and blue blocks stand on a dark base with a wide beam across their tops. An orange robot arm grips a support block at the bottom. The arm pulls the support block out. The piles collapse. The beam drops and lands tilted on the fallen blocks, and the blue blocks slide far across the floor to the right. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. Two tall piles of stacked dark and blue blocks stand on a dark base with a wide beam across their tops. An orange robot arm grips a support block at the bottom. The arm pulls the support block out. The piles collapse. The beam drops and lands tilted on the fallen blocks, and the blue blocks slide far across the floor to the right. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.291,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "pendulum_jenga",
+   "family": "pendulum_jenga",
+   "record": "pendulum_jenga__r3079/a3/factual",
+   "split": "test (scene never seen in training)",
+   "description": "A pendulum swings into a tower of blocks and knocks its top layer to the floor; the rest of the tower stays standing.",
+   "neuworld_note": "Knocks off the top layer only, as PhysX does.",
+   "video_model_note": "Wan2.2 brings the whole tower down; in Cosmos-Predict2.5 nothing is knocked off.",
+   "notes_by_eye": true,
+   "in_paper": "the scene of Fig. 2(b) of the paper (the paper shows clips regenerated from a recoloured first frame)",
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.8,
+    "left": 0.15,
+    "top": 0.17
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/pendulum_jenga/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/pendulum_jenga/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/pendulum_jenga/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/pendulum_jenga/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/pendulum_jenga/poster.jpg",
+   "first_frame": "static/media/compare_vdm/pendulum_jenga/first_frame.jpg",
+   "first_frame_note": "an earlier, darker render of the same start state from the same camera; the PhysX and NeuWorld tiles show the brighter re-render of the same states",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. A metal ball on a long thin rod hangs from a dark post, held out to one side. A tower of stacked blocks stands on the floor below. The ball is released and swings down. The ball hits the tower's top layer. All three of its blocks fall to the floor, the rest of the tower keeps standing, and the ball swings on. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. A metal ball on a long thin rod hangs from a dark post, held out to one side. A tower of stacked blocks stands on the floor below. The ball is released and swings down. The ball hits the tower's top layer. All three of its blocks fall to the floor, the rest of the tower keeps standing, and the ball swings on. The camera is fixed and captures the complete motion. The background furniture stays still. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.019,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)"
+   }
+  },
+  {
+   "id": "ramp_spring_domino",
+   "family": "ramp_spring_domino",
+   "record": "ramp_spring_domino__r128/a2/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm lets go of a ball at the top of a ramp; it hits a spring-mounted block, which topples a row of tall blocks one after another.",
+   "neuworld_note": "The row falls in order, as in PhysX.",
+   "video_model_note": "Wan2.2 invents a coil spring on a stand and breaks the row into loose planks; in Cosmos-Predict2.5 the row grows longer and none of it falls.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.75,
+    "left": 0.25,
+    "top": 0.25
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/ramp_spring_domino/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/ramp_spring_domino/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/ramp_spring_domino/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/ramp_spring_domino/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/ramp_spring_domino/poster.jpg",
+   "first_frame": "static/media/compare_vdm/ramp_spring_domino/first_frame.jpg",
+   "first_frame_note": "an earlier, darker render of the same start state from the same camera; the PhysX and NeuWorld tiles show the brighter re-render of the same states",
+   "prompt": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm holds a ball at the top of a wide brown ramp. At its foot stand a spring-mounted block and a row of tall thin blocks on end. The arm lets go of the ball. The ball rolls down and hits the spring-mounted block, which moves into the row. The blocks fall one after another and all end on the floor. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm holds a ball at the top of a wide brown ramp. At its foot stand a spring-mounted block and a row of tall thin blocks on end. The arm lets go of the ball. The ball rolls down and hits the spring-mounted block, which moves into the row. The blocks fall one after another and all end on the floor. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.023,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)",
+    "image_space_error_m": {
+     "wan14b": 0.43,
+     "cosmos14b": 0.29,
+     "neuworld_reg": 0.03
+    },
+    "image_space_error_source": "tracked object centre against the PhysX centre projected through the same camera, converted to metres at the true depth, mean over the first 5 s; video models: SAM 2 tracks on the clips shown here; NeuWorld+Reg: its predicted centres projected exactly"
+   }
+  },
+  {
+   "id": "trampoline",
+   "family": "trampoline",
+   "record": "trampoline__r3086/a1/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm drops a large ball into a net of tiles held by springs; the net stretches down and the ball settles in the dip.",
+   "neuworld_note": "The ball drops in, the net sags and the ball settles, as in PhysX.",
+   "video_model_note": "Wan2.2 dissolves the net into loose tiles; Cosmos-Predict2.5 draws a tall net that was never there around the ball.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 1,
+    "left": 0,
+    "top": 0
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/trampoline/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/trampoline/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/trampoline/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/trampoline/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/trampoline/poster.jpg",
+   "first_frame": "static/media/compare_vdm/trampoline/first_frame.jpg",
+   "first_frame_note": "an earlier, darker render of the same start state from the same camera; the PhysX and NeuWorld tiles show the brighter re-render of the same states",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. An orange robot arm holds a large orange ball high above a net of small blue and orange tiles stretched across a dark table-like frame. The arm lets go of the ball. The ball drops into the net, which stretches far down. The ball bounces up a little, drops in again and settles in the dip while the tiles keep swaying. The camera is fixed and captures the complete motion. The background furniture stays still.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. An orange robot arm holds a large orange ball high above a net of small blue and orange tiles stretched across a dark table-like frame. The arm lets go of the ball. The ball drops into the net, which stretches far down. The ball bounces up a little, drops in again and settles in the dip while the tiles keep swaying. The camera is fixed and captures the complete motion. The background furniture stays still.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.041,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)",
+    "image_space_error_m": {
+     "wan14b": 0.4,
+     "cosmos14b": 0.28,
+     "neuworld_reg": 0.17
+    },
+    "image_space_error_source": "tracked object centre against the PhysX centre projected through the same camera, converted to metres at the true depth, mean over the first 5 s; video models: SAM 2 tracks on the clips shown here; NeuWorld+Reg: its predicted centres projected exactly"
+   }
+  },
+  {
+   "id": "diving_board",
+   "family": "diving_board",
+   "record": "diving_board__r3064/a2/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm lets go of a ball above the free end of a springy board; the ball bounces off the board into a box.",
+   "neuworld_note": "The ball bounces off the board into the box, as in PhysX.",
+   "video_model_note": "Wan2.2 duplicates the ball, lifting one copy toward the ceiling while another appears in the box; in Cosmos-Predict2.5 the ball hangs in mid-air and never falls.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 5.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.85,
+    "left": 0.12,
+    "top": 0.1
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/diving_board/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/diving_board/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/diving_board/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/diving_board/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/diving_board/poster.jpg",
+   "first_frame": "static/media/compare_vdm/diving_board/first_frame.jpg",
+   "first_frame_note": "an earlier, darker render of the same start state from the same camera; the PhysX and NeuWorld tiles show the brighter re-render of the same states",
+   "prompt": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. An orange robot arm holds a ball above the free end of a long thin board fixed to a dark post. An open wooden box sits on the floor below that end. The arm lets go of the ball. The ball lands on the free end, which bends down and springs back. The ball bounces off and falls into the box, and the board keeps quivering. The camera is fixed and captures the complete motion. The background furniture stays still.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered furnished room with a dark wooden floor. An orange robot arm holds a ball above the free end of a long thin board fixed to a dark post. An open wooden box sits on the floor below that end. The arm lets go of the ball. The ball lands on the free end, which bends down and springs back. The ball bounces off and falls into the box, and the board keeps quivering. The camera is fixed and captures the complete motion. The background furniture stays still.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.056,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)",
+    "image_space_error_m": {
+     "wan14b": 1.08,
+     "cosmos14b": 0.85,
+     "neuworld_reg": 0.19
+    },
+    "image_space_error_source": "tracked object centre against the PhysX centre projected through the same camera, converted to metres at the true depth, mean over the first 5 s; video models: SAM 2 tracks on the clips shown here; NeuWorld+Reg: its predicted centres projected exactly"
+   }
+  },
+  {
+   "id": "collision",
+   "family": "collision",
+   "record": "collision__r127/a0/factual",
+   "split": "test (scene never seen in training)",
+   "description": "An arm pushes a block into a ball; the block stops and the ball rolls away fast toward the camera.",
+   "neuworld_note": "The block stops and the ball rolls out toward the camera, as in PhysX.",
+   "video_model_note": "In Wan2.2 the block itself travels across the floor; in Cosmos-Predict2.5 neither object moves.",
+   "notes_by_eye": true,
+   "in_paper": null,
+   "seconds": 4.0,
+   "fps": 30,
+   "size": [
+    640,
+    360
+   ],
+   "crop_of_frame": {
+    "kept_fraction": 0.7,
+    "left": 0.28,
+    "top": 0.3
+   },
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/compare_vdm/collision/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/compare_vdm/collision/neuworld.mp4"
+    },
+    {
+     "key": "wan14b",
+     "label": "Wan2.2 I2V-A14B",
+     "src": "static/media/compare_vdm/collision/wan14b.mp4"
+    },
+    {
+     "key": "cosmos14b",
+     "label": "Cosmos-Predict2.5 14B",
+     "src": "static/media/compare_vdm/collision/cosmos14b.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vdm/collision/poster.jpg",
+   "first_frame": "static/media/compare_vdm/collision/first_frame.jpg",
+   "first_frame_note": "an earlier, darker render of the same start state from the same camera; the PhysX and NeuWorld tiles show the brighter re-render of the same states",
+   "prompt": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm stands behind an upright blue block on the floor, with a metal ball just in front of the block. The arm pushes the block into the ball. The block stops after the impact, and the ball rolls away fast toward the camera until it leaves the picture. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_cosmos": "A video from a fixed camera showing a 3D-rendered empty room with a dark wooden floor. An orange robot arm stands behind an upright blue block on the floor, with a metal ball just in front of the block. The arm pushes the block into the ball. The block stops after the impact, and the ball rolls away fast toward the camera until it leaves the picture. The camera is fixed and captures the complete motion. The objects stay rigid.",
+   "prompt_kind": "outcome prompt: the scene, the action and, in order, what should happen",
+   "video_model_settings": {
+    "wan14b": {
+     "width": 1280,
+     "height": 720,
+     "n_frames": 81,
+     "fps": 16,
+     "steps": 40,
+     "seed": 0
+    },
+    "cosmos14b": {
+     "width": 1280,
+     "height": 704,
+     "n_frames": 93,
+     "fps": 16,
+     "steps": 36,
+     "seed": 0
+    }
+   },
+   "numbers": {
+    "neuworld_reg_position_error_m": 0.078,
+    "neuworld_reg_position_error_source": "mean distance of the moving objects from the PhysX states over the clip, from the predicted states (no rendering involved)",
+    "image_space_error_m": {
+     "wan14b": 0.4,
+     "cosmos14b": 0.69,
+     "neuworld_reg": 0.1
+    },
+    "image_space_error_source": "tracked object centre against the PhysX centre projected through the same camera, converted to metres at the true depth, mean over the first 5 s; video models: SAM 2 tracks on the clips shown here; NeuWorld+Reg: its predicted centres projected exactly"
+   }
+  }
+ ]
+}

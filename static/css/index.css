@@ -69,6 +69,8 @@ a { color: #3273dc; }
 .vid .vid-tag { position: absolute; left: 0.5rem; top: 0.5rem; font-size: 0.75rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 6px; background: rgba(17, 17, 17, 0.72); color: #fff; pointer-events: none; }
 .vid .vid-cover { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; background: repeating-linear-gradient(135deg, rgba(245, 246, 247, 0.96) 0 14px, rgba(232, 235, 237, 0.96) 14px 28px); color: var(--muted); font-size: 0.92rem; font-weight: 600; padding: 1rem; opacity: 0; transition: opacity 0.12s; pointer-events: none; }
 .vid .vid-cover.on { opacity: 1; }
+.vid .ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 0.25s; }
+.vid .ov-label { position: absolute; transform: translate(-50%, 0.7rem); background: rgba(255, 255, 255, 0.93); font-size: 0.74rem; font-weight: 700; padding: 0.05rem 0.45rem; border-radius: 5px; white-space: nowrap; pointer-events: none; transition: opacity 0.25s; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
 .sync-group { cursor: pointer; }
 
 /* ---------- Mode viewer ---------- */
@@ -121,6 +123,23 @@ a { color: #3273dc; }
 .mv-scenes button.on span { color: var(--ink); font-weight: 600; }
 .mv-caption { margin-top: 0.7rem; font-size: 0.92rem; color: var(--muted); }
 
+/* ---------- Pickers ---------- */
+.picker { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 1rem 1rem 1.1rem; }
+.pk-tiles { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 0.7rem; }
+@media screen and (max-width: 900px) { .pk-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pk-tile { border-radius: 10px; padding: 0.5rem; background: var(--surface-2); }
+.pk-tile h4 { font-size: 0.9rem; font-weight: 700; margin: 0 0.15rem 0.4rem; color: var(--ink); line-height: 1.25; }
+.pk-tile h4 span { display: block; font-weight: 400; font-size: 0.76rem; color: var(--muted); }
+.pk-tile.ours { background: var(--gen-soft); }
+.pk-tile.ours h4 { color: var(--gen); }
+.pk-tile.ref { background: var(--ref-soft); }
+.pk-tile.ref h4 { color: var(--ref); }
+.pk-tile.given { background: var(--given-soft); }
+.pk-tile.given h4 { color: var(--given); }
+.pk-note { font-size: 0.82rem; line-height: 1.4; margin: 0.45rem 0.15rem 0.1rem; color: var(--ink); }
+.pk-cap { margin: 0.8rem 0.1rem 0.2rem; font-size: 0.94rem; line-height: 1.5; }
+.pk-cap .m { color: var(--muted); }
+
 /* ---------- Galleries ---------- */
 .gal-bar { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; justify-content: center; align-items: center; margin-bottom: 1.1rem; }
 .gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1rem; }
@@ -136,6 +155,18 @@ a { color: #3273dc; }
 .gal.two { grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); }
 .tag-ours { background: rgba(194, 24, 122, 0.88) !important; }
 .tag-ref { background: rgba(60, 68, 72, 0.85) !important; }
+
+.chip.okc { background: #e3f3e6; color: #1e7a34; }
+.chip.noc { background: #fbe9e7; color: #b3261e; }
+table.llm-grid { border-collapse: separate; border-spacing: 0.45rem 0.4rem; margin: 0 auto; width: 100%; table-layout: fixed; }
+table.llm-grid th { font-size: 0.86rem; font-weight: 700; text-align: left; vertical-align: bottom; padding: 0 0.1rem; }
+table.llm-grid th small, table.llm-grid td.rowh small { display: block; font-weight: 400; font-size: 0.74rem; color: var(--muted); line-height: 1.3; }
+table.llm-grid th:first-child, table.llm-grid td.rowh { width: 9.5rem; }
+table.llm-grid td { vertical-align: top; background: #fff; border-radius: 8px; padding: 0.35rem; border: 1px solid var(--line); }
+table.llm-grid td.rowh { font-weight: 700; font-size: 0.9rem; background: none; border: none; vertical-align: middle; }
+table.llm-grid td.rowh.ours { color: var(--gen); }
+table.llm-grid td.rowh.ref { color: var(--ref); }
+table.llm-grid .ans { font-size: 0.82rem; line-height: 1.5; padding: 0.3rem 0.1rem 0.05rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
 /* ---------- Tables ---------- */
 .sp-table-wrap { overflow-x: auto; }

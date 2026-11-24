@@ -89,10 +89,30 @@
     function facts(rows) {
       return '<div class="mv-facts">' + rows.filter(Boolean).map(function (r) { return '<div><span class="k">' + esc(r[0]) + '</span><span class="' + (r[2] || '') + '">' + r[1] + '</span></div>'; }).join('') + '</div>';
     }
-    function vid(src, poster, tag, tagCls) {
-      return '<div class="vid"><video data-src="' + esc(src) + '" poster="' + esc(poster) + '" muted playsinline preload="none"></video>' + (tag ? '<span class="vid-tag ' + (tagCls || '') + '">' + esc(tag) + '</span>' : '') + '<div class="vid-cover"></div></div>';
+    function vid(src, poster, tag, tagCls, ov) {
+      return '<div class="vid"><video data-src="' + esc(src) + '" poster="' + esc(poster) + '" muted playsinline preload="none"></video>' + (ov || '') + (tag ? '<span class="vid-tag ' + (tagCls || '') + '">' + esc(tag) + '</span>' : '') + '<div class="vid-cover"></div></div>';
     }
-    function img(src, tag) { return '<div class="vid"><img src="' + esc(src) + '" alt="' + esc(tag) + '" loading="lazy"><span class="vid-tag">' + esc(tag) + '</span></div>'; }
+    /* an action drawn on the start frame: a dot on the object it acts on and an arrow along the force or launch direction (normalised image coordinates) */
+    function overlay(list, color, timed) {
+      if (!list) { return ''; }
+      if (!Array.isArray(list)) { list = [list]; }
+      var W = 1600, H = 900, out = '<svg class="ov' + (timed ? ' ov-timed' : '') + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">', labels = '';
+      list.forEach(function (o) {
+        if (!o || !o.point) { return; }
+        var x0 = o.point[0] * W, y0 = o.point[1] * H;
+        if (o.tip) {
+          var x1 = o.tip[0] * W, y1 = o.tip[1] * H, dx = x1 - x0, dy = y1 - y0, n = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / n, uy = dy / n, hl = 46, hw = 22;
+          var bx = x1 - ux * hl, by = y1 - uy * hl, head = [x1, y1, bx - uy * hw, by + ux * hw, bx + uy * hw, by - ux * hw].map(function (v) { return v.toFixed(1); });
+          out += '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="#fff" stroke-width="20" stroke-linecap="round"/>' +
+            '<polygon points="' + head[0] + ',' + head[1] + ' ' + head[2] + ',' + head[3] + ' ' + head[4] + ',' + head[5] + '" fill="' + color + '" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>' +
+            '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + bx + '" y2="' + by + '" stroke="' + color + '" stroke-width="11" stroke-linecap="round"/>';
+        }
+        out += '<circle cx="' + x0 + '" cy="' + y0 + '" r="13" fill="' + color + '" stroke="#fff" stroke-width="6"/>';
+        if (o.label) { labels += '<span class="ov-label' + (timed ? ' ov-timed' : '') + '" style="left:' + (100 * o.point[0]) + '%;top:' + (100 * o.point[1]) + '%;color:' + color + '">' + esc(o.label) + '</span>'; }
+      });
+      return out + '</svg>' + labels;
+    }
+    function img(src, tag, ov) { return '<div class="vid"><img src="' + esc(src) + '" alt="' + esc(tag) + '" loading="lazy">' + (ov || '') + '<span class="vid-tag">' + esc(tag) + '</span></div>'; }
     function tok(cls, title, text) { return '<div class="tok ' + cls + '"><small>' + esc(title) + '</small>' + text + '</div>'; }
 
     function render() {
@@ -112,13 +132,15 @@
         '<div class="tl" style="' + (info.motion === 'given' ? 'background:var(--given)' : '') + '">' + given.map(function (r) { return '<span class="tl-given" style="left:' + (100 * r[0] / T) + '%;width:' + Math.max(0.8, 100 * (r[1] - r[0]) / T) + '%"></span>'; }).join('') + '<span class="tl-head" style="left:0%"></span></div>' +
         '<div class="tl-times"><span>0 s</span><span>' + T.toFixed(1) + ' s</span></div></div></div>';
       /* three panels */
-      var gcol = '', ocol = '', rcol = '';
+      var gcol = '', ocol = '', rcol = '', BLUE = '#2563c9', MAG = '#c2187a', GREY = '#3c4448';
+      var ovs = scene.action_overlay || m.action_overlay || null, ovTrue = ovs && (ovs['true'] || (ovs.point ? ovs : null)), ovGen = ovs && ovs[state.variant];
+      var actionGiven = info.action === 'given';
       if (info.given_view === 'ends') {
         gcol = '<div class="mv-stills">' + img(m.first, 'start state') + img(m.last, 'end state') + '</div>';
       } else if (info.given_view === 'clip') {
-        gcol = vid(m.physics, m.first, info.motion === 'given' ? 'observed motion' : 'observed part of the motion');
+        gcol = vid(m.physics, m.first, info.motion === 'given' ? 'observed motion' : 'observed part of the motion', '', actionGiven ? overlay(ovTrue, BLUE, true) : '');
       } else {
-        gcol = img(m.first, 'start state');
+        gcol = img(m.first_plain || m.first, actionGiven ? 'start state and action' : 'start state', actionGiven ? overlay(ovTrue, BLUE, false) : '');
       }
       gcol += facts([['Properties', info.props === 'given' ? 'every mass, friction and restitution' : 'not given', info.props === 'given' ? '' : 'q'],
         ['Action', info.action === 'given' ? esc((m.action && m.action['true']) || m.action_given || 'the action program (type, object, force, timing)') : 'not given', info.action === 'given' ? '' : 'q'],
@@ -126,12 +148,12 @@
       if (info.output === 'values') {
         ocol = '<div class="mv-values">' + (m.values_html && m.values_html[state.variant] || '') + '</div>';
       } else {
-        ocol = vid(v.video, m.first, VARIANT_LABEL[state.variant], 'tag-ours');
+        ocol = vid(v.video, m.first, VARIANT_LABEL[state.variant], 'tag-ours', actionGiven ? '' : overlay(ovGen, MAG, true));
         ocol += facts([info.action !== 'given' && m.action && m.action[state.variant] ? ['Action', esc(m.action[state.variant])] : null,
           v.props_html ? ['Properties', v.props_html] : null,
           v.error_m != null ? ['Error', v.error_m.toFixed(2) + ' m mean distance from PhysX over the generated frames'] : null]);
       }
-      rcol = vid(m.physics, m.first, 'PhysX', 'tag-ref') + facts([info.action !== 'given' && m.action && m.action['true'] ? ['Action', esc(m.action['true'])] : null, m.truth_html ? ['Properties', m.truth_html] : null]);
+      rcol = vid(m.physics, m.first, 'PhysX', 'tag-ref', actionGiven ? '' : overlay(ovTrue, GREY, true)) + facts([info.action !== 'given' && m.action && m.action['true'] ? ['Action', esc(m.action['true'])] : null, m.truth_html ? ['Properties', m.truth_html] : null]);
       html += '<div class="mv-cols sync-group">' +
         '<div class="mv-col given"><h4>GIVEN<span>' + esc(info.given_short) + '</span></h4>' + gcol + '</div>' +
         '<div class="mv-col gen"><h4>GENERATED by NeuWorld<span>' + esc(info.gen_short) + '</span></h4>' + ocol + '</div>' +
@@ -147,6 +169,7 @@
       if (cover) { cover.textContent = 'not shown to the model'; }
       g.onTime = function (t) {
         if (head) { head.style.left = Math.min(100, 100 * t / T) + '%'; }
+        all('.ov-timed', groupEl).forEach(function (o) { o.style.opacity = t < 1.4 ? 1 : 0; });
         var inside = info.motion === 'given' || given.some(function (r) { return t >= r[0] - 0.02 && t <= r[1] + 0.02; });
         if (cover && info.given_view === 'clip') { cover.classList.toggle('on', !inside); }
         if (genVid && info.output !== 'values' && given.length) { genVid.classList.toggle('is-given', inside); genVid.classList.toggle('is-gen', !inside); var tag = genVid.querySelector('.vid-tag'); if (tag) { tag.textContent = VARIANT_LABEL[state.variant] + (inside ? ' · frames copied from the input' : ' · generated'); } }
@@ -162,9 +185,36 @@
     render();
   }
 
+  /* ---- Pickers: one row of clips that play together, with a strip of scenes to choose from ---- */
+  function initPickers() {
+    all('.picker[data-picker]').forEach(function (host) {
+      var data = (SUPP.pickers || {})[host.dataset.picker]; if (!data || !data.items.length) { return; }
+      var current = data.items[0].id;
+      function render() {
+        var it = data.items.filter(function (x) { return x.id === current; })[0], n = it.tiles.length;
+        var html = '<div class="pk-tiles sync-group" style="--n:' + n + '">' + it.tiles.map(function (t) {
+          var ar = it.aspect ? ' style="aspect-ratio:' + esc(it.aspect) + '"' : '';
+          var media = t.image ? '<div class="vid"' + ar + '><img src="' + esc(t.image) + '" alt="" loading="lazy"></div>'
+            : '<div class="vid"' + ar + '><video data-src="' + esc(t.src) + '" poster="' + esc(t.poster || it.poster || '') + '" muted playsinline preload="none"></video></div>';
+          return '<div class="pk-tile ' + (t.cls || '') + '"><h4>' + esc(t.label) + (t.sub ? '<span>' + esc(t.sub) + '</span>' : '') + '</h4>' + media + (t.note ? '<p class="pk-note">' + t.note + '</p>' : '') + '</div>';
+        }).join('') + '</div>';
+        html += '<div class="pk-cap">' + (it.caption || '') + '</div>' + (it.details || '');
+        if (data.items.length > 1) {
+          html += '<div class="mv-scenes">' + data.items.map(function (x) { return '<button type="button" data-item="' + esc(x.id) + '" class="' + (x.id === current ? 'on' : '') + '"><img src="' + esc(x.thumb) + '" alt="" loading="lazy"><span>' + esc(x.short || x.title) + '</span></button>'; }).join('') + '</div>';
+        }
+        all('.sync-group', host).forEach(function (g) { if (observer) { observer.unobserve(g); } if (g._group) { g._group.held = true; g._group.update(); } });
+        host.innerHTML = html;
+        var g = watch(host.querySelector('.sync-group')), rect = host.getBoundingClientRect(); g.visible = rect.top < window.innerHeight && rect.bottom > 0; g.update();
+      }
+      host.addEventListener('click', function (ev) { var b = ev.target.closest('button[data-item]'); if (b) { current = b.dataset.item; render(); } });
+      render();
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     all('.sync-group').forEach(watch);
     initGalleries();
     initModes();
+    initPickers();
   });
 }());

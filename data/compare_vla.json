@@ -1,0 +1,226 @@
+{
+ "section": "A zero-shot robot policy asked to produce the end state",
+ "setup": "pi0.5-DROID runs zero-shot in the same 41 test scenes. A Franka arm replaces the scene's tool, every object, mass and material is unchanged. The policy sees its camera images and an instruction that states the end state of the recorded motion, alone or with the motion described in words. Each scene is attempted twice per instruction; an attempt lasts 30 s.",
+ "tile_note": "The policy tile is filmed from the recording's camera in the plain look of the policy's simulation (no walls); the PhysX and NeuWorld tiles are the path-traced render of the same scene. NeuWorld is not asked the same question here: its tile is the forward prediction of the recorded action, to show the motion the policy would have to cause.",
+ "selection_note": "Four attempts picked by hand: a wrong manipulation, two attempts that never touch the object the recording acts on (the most common outcome) and one of the three successes.",
+ "table": {
+  "caption": "pi0.5-DROID, zero-shot, on the 41 test scenes (Table 14 of the supplementary). Moved: attempts in which the object the recorded action acts on is moved. Reached: attempts that reach the end state, on the 34 scenes (68 attempts) where it can be reached.",
+  "columns": [
+   "Recorded action",
+   "Scenes",
+   "End state: moved",
+   "End state: reached",
+   "End state + motion: moved",
+   "End state + motion: reached"
+  ],
+  "rows": [
+   [
+    "Push by a tool",
+    13,
+    "13 of 26",
+    "0 of 22",
+    "8 of 26",
+    "0 of 22"
+   ],
+   [
+    "Throw at the start",
+    9,
+    "3 of 18",
+    "0 of 14",
+    "5 of 18",
+    "0 of 14"
+   ],
+   [
+    "Hold, then let go or throw",
+    17,
+    "17 of 34",
+    "3 of 28",
+    "15 of 34",
+    "3 of 28"
+   ],
+   [
+    "Release at the start",
+    2,
+    "0 of 4",
+    "0 of 4",
+    "0 of 4",
+    "0 of 4"
+   ],
+   [
+    "All",
+    41,
+    "33 of 82",
+    "3 of 68",
+    "28 of 82",
+    "3 of 68"
+   ]
+  ],
+  "source": "tables/vla.tex of the paper"
+ },
+ "items": [
+  {
+   "id": "ball_block_catch",
+   "family": "ball_block_catch",
+   "record": "ball_block_catch__r2106/a1/factual",
+   "recorded_action_kind": "pushed by a tool in the recording",
+   "description": "Recorded motion: an arm pushes the ball, which knocks the block into the box and follows it in.",
+   "policy_note": "The policy grasps the red ball, lifts it and drops it off the table next to the box; the block never moves.",
+   "notes_by_eye": true,
+   "instruction": "get the blue block and the red ball into the wooden box on the floor. Masses: ball 0.4 kg, block 0.28 kg.",
+   "instruction_kind": "end state only",
+   "episode": 0,
+   "outcome": {
+    "moved_the_acted_object": true,
+    "reached_end_state": false,
+    "end_state_error_over_doing_nothing": 0.8,
+    "scene_can_reach_end_state": true,
+    "meaning": "error = summed end-state error of the tracked objects divided by the same sum when nobody acts; reached below 0.5; moved = the acted object ends at least 2 cm farther from its start than with nobody acting"
+   },
+   "neuworld_reg_position_error_m": 0.06,
+   "seconds": 5.0,
+   "policy_speed_up": 6.0,
+   "policy_episode_seconds": 30.0,
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX recording (the end state to reach)",
+     "src": "static/media/compare_vla/ball_block_catch/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg, forward prediction of the recorded action",
+     "src": "static/media/compare_vla/ball_block_catch/neuworld.mp4"
+    },
+    {
+     "key": "pi05",
+     "label": "pi0.5-DROID, zero-shot (30 s episode at 6x speed)",
+     "src": "static/media/compare_vla/ball_block_catch/pi05.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vla/ball_block_catch/poster.jpg"
+  },
+  {
+   "id": "pendulum_jenga",
+   "family": "pendulum_jenga",
+   "record": "pendulum_jenga__r3079/a3/factual",
+   "recorded_action_kind": "released at the start in the recording",
+   "description": "Recorded motion: the pendulum is released and knocks the top layer off the tower.",
+   "policy_note": "The policy reaches toward the tower and never touches the pendulum; nothing moves.",
+   "notes_by_eye": true,
+   "instruction": "knock the top layer of blocks off the tower with the pendulum ball and leave the rest standing. Masses: actor 0.66 kg, jenga 5 2 0.06 kg, jenga 5 1 0.06 kg, jenga 5 0 0.06 kg.",
+   "instruction_kind": "end state only",
+   "episode": 0,
+   "outcome": {
+    "moved_the_acted_object": false,
+    "reached_end_state": false,
+    "end_state_error_over_doing_nothing": 1.0,
+    "scene_can_reach_end_state": true,
+    "meaning": "error = summed end-state error of the tracked objects divided by the same sum when nobody acts; reached below 0.5; moved = the acted object ends at least 2 cm farther from its start than with nobody acting"
+   },
+   "neuworld_reg_position_error_m": 0.019,
+   "seconds": 5.0,
+   "policy_speed_up": 6.0,
+   "policy_episode_seconds": 30.0,
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX recording (the end state to reach)",
+     "src": "static/media/compare_vla/pendulum_jenga/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg, forward prediction of the recorded action",
+     "src": "static/media/compare_vla/pendulum_jenga/neuworld.mp4"
+    },
+    {
+     "key": "pi05",
+     "label": "pi0.5-DROID, zero-shot (30 s episode at 6x speed)",
+     "src": "static/media/compare_vla/pendulum_jenga/pi05.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vla/pendulum_jenga/poster.jpg"
+  },
+  {
+   "id": "launcher_tower",
+   "family": "launcher_tower",
+   "record": "launcher_tower__r112/a0/factual",
+   "recorded_action_kind": "held by a tool, then thrown, in the recording",
+   "description": "Recorded motion: the launcher fires the ball into the tower, which topples.",
+   "policy_note": "The policy never touches the ball held by the launcher; the tower stays standing.",
+   "notes_by_eye": true,
+   "instruction": "make the tower of blocks collapse. Masses: actor 0.3 kg, ball 0.47 kg, jenga 1 1 0.06 kg, jenga 1 2 0.06 kg.",
+   "instruction_kind": "end state only",
+   "episode": 0,
+   "outcome": {
+    "moved_the_acted_object": false,
+    "reached_end_state": false,
+    "end_state_error_over_doing_nothing": 1.0,
+    "scene_can_reach_end_state": true,
+    "meaning": "error = summed end-state error of the tracked objects divided by the same sum when nobody acts; reached below 0.5; moved = the acted object ends at least 2 cm farther from its start than with nobody acting"
+   },
+   "neuworld_reg_position_error_m": 0.105,
+   "seconds": 5.0,
+   "policy_speed_up": 6.0,
+   "policy_episode_seconds": 30.0,
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX recording (the end state to reach)",
+     "src": "static/media/compare_vla/launcher_tower/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg, forward prediction of the recorded action",
+     "src": "static/media/compare_vla/launcher_tower/neuworld.mp4"
+    },
+    {
+     "key": "pi05",
+     "label": "pi0.5-DROID, zero-shot (30 s episode at 6x speed)",
+     "src": "static/media/compare_vla/launcher_tower/pi05.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vla/launcher_tower/poster.jpg"
+  },
+  {
+   "id": "diving_board",
+   "family": "diving_board",
+   "record": "diving_board__r3064/a2/factual",
+   "recorded_action_kind": "held by a tool, then let go, in the recording",
+   "description": "Recorded motion: the ball is let go above the board, bounces off its free end and lands in the box.",
+   "policy_note": "One of the three successful attempts: touching the held ball frees it, and physics does the rest.",
+   "notes_by_eye": true,
+   "instruction": "get the ball into the wooden box below the end of the board. Masses: actor 5 kg, board seg8 0.15 kg.",
+   "instruction_kind": "end state only",
+   "episode": 1,
+   "outcome": {
+    "moved_the_acted_object": true,
+    "reached_end_state": true,
+    "end_state_error_over_doing_nothing": 0.41,
+    "scene_can_reach_end_state": true,
+    "meaning": "error = summed end-state error of the tracked objects divided by the same sum when nobody acts; reached below 0.5; moved = the acted object ends at least 2 cm farther from its start than with nobody acting"
+   },
+   "neuworld_reg_position_error_m": 0.056,
+   "seconds": 5.0,
+   "policy_speed_up": 6.0,
+   "policy_episode_seconds": 30.0,
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX recording (the end state to reach)",
+     "src": "static/media/compare_vla/diving_board/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg, forward prediction of the recorded action",
+     "src": "static/media/compare_vla/diving_board/neuworld.mp4"
+    },
+    {
+     "key": "pi05",
+     "label": "pi0.5-DROID, zero-shot (30 s episode at 6x speed)",
+     "src": "static/media/compare_vla/diving_board/pi05.mp4"
+    }
+   ],
+   "poster": "static/media/compare_vla/diving_board/poster.jpg"
+  }
+ ]
+}

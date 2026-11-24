@@ -1,0 +1,247 @@
+{
+ "section": "Scans of real rooms",
+ "setup": "Eight real places are turned into simulation-ready scenes: six ScanNet++ rooms and two outdoor Mip-NeRF 360 captures (a garden and a park bench). Each scanned object becomes a textured mesh with a collider, is placed in the room and grounded. The scans are never used in training. PhysX provides the ground-truth motion in these scenes as well.",
+ "look_note": "Rendered from above the cut walls: the scan as background, each scanned object as its textured mesh. Tiles are 432 x 224 pixels, cut from the evaluation renders.",
+ "selection_note": "Seven of the 70 simulations in scanned places, picked by hand among those where NeuWorld follows PhysX; they are best cases, not typical ones. The model shown differs by clip and is named on each.",
+ "headline": {
+  "text": "On 70 simulations in scanned rooms, all three NeuWorld variants beat the assumption that nothing moves; the position error of NeuWorld+Reg is 57% of the no-motion error. The error is still 3.0 to 3.9 times that on the same motion families in the test set, mostly because of furniture shapes never seen in training.",
+  "source": "Sec. 4.2 (RQ5) of the paper"
+ },
+ "pipeline_figure": {
+  "src": "static/media/twins/twin_pipeline.jpg",
+  "caption": "From posed photographs to a simulation-ready twin: SAM 3D Objects reconstructs each object, which is then placed, given a collider and grounded (Fig. 7 of the supplementary)."
+ },
+ "items": [
+  {
+   "id": "kitchen_crate",
+   "record": "twin_kitchen__drop_crate/a1/factual",
+   "place": "kitchen (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "A crate is dropped onto the kitchen table next to a plant.",
+   "in_paper": "Fig. 6(a) of the paper",
+   "model": "NeuWorld+Reg, fine-tuned for 14,000 updates on twin-like simulations",
+   "model_key": "reg_ft",
+   "numbers": {
+    "neuworld_position_error_m": 0.07,
+    "no_motion_error_m": 0.29,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/kitchen_crate/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/twins/kitchen_crate/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/kitchen_crate/poster.jpg"
+  },
+  {
+   "id": "office_chair",
+   "record": "twin_office__tip_chair/a0/factual",
+   "place": "office (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "An office chair with a ball on its seat is tipped.",
+   "in_paper": "Fig. 6(b) of the paper",
+   "model": "NeuWorld+Reg, fine-tuned for 14,000 updates on twin-like simulations",
+   "model_key": "reg_ft",
+   "numbers": {
+    "neuworld_position_error_m": 0.37,
+    "no_motion_error_m": 0.41,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/office_chair/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/twins/office_chair/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/office_chair/poster.jpg"
+  },
+  {
+   "id": "office_table_throw",
+   "record": "twin_office__throw_from_table/a0/factual",
+   "place": "office (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "An object is thrown off a table and lands on the floor.",
+   "in_paper": null,
+   "model": "NeuWorld+Reg, fine-tuned for 14,000 updates on twin-like simulations",
+   "model_key": "reg_ft",
+   "numbers": {
+    "neuworld_position_error_m": 0.18,
+    "no_motion_error_m": 1.79,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/office_table_throw/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/twins/office_table_throw/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/office_table_throw/poster.jpg"
+  },
+  {
+   "id": "bedroom_table_throw",
+   "record": "twin_bedroom__throw_from_table/a0/factual",
+   "place": "bedroom (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "An object is thrown off a table and lands on the floor.",
+   "in_paper": null,
+   "model": "NeuWorld+FM, fine-tuned for 14,000 updates on twin-like simulations",
+   "model_key": "fm_ft",
+   "numbers": {
+    "neuworld_position_error_m": 0.1,
+    "no_motion_error_m": 1.82,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/bedroom_table_throw/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+FM (ours)",
+     "src": "static/media/twins/bedroom_table_throw/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/bedroom_table_throw/poster.jpg"
+  },
+  {
+   "id": "conference_crate",
+   "record": "twin_conference_a__drop_crate/a1/factual",
+   "place": "conference room A (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "A crate is dropped onto a conference table next to a cup.",
+   "in_paper": null,
+   "model": "NeuWorld+FM, the 150k-step model of the paper, no fine-tuning",
+   "model_key": "fm_150k",
+   "numbers": {
+    "neuworld_position_error_m": 0.04,
+    "no_motion_error_m": 0.29,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/conference_crate/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+FM (ours)",
+     "src": "static/media/twins/conference_crate/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/conference_crate/poster.jpg"
+  },
+  {
+   "id": "conference_chair",
+   "record": "twin_conference_b__tip_chair/a0/factual",
+   "place": "conference room B (ScanNet++ scan)",
+   "outdoor": false,
+   "description": "A chair with a ball on its seat is launched forward with a spin.",
+   "in_paper": null,
+   "model": "NeuWorld+FM, the 150k-step model of the paper, no fine-tuning",
+   "model_key": "fm_150k",
+   "numbers": {
+    "neuworld_position_error_m": 0.19,
+    "no_motion_error_m": 0.58,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/conference_chair/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+FM (ours)",
+     "src": "static/media/twins/conference_chair/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/conference_chair/poster.jpg"
+  },
+  {
+   "id": "park_bench_cube",
+   "record": "twin_park_bench__throw_cube/a0/factual",
+   "place": "park bench (outdoor Mip-NeRF 360 capture)",
+   "outdoor": true,
+   "description": "A cube is thrown across the grass next to a bench and a bicycle.",
+   "in_paper": null,
+   "model": "NeuWorld+Reg, fine-tuned for 14,000 updates on twin-like simulations",
+   "model_key": "reg_ft",
+   "numbers": {
+    "neuworld_position_error_m": 0.3,
+    "no_motion_error_m": 2.19,
+    "source": "position error over the bodies PhysX moves, as printed on the evaluation grid of this record; no-motion error = the same error for a prediction in which nothing moves"
+   },
+   "seconds": 5.07,
+   "size": [
+    432,
+    224
+   ],
+   "tiles": [
+    {
+     "key": "physx",
+     "label": "PhysX (ground truth)",
+     "src": "static/media/twins/park_bench_cube/physx.mp4"
+    },
+    {
+     "key": "neuworld",
+     "label": "NeuWorld+Reg (ours)",
+     "src": "static/media/twins/park_bench_cube/neuworld.mp4"
+    }
+   ],
+   "poster": "static/media/twins/park_bench_cube/poster.jpg"
+  }
+ ]
+}

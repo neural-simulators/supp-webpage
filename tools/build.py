@@ -190,6 +190,135 @@ def forward_section(v1):
 </div></section>'''
 
 
+def table_html(columns, rows, ours=('NeuWorld',)):
+    head = ''.join(f'<th>{e(c)}</th>' for c in columns)
+    fmt = lambda c: ('%.2f' % c) if isinstance(c, float) else c
+    body = ''.join('<tr>' + ''.join('<td>%s</td>' % (('<b>%s</b>' % e(fmt(c))) if str(row[0]).startswith(ours) else e(fmt(c))) for c in row) + '</tr>' for row in rows)
+    return f'<div class="sp-table-wrap"><table class="sp-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+VDM_TILES = {'physx': ('PhysX', 'ground truth', 'ref'), 'neuworld': ('NeuWorld+Reg', 'input: scene graph and action', 'ours'),
+             'wan14b': ('Wan2.2 14B', 'input: first frame and text', ''), 'cosmos14b': ('Cosmos-Predict2.5 14B', 'input: first frame and text', '')}
+
+
+def vdm_section(d, pickers):
+    if not d:
+        return ''
+    items = []
+    for it in d['items']:
+        tiles = [{'label': VDM_TILES[t['key']][0], 'sub': VDM_TILES[t['key']][1], 'cls': VDM_TILES[t['key']][2], 'src': t['src'], 'poster': it.get('poster')} for t in it['tiles'] if t['key'] in VDM_TILES]
+        cap = (f"<b>{e(it['description'])}</b> <span class=\"m\">Test scene, not seen in training.</span><br>"
+               f"<b style=\"color:var(--gen)\">NeuWorld:</b> {e(it['neuworld_note'])} <b>Video models:</b> {e(it['video_model_note'])}")
+        same = it.get('prompt_cosmos', it['prompt']) == it['prompt']
+        details = ('<details class="sp-more"><summary>What the video models received: the first frame and this prompt</summary>'
+                   f'<div style="display:grid;grid-template-columns:minmax(160px,240px) 1fr;gap:0.9rem;align-items:start;margin-top:0.6rem"><div class="vid"><img src="{e(it["first_frame"])}" alt="first frame" loading="lazy"></div>'
+                   f'<div><blockquote class="sp-prompt">{e(it["prompt"])}</blockquote>'
+                   + ('' if same else f'<p class="sp-note">Cosmos-Predict2.5 received the same prompt with a few words replaced so that it passes the model\'s input filter:</p><blockquote class="sp-prompt">{e(it["prompt_cosmos"])}</blockquote>')
+                   + '</div></div></details>')
+        title = it['family'].replace('_', ' ')
+        items.append({'id': it['id'], 'title': title, 'short': title, 'thumb': it.get('poster') or it['first_frame'], 'poster': it.get('poster'), 'tiles': tiles, 'caption': cap, 'details': details})
+    pickers['vdm'] = {'items': items}
+    t = d.get('table')
+    table = ''
+    if t:
+        table = (f'<details class="sp-more" open><summary>Measured over 36 test scenes</summary><p class="sp-note" style="margin:0.5rem 0">{e(t["caption"])}</p>'
+                 + table_html(t['columns'], t['rows']) + '</details>')
+    return f'''<section class="section sp-section" id="video-models"><div class="sp-container sp-wide">
+<h2 class="title is-3 has-text-centered">Comparison with video diffusion models</h2>
+<p class="sp-lead">Video models take one frame and a sentence, so they get an easier input: the rendered first frame and a prompt that says, in order, what should happen.
+NeuWorld gets the scene graph and the action, with no image and no description of the outcome. All four clips of a scene play together.</p>
+<div class="picker" data-picker="vdm"></div>
+{table}
+<p class="sp-note" style="margin-top:0.7rem">The remarks on what each model does are observations by eye. Video-model clips are generated at 16 frames per second and shown at their own clock.</p>
+</div></section>'''
+
+
+def yesno(ok, yes, no):
+    return f'<span class="chip {"okc" if ok else "noc"}">{e(yes if ok else no)}</span>'
+
+
+def vla_section(d, pickers):
+    if not d:
+        return ''
+    tiles_of = {'physx': ('PhysX', 'the recorded motion; its end state is the goal', 'ref'), 'neuworld': ('NeuWorld+Reg', 'forward prediction of the recorded action', 'ours'),
+                'pi05': ('π₀.₅-DROID, zero-shot', 'a 30 s attempt, shown at 6x speed', '')}
+    items = []
+    for it in d['items']:
+        tiles = [{'label': tiles_of[t['key']][0], 'sub': tiles_of[t['key']][1], 'cls': tiles_of[t['key']][2], 'src': t['src'], 'poster': it.get('poster')} for t in it['tiles']]
+        o = it['outcome']
+        cap = (f"<b>{e(it['description'])}</b><br><b>Instruction to the policy</b> <span class=\"m\">({e(it['instruction_kind'])})</span>: \u201c{e(it['instruction'])}\u201d<br>"
+               f"<b>What the policy does:</b> {e(it['policy_note'])} {yesno(o['moved_the_acted_object'], 'moves the right object', 'does not move the right object')} {yesno(o['reached_end_state'], 'reaches the end state', 'does not reach the end state')}")
+        title = it['family'].replace('_', ' ')
+        items.append({'id': it['id'], 'title': title, 'short': title, 'thumb': it['poster'], 'poster': it['poster'], 'tiles': tiles, 'caption': cap})
+    pickers['vla'] = {'items': items}
+    t = d['table']
+    return f'''<h3 class="title is-4 has-text-centered sp-sub">A zero-shot robot policy</h3>
+<p class="sp-lead">{e(d['setup'])}</p>
+<div class="picker" data-picker="vla"></div>
+<details class="sp-more"><summary>All 41 scenes: how often the policy moves the right object and reaches the end state</summary><p class="sp-note" style="margin:0.5rem 0">{e(t['caption'])}</p>{table_html(t['columns'], t['rows'])}</details>
+<p class="sp-note" style="margin-top:0.7rem">{e(d['tile_note'])} {e(d['selection_note'])} The remarks on what the policy does are observations by eye.</p>'''
+
+
+def llm_section(d):
+    if not d:
+        return ''
+    tasks = d['tasks']
+    def cell(ans):
+        ok = '(correct)' in ans
+        return f'<span class="chip {"okc" if ok else "noc"}">{e(ans.replace(" (correct)", "").replace(" (wrong)", ""))}</span>'
+    head = '<tr><th></th>' + ''.join(f'<th>{e(t["mode"])}<small>{e(t["condition"])}</small></th>' for t in tasks) + '</tr>'
+    rows = '<tr><td class="rowh ref">PhysX<small>ground truth</small></td>' + ''.join(f'<td><div class="vid"><img src="{e(t["frames"]["physx"])}" alt="" loading="lazy"></div><div class="ans">{e(t["physx"])}</div></td>' for t in tasks) + '</tr>'
+    rows += '<tr><td class="rowh ours">NeuWorld+Reg<small>scene graph and action</small></td>' + ''.join(f'<td><div class="vid"><img src="{e(t["frames"]["neuworld"])}" alt="" loading="lazy"></div><div class="ans">{cell(t["neuworld_reg"])}</div></td>' for t in tasks) + '</tr>'
+    for key, name in (('claude_opus_5_5', 'Claude Opus 5.5'), ('claude_fable_5_2', 'Claude Fable 5.2')):
+        rows += f'<tr><td class="rowh">{name}<small>scene graph as text, two calls</small></td>' + ''.join('<td><div class="ans">' + ' '.join(cell(x) for x in t[key]) + '</div></td>' for t in tasks) + '</tr>'
+    sc = d['score']; pl = d['planner']
+    prompts = ''.join(f'<p class="sp-note" style="margin-top:0.5rem"><b>{e(k)}</b></p><blockquote class="sp-prompt" style="white-space:pre-wrap">{e(v)}</blockquote>' for k, v in d['prompts'].items())
+    return f'''<h3 class="title is-4 has-text-centered sp-sub">Language models reading the same scene graph</h3>
+<p class="sp-lead">{e(d['scene'])}</p>
+<div class="sp-table-wrap"><table class="llm-grid"><thead>{head}</thead><tbody>{rows}</tbody></table></div>
+<p class="sp-note has-text-centered" style="margin-top:0.6rem">Correct: NeuWorld+Reg {e(sc['neuworld_reg'])}, Claude Opus 5.5 {e(sc['claude_opus_5_5'])}, Claude Fable 5.2 {e(sc['claude_fable_5_2'])}. Frames show the end of each motion.
+{e(d['inputs']['language_models'])}</p>
+<details class="sp-more"><summary>The prompts sent to the language models</summary>{prompts}</details>
+<h3 class="title is-4 has-text-centered sp-sub">A planner that tests its actions before acting</h3>
+<p class="sp-lead">{e(pl['text'])}</p>
+<details class="sp-more"><summary>Planner results on the 206 tasks</summary><p class="sp-note" style="margin:0.5rem 0">{e(pl['table']['caption'])}</p>{table_html(pl['table']['columns'], pl['table']['rows'], ours=('Claude Opus 5.5, tries predicted by NeuWorld',))}</details>'''
+
+
+def others_section(llm, vla, pickers):
+    a, b = llm_section(llm), vla_section(vla, pickers)
+    if not (a or b):
+        return ''
+    return f'''<section class="section sp-section sp-band" id="llm-vla"><div class="sp-container sp-wide">
+<h2 class="title is-3 has-text-centered">Comparison with language models and a robot policy</h2>
+{a}{b}
+</div></section>'''
+
+
+def twins_section(d, pickers):
+    if not d:
+        return ''
+    items = []
+    for it in d['items']:
+        n = it['numbers']; model = it['model']
+        tiles = [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': it['tiles'][0]['src'], 'poster': it.get('poster')},
+                 {'label': model.split(',')[0], 'sub': model.split(',', 1)[1].strip() if ',' in model else '', 'cls': 'ours', 'src': it['tiles'][1]['src'], 'poster': it.get('poster')}]
+        cap = (f"<b>{e(it['description'])}</b> <span class=\"m\">{e(it['place'][0].upper() + it['place'][1:])}, never used in training.</span><br>"
+               f"Position error {n['neuworld_position_error_m']:.2f} m, against {n['no_motion_error_m']:.2f} m for a prediction in which nothing moves.")
+        title = it['place'].split(' (')[0]
+        items.append({'id': it['id'], 'title': title, 'short': it['description'], 'thumb': it['poster'], 'poster': it['poster'], 'tiles': tiles, 'caption': cap, 'aspect': '%d / %d' % tuple(it['size'])})
+    pickers['twins'] = {'items': items}
+    fig = d.get('pipeline_figure')
+    figure = f'<details class="sp-more"><summary>How a scan becomes a simulation-ready scene</summary><img src="{e(fig["src"])}" alt="" loading="lazy" style="width:100%;margin-top:0.6rem;border-radius:8px"><p class="sp-note">{e(fig["caption"])}</p></details>' if fig else ''
+    return f'''<section class="section sp-section" id="twins"><div class="sp-container sp-wide">
+<h2 class="title is-3 has-text-centered">Scans of real rooms</h2>
+<p class="sp-lead">{e(d['setup'])}</p>
+<div class="picker" data-picker="twins" style="max-width:1000px;margin-inline:auto"></div>
+{figure}
+<p class="sp-note" style="margin-top:0.7rem">{e(d['headline']['text'])} The clips are seven of the 70 simulations, chosen among those where NeuWorld follows PhysX. The model shown is named above each clip.
+The view is from above the cut walls, with the scan as background and each scanned object as its textured mesh.</p>
+</div></section>'''
+
+
 RESULTS = [  # tables/main_results.tex of the paper: families-equal means over the 25,413 test simulations
     ('Forward (constant velocity: 0.836 m)', [('GNS', '0.157', '24.9*', '0.218', '1.24', '6.0%*', '1.7*', '0.4*', '1.3'), ('NeuWorld+FM', '0.182', '29.9', '0.183', '1.28', '18.5%', '7.3', '3.2', '0.9'),
                                              ('NeuWorld+DDPM', '0.194', '30.7', '0.186', '1.30', '18.2%', '7.1', '2.8', '0.9'), ('NeuWorld+Reg', '0.130*', '25.2', '0.160*', '1.01*', '22.3%', '6.3', '3.2', '0.9')]),
@@ -230,11 +359,14 @@ def footer():
 
 def main():
     v1 = load('v1.json'); showcase = load('showcase.json')
-    md = modes_data(v1, showcase)
-    sections = [('modes', 'Inference modes', modes_section(md)), ('forward', 'Forward prediction', forward_section(v1)), ('numbers', 'Numbers', results_section())]
+    md = modes_data(v1, showcase); pickers = {}
+    sections = [('modes', 'Inference modes', modes_section(md)), ('forward', 'Forward prediction', forward_section(v1)),
+                ('video-models', 'Video models', vdm_section(load('compare_vdm.json'), pickers)),
+                ('llm-vla', 'Language models and robot policy', others_section(load('compare_llm.json'), load('compare_vla.json'), pickers)),
+                ('twins', 'Real-room scans', twins_section(load('twins.json'), pickers)), ('numbers', 'Numbers', results_section())]
     nav = [(k, label) for k, label, body in sections if body]
     body = hero(nav) + overview() + ''.join(b for _, _, b in sections) + footer()
-    data = {'modes': md}
+    data = {'modes': md, 'pickers': pickers}
     blob = json.dumps(data, separators=(',', ':')).replace('</', '<\\/')
     page = f'''<!DOCTYPE html>
 <html lang="en">
