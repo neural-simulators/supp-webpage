@@ -162,7 +162,7 @@ table.props td b { color: var(--gen); }
 
 /* ---------- Galleries ---------- */
 .gal-bar { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; justify-content: center; align-items: center; margin-bottom: 1.1rem; }
-.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(540px, 1fr)); gap: 1rem; }
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(540px, 100%), 1fr)); gap: 1rem; }
 @media screen and (max-width: 520px) { .gal { grid-template-columns: 1fr; } }
 .card-x { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 0.6rem; }
 .card-x .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
@@ -172,7 +172,7 @@ table.props td b { color: var(--gen); }
 .card-x .cap b { font-weight: 600; }
 .card-x .cap .m { color: var(--muted); }
 .gal.wide { grid-template-columns: 1fr; }
-.gal.two { grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); }
+.gal.two { grid-template-columns: repeat(auto-fill, minmax(min(560px, 100%), 1fr)); }
 .tag-ours { background: rgba(194, 24, 122, 0.88) !important; }
 .tag-ref { background: rgba(60, 68, 72, 0.85) !important; }
 
@@ -188,13 +188,13 @@ table.llm-grid td.rowh.ours { color: var(--gen); }
 table.llm-grid td.rowh.ref { color: var(--ref); }
 table.llm-grid .ans { font-size: 0.82rem; line-height: 1.5; padding: 0.3rem 0.1rem 0.05rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
-.kf-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.2rem; margin-top: 0.7rem; }
+.kf-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 1.2rem; margin-top: 0.7rem; }
 .kf { display: grid; grid-template-columns: 5.2rem repeat(var(--n, 3), minmax(0, 1fr)); gap: 0.3rem; align-items: center; }
 .kf-t { font-size: 0.78rem; color: var(--muted); text-align: center; }
 .kf-l { font-size: 0.8rem; font-weight: 600; }
 
 /* ---------- Dataset ---------- */
-.dgal { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.8rem; }
+.dgal { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); gap: 0.8rem; }
 .dcard { border: 1px solid var(--line); border-radius: 10px; padding: 0.4rem; background: #fff; cursor: pointer; }
 .dcard p { font-size: 0.78rem; line-height: 1.35; margin: 0.35rem 0.1rem 0.1rem; color: var(--muted); }
 .dcard p b { color: var(--ink); display: block; font-size: 0.84rem; }
@@ -223,7 +223,7 @@ ul.qa li b { text-align: right; flex: 0 0 auto; max-width: 45%; }
 .chart-tip span { display: block; }
 
 .dgal:not(.show-all) .dcard[data-featured="0"] { display: none; }
-.legends { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 0.9rem; }
+.legends { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 1rem; margin-top: 0.9rem; }
 .legends div { display: flex; gap: 0.7rem; align-items: center; }
 .legends img { height: 64px; width: auto; max-width: 150px; border-radius: 6px; flex: 0 0 auto; }
 .legends p { font-size: 0.8rem; line-height: 1.4; color: var(--muted); margin: 0; }
