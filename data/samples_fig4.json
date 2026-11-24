@@ -1,0 +1,576 @@
+{
+ "schema": "supp-samples-1",
+ "record": "ramp_spring_domino__r9/a2/factual",
+ "paper_figure": "the uncertainty panel of Fig. 4 of the paper",
+ "model": "NeuWorld+FM",
+ "question": "every mass, friction and restitution hidden; scene graph, start state and action given (the unknown-properties mode)",
+ "physics": {
+  "video": "static/media/showcase/ramp_spring_domino__r9__a2__factual/physics.mp4",
+  "first": "static/media/showcase/ramp_spring_domino__r9__a2__factual/first.jpg",
+  "outcome": "6 of 6 tiles fall"
+ },
+ "samples": [
+  {
+   "seed": 1,
+   "video": "static/media/samples_fig4/unk100__fm__seed1.mp4",
+   "error_m": 0.0369,
+   "outcome": "6 of 6 tiles fall",
+   "inferred_properties": [
+    {
+     "object": "ball",
+     "id": "actor",
+     "mass_kg": {
+      "true": 4.3385,
+      "estimate": 4.3569
+     },
+     "friction": {
+      "true": 0.85,
+      "estimate": 0.4998
+     },
+     "restitution": {
+      "true": 0.65,
+      "estimate": 0.2496
+     }
+    },
+    {
+     "object": "spring-mounted block",
+     "id": "bumper",
+     "mass_kg": {
+      "true": 0.4,
+      "estimate": 0.3995
+     },
+     "friction": {
+      "true": 0.3,
+      "estimate": 0.2991
+     },
+     "restitution": {
+      "true": 0.35,
+      "estimate": 0.3517
+     }
+    },
+    {
+     "object": "tile 1",
+     "id": "tile0",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0741
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4204
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.4045
+     }
+    },
+    {
+     "object": "tile 2",
+     "id": "tile1",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0701
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.5004
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2466
+     }
+    },
+    {
+     "object": "tile 3",
+     "id": "tile2",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0694
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4985
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2499
+     }
+    },
+    {
+     "object": "tile 4",
+     "id": "tile3",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0704
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.5021
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2474
+     }
+    },
+    {
+     "object": "tile 5",
+     "id": "tile4",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0699
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.3446
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.4552
+     }
+    },
+    {
+     "object": "tile 6",
+     "id": "tile5",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.068
+     },
+     "friction": {
+      "true": 0.35,
+      "estimate": 0.5021
+     },
+     "restitution": {
+      "true": 0.45,
+      "estimate": 0.2518
+     }
+    }
+   ],
+   "properties_total": 8
+  },
+  {
+   "seed": 2,
+   "video": "static/media/samples_fig4/unk100__fm__seed2.mp4",
+   "error_m": 0.0374,
+   "outcome": "6 of 6 tiles fall",
+   "inferred_properties": [
+    {
+     "object": "ball",
+     "id": "actor",
+     "mass_kg": {
+      "true": 4.3385,
+      "estimate": 4.4789
+     },
+     "friction": {
+      "true": 0.85,
+      "estimate": 0.8505
+     },
+     "restitution": {
+      "true": 0.65,
+      "estimate": 0.6408
+     }
+    },
+    {
+     "object": "spring-mounted block",
+     "id": "bumper",
+     "mass_kg": {
+      "true": 0.4,
+      "estimate": 0.3968
+     },
+     "friction": {
+      "true": 0.3,
+      "estimate": 0.3629
+     },
+     "restitution": {
+      "true": 0.35,
+      "estimate": 0.4544
+     }
+    },
+    {
+     "object": "tile 1",
+     "id": "tile0",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0704
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4966
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2522
+     }
+    },
+    {
+     "object": "tile 2",
+     "id": "tile1",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0709
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4969
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2474
+     }
+    },
+    {
+     "object": "tile 3",
+     "id": "tile2",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0706
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.3355
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.4245
+     }
+    },
+    {
+     "object": "tile 4",
+     "id": "tile3",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0704
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.8535
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.6482
+     }
+    },
+    {
+     "object": "tile 5",
+     "id": "tile4",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0738
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.2953
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.3521
+     }
+    },
+    {
+     "object": "tile 6",
+     "id": "tile5",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0701
+     },
+     "friction": {
+      "true": 0.35,
+      "estimate": 0.4992
+     },
+     "restitution": {
+      "true": 0.45,
+      "estimate": 0.2518
+     }
+    }
+   ],
+   "properties_total": 8
+  },
+  {
+   "seed": 3,
+   "video": "static/media/samples_fig4/unk100__fm__seed3.mp4",
+   "error_m": 0.0366,
+   "outcome": "6 of 6 tiles fall",
+   "inferred_properties": [
+    {
+     "object": "ball",
+     "id": "actor",
+     "mass_kg": {
+      "true": 4.3385,
+      "estimate": 4.4789
+     },
+     "friction": {
+      "true": 0.85,
+      "estimate": 0.5021
+     },
+     "restitution": {
+      "true": 0.65,
+      "estimate": 0.2522
+     }
+    },
+    {
+     "object": "spring-mounted block",
+     "id": "bumper",
+     "mass_kg": {
+      "true": 0.4,
+      "estimate": 0.4023
+     },
+     "friction": {
+      "true": 0.3,
+      "estimate": 0.3181
+     },
+     "restitution": {
+      "true": 0.35,
+      "estimate": 0.3842
+     }
+    },
+    {
+     "object": "tile 1",
+     "id": "tile0",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0687
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4967
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2496
+     }
+    },
+    {
+     "object": "tile 2",
+     "id": "tile1",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0689
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.5011
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.247
+     }
+    },
+    {
+     "object": "tile 3",
+     "id": "tile2",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0694
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.3477
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.4552
+     }
+    },
+    {
+     "object": "tile 4",
+     "id": "tile3",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.068
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.2998
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.353
+     }
+    },
+    {
+     "object": "tile 5",
+     "id": "tile4",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0696
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4985
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2529
+     }
+    },
+    {
+     "object": "tile 6",
+     "id": "tile5",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0682
+     },
+     "friction": {
+      "true": 0.35,
+      "estimate": 0.8505
+     },
+     "restitution": {
+      "true": 0.45,
+      "estimate": 0.6497
+     }
+    }
+   ],
+   "properties_total": 8
+  },
+  {
+   "seed": 4,
+   "video": "static/media/samples_fig4/unk100__fm__seed4.mp4",
+   "error_m": 0.0273,
+   "outcome": "6 of 6 tiles fall",
+   "inferred_properties": [
+    {
+     "object": "ball",
+     "id": "actor",
+     "mass_kg": {
+      "true": 4.3385,
+      "estimate": 4.4789
+     },
+     "friction": {
+      "true": 0.85,
+      "estimate": 0.846
+     },
+     "restitution": {
+      "true": 0.65,
+      "estimate": 0.6216
+     }
+    },
+    {
+     "object": "spring-mounted block",
+     "id": "bumper",
+     "mass_kg": {
+      "true": 0.4,
+      "estimate": 0.386
+     },
+     "friction": {
+      "true": 0.3,
+      "estimate": 0.3074
+     },
+     "restitution": {
+      "true": 0.35,
+      "estimate": 0.3512
+     }
+    },
+    {
+     "object": "tile 1",
+     "id": "tile0",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0709
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.849
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.6467
+     }
+    },
+    {
+     "object": "tile 2",
+     "id": "tile1",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0706
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4998
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2481
+     }
+    },
+    {
+     "object": "tile 3",
+     "id": "tile2",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0696
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.4996
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2511
+     }
+    },
+    {
+     "object": "tile 4",
+     "id": "tile3",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0709
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.5026
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2477
+     }
+    },
+    {
+     "object": "tile 5",
+     "id": "tile4",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0692
+     },
+     "friction": {
+      "true": 0.5,
+      "estimate": 0.5005
+     },
+     "restitution": {
+      "true": 0.25,
+      "estimate": 0.2499
+     }
+    },
+    {
+     "object": "tile 6",
+     "id": "tile5",
+     "mass_kg": {
+      "true": 0.07,
+      "estimate": 0.0675
+     },
+     "friction": {
+      "true": 0.35,
+      "estimate": 0.5055
+     },
+     "restitution": {
+      "true": 0.45,
+      "estimate": 0.2533
+     }
+    }
+   ],
+   "properties_total": 8
+  }
+ ],
+ "spread": {
+  "largest_distance_between_two_samples_m": {
+   "ball": 0.208,
+   "spring-mounted block": 0.099,
+   "tile 1": 0.116,
+   "tile 2": 0.061,
+   "tile 3": 0.122,
+   "tile 4": 0.079,
+   "tile 5": 0.105,
+   "tile 6": 0.15
+  },
+  "note": "per body, the largest distance between two samples at the same time"
+ },
+ "note": "Each sample starts from different sampling noise (seeds 1 to 4; 10 sampling steps); the question is the same. error_m is the mean distance of the moving objects from PhysX over the generated frames. The outcome counts tiles that end tilted more than 45 degrees from their start. Camera, floor and exposure are those of the same record in the mode viewer."
+}

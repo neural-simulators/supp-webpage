@@ -217,7 +217,27 @@ def modes_data(v1, showcase):
     return {'order': order, 'info': MODE_INFO, 'default_variant': 'reg', 'scenes': ordered} if ordered else None
 
 
-def modes_section(md, showcase=None):
+def samples_block(d, pickers):
+    if not d:
+        return ''
+    ph = d['physics']; tiles = [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': ph['video'], 'poster': ph['first']}]
+    true = None
+    for i, sm in enumerate(d['samples']):
+        ball = sm['inferred_properties'][0]; true = ball
+        tiles.append({'label': f'Sample {i + 1}', 'sub': f"position error {sm['error_m']:.2f} m", 'cls': 'ours', 'src': sm['video'], 'poster': ph['first'],
+                      'note': f"{e(sm['outcome'])}<br>inferred for the {e(ball['object'])}: friction <b>{ball['friction']['estimate']:.2f}</b>, restitution <b>{ball['restitution']['estimate']:.2f}</b>"})
+    tiles[0]['note'] = f"{e(ph['outcome'])}<br>true for the {e(true['object'])}: friction <b>{true['friction']['true']:.2f}</b>, restitution <b>{true['restitution']['true']:.2f}</b>"
+    spread = max(d['spread']['largest_distance_between_two_samples_m'].values())
+    cap = (f"Each sample starts from different noise; the question is the same. At the same time step, two samples are at most {spread:.2f} m apart on any object. "
+           f"<span class=\"m\">{e(d['paper_figure'][0].upper() + d['paper_figure'][1:])}, which uses 16 samples.</span>")
+    pickers['samples'] = {'items': [{'id': 'samples', 'title': 'Samples', 'short': 'Samples', 'thumb': ph['first'], 'tiles': tiles, 'caption': cap}]}
+    return f'''<h3 class="title is-4 has-text-centered sp-sub">Repeated samples when the properties are hidden</h3>
+<p class="sp-lead">With every mass, friction and restitution hidden, the flow-matching variant (NeuWorld+FM) samples the motion together with the properties.
+Four samples for the ramp scene; their spread shows how much the hidden properties leave open.</p>
+<div class="picker" data-picker="samples" style="--head:2.6rem"></div>'''
+
+
+def modes_section(md, showcase=None, samples=''):
     if not md:
         return ''
     spans = ' For completion, the first 30% of the motion is given; for infilling, the first and the last 20%.' if showcase else ''
@@ -228,6 +248,7 @@ of the same scene, which the model does not see. The bar under <i>Motion</i> mar
 <div class="mv" id="mode-viewer"></div>
 <p class="sp-note" style="margin-top:0.8rem">All modes use the same weights. The buttons on the right switch between the three variants of NeuWorld (regression, flow matching, diffusion).
 In completion and infilling, the generated clip also shows the given frames, with a blue outline while a frame is copied from the input and a magenta outline while it is generated.{spans}</p>
+{samples}
 </div></section>'''
 
 
@@ -266,9 +287,19 @@ Each pair shows the PhysX simulation (left) and NeuWorld (right).</p>
 </div></section>'''
 
 
-def whatif_section(d, pickers):
+def whatif_section(d, pickers, extra=None):
     if not d or not d.get('sets'):
         return ''
+    for st in (extra or {}).get('sets', []):                         # runs rendered later for a scene that already has a set (the intervention of Fig. 4)
+        base = next((x for x in d['sets'] if x['id'] == st['id']), None)
+        if base is None:
+            d['sets'].append(st); continue
+        have = {b['branch'] for b in base['branches']}; eff = (st.get('effect_of_the_intervention_in_physx') or {}).get('largest_difference_m') or {}
+        for br in st['branches']:
+            if br['branch'] not in have:
+                if st.get('paper_figure') and eff:
+                    br = dict(br, remark=f"{st['paper_figure'][0].upper() + st['paper_figure'][1:]}. In PhysX the push shifts the ball by up to {max(eff.values()):.2f} m and the tiles by up to {max(v for k, v in eff.items() if k.startswith('tile')):.2f} m.")
+                base['branches'].append(br)
     items = []; kinds = {'factual': 'The action as planned', 'counterfactual': 'Counterfactual: one stated change', 'intervention': 'Intervention: a change during the motion'}
     for st in d['sets']:
         rows = []
@@ -277,7 +308,8 @@ def whatif_section(d, pickers):
             notes = {k: f"Position error {v['error_m']:.2f} m" for k, v in br['variants'].items() if v.get('error_m') is not None}
             ov = br.get('action_overlay'); ov = ov.get('true') if isinstance(ov, dict) else ov
             on = br.get('outcome_neuworld', ''); on = on if isinstance(on, dict) else {k: on for k in br['variants']}
-            texts = {k: (f'<span class="oc"><i>PhysX:</i> {e(br.get("outcome_physx", ""))}</span><span class="oc"><i style="color:var(--gen)">{VARIANT[k]}:</i> {e(on.get(k, ""))}</span>') for k in br['variants']}
+            remark = f'<span class="oc" style="color:var(--muted);font-size:0.84rem">{e(br["remark"])}</span>' if br.get('remark') else ''
+            texts = {k: (f'<span class="oc"><i>PhysX:</i> {e(br.get("outcome_physx", ""))}</span><span class="oc"><i style="color:var(--gen)">{VARIANT[k]}:</i> {e(on.get(k, ""))}</span>{remark}') for k in br['variants']}
             label = 'The action as recorded' if br['kind'] == 'factual' else br['stated_change'][0].upper() + br['stated_change'][1:]
             rows.append({'kind': kinds.get(br['kind'], br['kind']) if br['kind'] != 'factual' else 'The recorded run', 'label': label, 'texts': texts, 'cls': 'ref' if br['kind'] == 'factual' else '',
                          'tiles': [{'label': 'PhysX', 'sub': 'ground truth', 'cls': 'ref', 'src': br['physics']['video'], 'poster': br['physics'].get('first'), 'overlay': overlay_svg(ov, '#2563c9', timed=True) if ov else ''},
@@ -736,9 +768,9 @@ def main():
     llm = load('compare_llm.json'); vdm = load('compare_vdm.json'); whatif = load('whatif.json')
     n_fwd = sum(1 for r in (showcase or {'records': []})['records'] if r['modes'].get('fwd', {}).get('variants', {}).get('reg') and r['id'] != 'catapult__r2009__a2__factual')
     sections = [('how-it-works', 'How masking selects the inference mode', 'An animated diagram of what is given and what is generated in each mode.', how),
-                ('modes', 'Inference modes', f"{len(md['scenes'])} test scenes in {len(md['order'])} modes, for the three variants of NeuWorld." if md else '', modes_section(md, showcase)),
+                ('modes', 'Inference modes', f"{len(md['scenes'])} test scenes in {len(md['order'])} modes, for the three variants of NeuWorld." if md else '', modes_section(md, showcase, samples_block(load('samples_fig4.json'), pickers))),
                 ('families', 'Test scenes across motion families', f'PhysX next to NeuWorld on {n_fwd} test scenes, grouped by kind of motion.', forward_section(v1, showcase)),
-                ('what-if', 'Counterfactuals and interventions', 'One scene simulated again under a stated change, with measured outcomes.', whatif_section(whatif, pickers)),
+                ('what-if', 'Counterfactuals and interventions', 'One scene simulated again under a stated change, with measured outcomes.', whatif_section(whatif, pickers, load('whatif_fig4.json'))),
                 ('one-scene', 'One scene, all methods', 'Fig. 1 of the paper as video: PhysX, NeuWorld, video models, a robot policy and language models.', teaser_section(teaser, llm, pickers)),
                 ('video-models', 'Comparison with video diffusion models', f"{len(vdm['items'])} test scenes with the prompt of every generated clip, and the measured comparison." if vdm else '', vdm_section(vdm, pickers)),
                 ('llm-vla', 'Language-model planner and robot policy' if teaser else 'Comparison with language models and a robot policy', 'A planner that tries its actions in simulation first, and a zero-shot robot policy in the test scenes.',
