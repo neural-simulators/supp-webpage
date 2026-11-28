@@ -828,8 +828,8 @@ def main():
                 ('llm-vla', 'Language-model planner and robot policy' if teaser else 'Comparison with language models and a robot policy', 'A planner that tries its actions in simulation first, and a zero-shot robot policy in the test scenes.',
                  others_section(llm, load('compare_vla.json'), pickers, grid=not teaser, teaser=teaser)),
                 ('twins', 'Scans of real rooms', 'NeuWorld in scenes reconstructed from scans of real places.', twins_section(load('twins.json'), pickers)),
-                ('dataset', 'The dataset', 'Comparison with existing physics datasets, the motion families, the contents of a record, and the rendered channels.', dataset_section(load('dataset.json'), pickers, load('dataset_compare.json'))),
-                ('quantitative', 'Quantitative results', 'The main table of the paper.', results_section())]
+                ('dataset', 'The dataset', 'Comparison with existing physics datasets, the motion families, the contents of a record, and the rendered channels.', dataset_section(load('dataset.json'), pickers, load('dataset_compare.json')))]
+    # 28 Nov 2026 (owner): the quantitative section (the paper's main table, results_section) is no longer shown; the numbers are in the paper.
     toc = [(k, title, desc) for k, title, desc, body in sections if body]
     body = hero() + overview(toc, overview_video(load('overview_video.json'))) + ''.join(b for _, _, _, b in sections) + footer()
     data = {'modes': md, 'pickers': pickers}

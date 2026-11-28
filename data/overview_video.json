@@ -2,6 +2,6 @@
  "src": "static/media/overview/neuworld_overview.mp4",
  "poster": "static/media/overview/neuworld_overview.jpg",
  "title": "Overview video",
- "caption": "(2 min 27 s, no sound; press play). A rescue robot has to pull a skid out from under a brick bridge without dropping the bridge on a person. A video model, a robot policy, a physics engine and NeuWorld are each asked what will happen. Then: test scenes across motion families, scenes with the action or the properties hidden, video models given the same first frame, the dataset, and two shots filmed on a real pool table.",
- "source": "the paper's teaser video, sixth silent cut (1920 x 1080, 30 fps, H.264, no audio track, no metadata)"
+ "caption": "(2 min 39 s, no sound; press play). A rescue robot has to pull a skid out from under a brick structure without dropping it on the people nearby. A video model, language models, a robot policy, a physics engine and NeuWorld are each asked what will happen. NeuWorld then answers a counterfactual, an intervention, a backward question and property inference on the same scene. Then: the rendered channels of the dataset, test scenes across motion families, a scene with the action hidden, video models given the same first frame, and a real recording on a pool table.",
+ "source": "the paper's teaser video, silent cut v9g (1920 x 1080, 30 fps, H.264, no audio track, encoder tags only)"
 }
